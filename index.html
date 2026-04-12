@@ -1,627 +1,203 @@
 <!DOCTYPE html>
-<html lang="pa">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ਫ਼ਸਲ ਕੈਲਕ — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<title>DeepKisan — Fertilizer Requirement Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&family=Noto+Sans+Gurmukhi:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --green-dark: #1a3a2a;
-    --green-mid:  #2d6a4f;
-    --green-light:#52b788;
-    --green-pale: #d8f3dc;
-    --cream:      #f8f4ec;
-    --cream-dark: #ede8da;
-    --brown:      #7c5c3a;
-    --text:       #1c1c1c;
-    --text-muted: #6b6b6b;
-    --white:      #ffffff;
-    --shadow:     0 4px 32px rgba(26,58,42,0.10);
+    --green-dark:#1a3a2a; --green-mid:#2d6a4f; --green-light:#52b788;
+    --green-pale:#d8f3dc; --cream:#f8f4ec; --cream-dark:#ede8da;
+    --brown:#7c5c3a; --text:#1c1c1c; --text-muted:#6b6b6b;
+    --white:#ffffff; --shadow:0 4px 32px rgba(26,58,42,0.10);
   }
-
   html { scroll-behavior: smooth; }
-
   body {
-    font-family: 'Noto Sans Gurmukhi', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream); color: var(--text);
+    min-height: 100vh; position: relative; overflow-x: hidden;
   }
-
+  body.pa { font-family: 'Noto Sans Gurmukhi', sans-serif; }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 15% 20%, rgba(82,183,136,0.12) 0%, transparent 50%),
-      radial-gradient(circle at 85% 75%, rgba(45,106,79,0.10) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: radial-gradient(circle at 15% 20%,rgba(82,183,136,.12) 0%,transparent 50%),
+                      radial-gradient(circle at 85% 75%,rgba(45,106,79,.10) 0%,transparent 50%);
   }
-
   body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    opacity: 0.4;
-    pointer-events: none;
-    z-index: 0;
+    content:''; position:fixed; inset:0; opacity:.4; pointer-events:none; z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   }
 
+  /* HEADER */
   header {
-    position: relative;
-    z-index: 10;
-    background: var(--green-dark);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 68px;
-    border-bottom: 3px solid var(--green-light);
+    position:relative; z-index:10; background:var(--green-dark);
+    padding:0 1.5rem; display:flex; align-items:center;
+    justify-content:space-between; height:64px;
+    border-bottom:3px solid var(--green-light);
   }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-icon { width:32px; height:32px; }
+  .logo-text { font-family:'DM Serif Display',serif; font-size:22px; color:var(--cream); letter-spacing:-0.5px; }
+  body.pa .logo-text { font-family:'Noto Sans Gurmukhi',sans-serif; font-size:19px; font-weight:600; letter-spacing:0; }
+  .logo-sub { font-size:11px; color:var(--green-light); letter-spacing:.1em; font-weight:500; }
 
-  .logo { display: flex; align-items: center; gap: 10px; }
-  .logo-icon { width: 32px; height: 32px; }
-
-  .logo-text {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--cream);
-    letter-spacing: 0;
+  /* LANGUAGE TOGGLE */
+  .lang-toggle {
+    display:flex; align-items:center; background:rgba(255,255,255,.08);
+    border:1.5px solid var(--green-light); border-radius:30px;
+    padding:3px; gap:2px;
   }
-
-  .logo-sub {
-    font-size: 11px;
-    color: var(--green-light);
-    font-weight: 500;
+  .lang-opt {
+    border:none; background:transparent; color:var(--green-light);
+    font-size:12px; font-weight:600; padding:5px 14px;
+    border-radius:24px; cursor:pointer; transition:all .2s;
+    font-family:'Outfit',sans-serif; letter-spacing:.02em;
+    white-space:nowrap;
   }
-
-  /* Language toggle button */
-  .lang-btn {
-    background: transparent;
-    border: 1.5px solid var(--green-light);
-    border-radius: 8px;
-    color: var(--green-light);
-    font-family: 'Noto Sans Gurmukhi', sans-serif;
-    font-size: 12px;
-    padding: 5px 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+  .lang-opt.active {
+    background:var(--green-light); color:var(--green-dark);
   }
+  .lang-opt:not(.active):hover { background:rgba(82,183,136,.15); }
 
-  .lang-btn:hover {
-    background: var(--green-light);
-    color: var(--green-dark);
-  }
-
-  .hero {
-    position: relative;
-    z-index: 5;
-    text-align: center;
-    padding: 3.5rem 2rem 2rem;
-  }
-
+  /* HERO */
+  .hero { position:relative; z-index:5; text-align:center; padding:3.5rem 2rem 2rem; }
   .hero-eyebrow {
-    display: inline-block;
-    background: var(--green-pale);
-    color: var(--green-mid);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 16px;
-    border-radius: 100px;
-    margin-bottom: 1rem;
+    display:inline-block; background:var(--green-pale); color:var(--green-mid);
+    font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    padding:5px 16px; border-radius:100px; margin-bottom:1rem;
   }
-
+  body.pa .hero-eyebrow { text-transform:none; letter-spacing:0; font-size:12px; }
   .hero h1 {
-    font-size: clamp(1.7rem, 5vw, 2.8rem);
-    font-weight: 600;
-    color: var(--green-dark);
-    line-height: 1.3;
-    max-width: 580px;
-    margin: 0 auto 0.75rem;
+    font-family:'DM Serif Display',serif; font-size:clamp(1.9rem,5vw,3.2rem);
+    color:var(--green-dark); line-height:1.15; max-width:580px; margin:0 auto .75rem;
   }
+  body.pa .hero h1 { font-family:'Noto Sans Gurmukhi',sans-serif; font-weight:600; line-height:1.35; font-size:clamp(1.6rem,4vw,2.6rem); }
+  .hero h1 em { font-style:italic; color:var(--green-mid); }
+  body.pa .hero h1 em { font-style:normal; }
+  .hero p { font-size:15px; color:var(--text-muted); max-width:460px; margin:0 auto; line-height:1.75; }
 
-  .hero h1 em {
-    font-style: normal;
-    color: var(--green-mid);
-  }
-
-  .hero p {
-    font-size: 15px;
-    color: var(--text-muted);
-    max-width: 460px;
-    margin: 0 auto;
-    line-height: 1.8;
-  }
-
-  .card-wrap {
-    position: relative;
-    z-index: 5;
-    max-width: 640px;
-    margin: 2rem auto 4rem;
-    padding: 0 1.25rem;
-  }
-
-  .card {
-    background: var(--white);
-    border-radius: 20px;
-    box-shadow: var(--shadow), 0 1px 0 rgba(82,183,136,0.2);
-    overflow: hidden;
-  }
-
-  .card-header {
-    background: var(--green-dark);
-    padding: 1.25rem 1.75rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
+  /* CARD */
+  .card-wrap { position:relative; z-index:5; max-width:640px; margin:2rem auto 4rem; padding:0 1.25rem; }
+  .card { background:var(--white); border-radius:20px; box-shadow:var(--shadow),0 1px 0 rgba(82,183,136,.2); overflow:hidden; }
+  .card-header { background:var(--green-dark); padding:1.25rem 1.75rem; display:flex; align-items:center; gap:12px; }
   .step-pill {
-    background: var(--green-light);
-    color: var(--green-dark);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 100px;
-    white-space: nowrap;
+    background:var(--green-light); color:var(--green-dark);
+    font-size:11px; font-weight:600; letter-spacing:.08em;
+    padding:3px 10px; border-radius:100px; white-space:nowrap;
   }
+  body.pa .step-pill { letter-spacing:0; }
+  .card-header h2 { font-size:15px; font-weight:500; color:var(--cream); }
+  .card-body { padding:1.75rem; }
 
-  .card-header h2 {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--cream);
-  }
-
-  .card-body { padding: 1.75rem; }
-
-  .crop-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 1.75rem;
-  }
-
+  /* CROP BUTTONS */
+  .crop-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1.75rem; }
   .crop-btn {
-    border: 1.5px solid var(--cream-dark);
-    border-radius: 14px;
-    background: var(--cream);
-    padding: 14px 8px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    border:1.5px solid var(--cream-dark); border-radius:14px;
+    background:var(--cream); padding:14px 8px; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    transition:all .2s ease; font-family:inherit;
   }
+  .crop-btn:hover { border-color:var(--green-light); background:var(--green-pale); transform:translateY(-2px); box-shadow:0 4px 16px rgba(82,183,136,.18); }
+  .crop-btn.active { border-color:var(--green-mid); background:var(--green-pale); box-shadow:0 0 0 3px rgba(82,183,136,.2); }
+  .crop-icon { font-size:28px; line-height:1; }
+  .crop-name { font-size:13px; font-weight:600; color:var(--green-dark); }
+  .crop-desc { font-size:10px; color:var(--text-muted); text-align:center; line-height:1.4; }
 
-  .crop-btn:hover {
-    border-color: var(--green-light);
-    background: var(--green-pale);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(82,183,136,0.18);
-  }
-
-  .crop-btn.active {
-    border-color: var(--green-mid);
-    background: var(--green-pale);
-    box-shadow: 0 0 0 3px rgba(82,183,136,0.2);
-  }
-
-  .crop-icon { font-size: 28px; line-height: 1; }
-
-  .crop-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--green-dark);
-  }
-
-  .crop-desc {
-    font-size: 10px;
-    color: var(--text-muted);
-    text-align: center;
-    line-height: 1.5;
-  }
-
-  .field-row { margin-bottom: 1.1rem; }
-
-  .field-label {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  .field-label label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--green-dark);
-  }
-
-  .field-label .hint { font-size: 11px; color: var(--text-muted); }
-
-  .field-label .badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    background: var(--cream-dark);
-    color: var(--brown);
-    padding: 2px 8px;
-    border-radius: 100px;
-  }
-
-  input[type="number"] {
-    width: 100%;
-    border: 1.5px solid var(--cream-dark);
-    border-radius: 10px;
-    padding: 11px 14px;
-    font-family: 'DM Mono', monospace;
-    font-size: 15px;
-    color: var(--text);
-    background: var(--cream);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    -moz-appearance: textfield;
-  }
-
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-  input[type="number"]:focus {
-    border-color: var(--green-light);
-    box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
-    background: var(--white);
-  }
-
-  .soil-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-  }
-
-  .wheat-residue-wrap { display: none; margin-top: 0.5rem; }
-
-  .residue-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .residue-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 0.5rem;
-  }
-
+  /* RESIDUE */
+  .residue-section { display:none; margin-top:.5rem; }
+  .residue-section-label { font-size:12px; color:var(--text-muted); font-weight:600; margin-bottom:8px; }
+  .residue-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
   .residue-btn {
-    border: 1.5px solid var(--cream-dark);
-    border-radius: 12px;
-    background: var(--cream);
-    padding: 12px 6px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease;
-    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    border:1.5px solid var(--cream-dark); border-radius:12px;
+    background:var(--cream); padding:12px 6px; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    transition:all .2s; font-family:inherit;
   }
+  .residue-btn:hover { border-color:var(--green-light); background:var(--green-pale); transform:translateY(-1px); }
+  .residue-btn.active { border-color:var(--green-mid); background:var(--green-pale); box-shadow:0 0 0 3px rgba(82,183,136,.2); }
+  .residue-icon { font-size:20px; }
+  .residue-name { font-size:11px; font-weight:600; color:var(--green-dark); text-align:center; line-height:1.4; }
 
-  .residue-btn:hover {
-    border-color: var(--green-light);
-    background: var(--green-pale);
-    transform: translateY(-1px);
+  /* FIELDS */
+  .field-row { margin-bottom:1.1rem; }
+  .field-label { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; }
+  .field-label label { font-size:13px; font-weight:600; color:var(--green-dark); }
+  .field-label .hint { font-size:11px; color:var(--text-muted); }
+  .field-label .badge { font-family:'DM Mono',monospace; font-size:10px; background:var(--cream-dark); color:var(--brown); padding:2px 8px; border-radius:100px; }
+  input[type="number"] {
+    width:100%; border:1.5px solid var(--cream-dark); border-radius:10px;
+    padding:11px 14px; font-family:'DM Mono',monospace; font-size:15px;
+    color:var(--text); background:var(--cream); outline:none;
+    transition:border-color .2s,box-shadow .2s; -moz-appearance:textfield;
   }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance:none; }
+  input[type="number"]:focus { border-color:var(--green-light); box-shadow:0 0 0 3px rgba(82,183,136,.15); background:var(--white); }
+  .soil-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .range-note { display:none; background:var(--green-pale); border:1px solid #a8dab5; border-radius:10px; padding:10px 14px; font-size:12px; color:var(--green-mid); margin-top:6px; line-height:1.7; }
+  .error-msg { font-size:12px; color:#c0392b; margin-top:5px; min-height:16px; }
 
-  .residue-btn.active {
-    border-color: var(--green-mid);
-    background: var(--green-pale);
-    box-shadow: 0 0 0 3px rgba(82,183,136,0.2);
-  }
-
-  .residue-icon { font-size: 20px; line-height: 1; }
-
-  .residue-name {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--green-dark);
-    text-align: center;
-    line-height: 1.4;
-  }
-
-  .range-note {
-    display: none;
-    background: var(--green-pale);
-    border: 1px solid #a8dab5;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--green-mid);
-    margin-top: 6px;
-    line-height: 1.7;
-  }
-
-  .error-msg {
-    font-size: 12px;
-    color: #c0392b;
-    margin-top: 5px;
-    min-height: 16px;
-  }
-
+  /* CALC BUTTON */
   .calc-btn {
-    width: 100%;
-    background: var(--green-dark);
-    color: var(--cream);
-    border: none;
-    border-radius: 12px;
-    padding: 15px;
-    font-family: 'Noto Sans Gurmukhi', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 0.5rem;
+    width:100%; background:var(--green-dark); color:var(--cream); border:none;
+    border-radius:12px; padding:15px; font-family:inherit; font-size:15px;
+    font-weight:600; cursor:pointer; transition:all .2s;
+    display:flex; align-items:center; justify-content:center; gap:10px; margin-top:.5rem;
   }
+  .calc-btn:hover { background:var(--green-mid); transform:translateY(-2px); box-shadow:0 6px 20px rgba(26,58,42,.25); }
+  .calc-btn:active { transform:scale(.98); }
 
-  .calc-btn:hover {
-    background: var(--green-mid);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(26,58,42,0.25);
-  }
+  /* RESULTS */
+  .results-section { display:none; padding:1.75rem; border-top:1.5px dashed var(--cream-dark); background:linear-gradient(180deg,var(--green-pale) 0%,var(--white) 100%); }
+  .results-header { display:flex; align-items:center; gap:10px; margin-bottom:1.25rem; flex-wrap:wrap; }
+  .results-header h3 { font-family:'DM Serif Display',serif; font-size:18px; color:var(--green-dark); }
+  body.pa .results-header h3 { font-family:'Noto Sans Gurmukhi',sans-serif; font-weight:600; }
+  .results-crop-tag { font-size:11px; font-weight:600; background:var(--green-dark); color:var(--green-pale); padding:3px 10px; border-radius:100px; }
+  .result-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .result-card { background:var(--white); border:1.5px solid var(--cream-dark); border-radius:14px; padding:16px 12px; text-align:center; position:relative; overflow:hidden; }
+  .result-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; }
+  .result-card.n::before{background:#4caf7d;} .result-card.p::before{background:#e07b3f;} .result-card.k::before{background:#7b8ee0;}
+  .result-card.animate { animation:popIn .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+  @keyframes popIn { from{opacity:0;transform:translateY(12px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+  .r-label { font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
+  body.pa .r-label { text-transform:none; letter-spacing:0; }
+  .r-value { font-family:'DM Mono',monospace; font-size:28px; font-weight:500; color:var(--green-dark); line-height:1; margin-bottom:4px; }
+  .r-unit { font-size:10px; color:var(--text-muted); font-weight:500; }
+  .r-negative { font-size:10px; color:#c0392b; margin-top:4px; }
+  .results-footnote { margin-top:1rem; font-size:11.5px; color:var(--text-muted); line-height:1.7; padding:10px 14px; background:var(--cream); border-radius:10px; border:1px solid var(--cream-dark); }
 
-  .calc-btn:active { transform: scale(0.98); }
+  /* FERT TABLE */
+  .scenario-tabs { display:flex; gap:6px; margin-bottom:12px; }
+  .scenario-tab { flex:1; border:1.5px solid var(--cream-dark); border-radius:10px; background:var(--cream); padding:9px 10px; font-family:inherit; font-size:12px; font-weight:500; color:var(--text-muted); cursor:pointer; transition:all .18s; text-align:center; }
+  .scenario-tab:hover { border-color:var(--green-light); color:var(--green-dark); background:var(--green-pale); }
+  .scenario-tab.active { background:var(--green-dark); border-color:var(--green-dark); color:var(--cream); }
+  .fert-n-credit { font-size:11.5px; color:var(--green-mid); background:var(--green-pale); border-radius:8px; padding:7px 12px; margin-top:8px; display:none; line-height:1.6; }
+  .fert-table-wrap { margin-top:1.5rem; border-top:1.5px dashed var(--cream-dark); padding-top:1.25rem; }
+  .fert-table-title { font-family:'DM Serif Display',serif; font-size:16px; color:var(--green-dark); margin-bottom:.75rem; }
+  body.pa .fert-table-title { font-family:'Noto Sans Gurmukhi',sans-serif; font-weight:600; }
+  .fert-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .fert-table thead tr { background:var(--green-dark); color:var(--cream); }
+  .fert-table thead th { padding:10px 14px; text-align:left; font-weight:500; font-size:12px; letter-spacing:.04em; }
+  body.pa .fert-table thead th { letter-spacing:0; }
+  .fert-table thead th:last-child { text-align:right; }
+  .fert-table tbody tr { border-bottom:1px solid var(--cream-dark); transition:background .15s; }
+  .fert-table tbody tr:last-child { border-bottom:none; }
+  .fert-table tbody tr:hover { background:var(--green-pale); }
+  .fert-table td { padding:11px 14px; color:var(--text); vertical-align:middle; }
+  .fert-table td:last-child { text-align:right; font-family:'DM Mono',monospace; font-size:14px; font-weight:500; color:var(--green-dark); }
+  .fert-dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+  .fert-source { font-size:11px; color:var(--text-muted); display:block; margin-top:2px; }
+  .fert-table-footnote { margin-top:10px; font-size:11px; color:var(--text-muted); line-height:1.7; }
 
-  /* ---- RESULTS ---- */
-  .results-section {
-    display: none;
-    padding: 1.75rem;
-    border-top: 1.5px dashed var(--cream-dark);
-    background: linear-gradient(180deg, var(--green-pale) 0%, var(--white) 100%);
-  }
+  footer { position:relative; z-index:5; text-align:center; padding:1.5rem; font-size:12px; color:var(--text-muted); border-top:1px solid var(--cream-dark); }
 
-  .results-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-  }
-
-  .results-header h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--green-dark);
-  }
-
-  .results-crop-tag {
-    font-size: 11px;
-    font-weight: 600;
-    background: var(--green-dark);
-    color: var(--green-pale);
-    padding: 3px 10px;
-    border-radius: 100px;
-  }
-
-  .result-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .result-card {
-    background: var(--white);
-    border: 1.5px solid var(--cream-dark);
-    border-radius: 14px;
-    padding: 16px 12px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .result-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-
-  .result-card.n::before { background: #4caf7d; }
-  .result-card.p::before { background: #e07b3f; }
-  .result-card.k::before { background: #7b8ee0; }
-
-  .result-card.animate {
-    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
-  }
-
-  @keyframes popIn {
-    from { opacity: 0; transform: translateY(12px) scale(0.96); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .r-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-  }
-
-  .r-value {
-    font-family: 'DM Mono', monospace;
-    font-size: 28px;
-    font-weight: 500;
-    color: var(--green-dark);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .r-unit { font-size: 10px; color: var(--text-muted); font-weight: 500; }
-  .r-negative { font-size: 10px; color: #c0392b; margin-top: 4px; }
-
-  .results-footnote {
-    margin-top: 1rem;
-    font-size: 11.5px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    padding: 10px 14px;
-    background: var(--cream);
-    border-radius: 10px;
-    border: 1px solid var(--cream-dark);
-  }
-
-  /* ---- FERTILIZER TABLE ---- */
-  .scenario-tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 12px;
-  }
-
-  .scenario-tab {
-    flex: 1;
-    border: 1.5px solid var(--cream-dark);
-    border-radius: 10px;
-    background: var(--cream);
-    padding: 9px 10px;
-    font-family: 'Noto Sans Gurmukhi', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.18s ease;
-    text-align: center;
-  }
-
-  .scenario-tab:hover {
-    border-color: var(--green-light);
-    color: var(--green-dark);
-    background: var(--green-pale);
-  }
-
-  .scenario-tab.active {
-    background: var(--green-dark);
-    border-color: var(--green-dark);
-    color: var(--cream);
-  }
-
-  .fert-n-credit {
-    font-size: 11.5px;
-    color: var(--green-mid);
-    background: var(--green-pale);
-    border-radius: 8px;
-    padding: 7px 12px;
-    margin-top: 8px;
-    display: none;
-    line-height: 1.6;
-  }
-
-  .fert-table-wrap {
-    margin-top: 1.5rem;
-    border-top: 1.5px dashed var(--cream-dark);
-    padding-top: 1.25rem;
-  }
-
-  .fert-table-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--green-dark);
-    margin-bottom: 0.75rem;
-  }
-
-  .fert-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-
-  .fert-table thead tr {
-    background: var(--green-dark);
-    color: var(--cream);
-  }
-
-  .fert-table thead th {
-    padding: 10px 14px;
-    text-align: left;
-    font-weight: 500;
-    font-size: 12px;
-  }
-
-  .fert-table thead th:last-child { text-align: right; }
-
-  .fert-table tbody tr {
-    border-bottom: 1px solid var(--cream-dark);
-    transition: background 0.15s;
-  }
-
-  .fert-table tbody tr:last-child { border-bottom: none; }
-  .fert-table tbody tr:hover { background: var(--green-pale); }
-
-  .fert-table td {
-    padding: 11px 14px;
-    color: var(--text);
-    vertical-align: middle;
-  }
-
-  .fert-table td:last-child {
-    text-align: right;
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--green-dark);
-  }
-
-  .fert-dot {
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-
-  .fert-source {
-    font-size: 11px;
-    color: var(--text-muted);
-    display: block;
-    margin-top: 2px;
-  }
-
-  .fert-table-footnote {
-    margin-top: 10px;
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-
-  footer {
-    position: relative;
-    z-index: 5;
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 12px;
-    color: var(--text-muted);
-    border-top: 1px solid var(--cream-dark);
-  }
-
-  @media (max-width: 480px) {
-    .soil-grid { grid-template-columns: 1fr; }
-    .result-cards { grid-template-columns: 1fr; }
-    .crop-grid { gap: 6px; }
-    .r-value { font-size: 22px; }
+  @media(max-width:480px) {
+    .soil-grid{grid-template-columns:1fr;}
+    .result-cards{grid-template-columns:1fr;}
+    .r-value{font-size:22px;}
+    .lang-opt{padding:5px 9px;}
   }
 </style>
 </head>
@@ -631,303 +207,444 @@
   <div class="logo">
     <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="16" cy="16" r="16" fill="#2d6a4f"/>
-      <path d="M16 6 C16 6 10 12 10 18 C10 21.3 12.7 24 16 24 C19.3 24 22 21.3 22 18 C22 12 16 6 16 6Z" fill="#52b788"/>
-      <path d="M16 10 L16 24" stroke="#d8f3dc" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M16 16 L12 13" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M16 19 L20 16" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M16 6C16 6 10 12 10 18C10 21.3 12.7 24 16 24C19.3 24 22 21.3 22 18C22 12 16 6 16 6Z" fill="#52b788"/>
+      <path d="M16 10L16 24" stroke="#d8f3dc" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M16 16L12 13" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M16 19L20 16" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
     </svg>
     <div>
-      <div class="logo-text">ਫ਼ਸਲ ਕੈਲਕ</div>
-      <div class="logo-sub">ਖਾਦ ਯੋਜਨਾਕਾਰ</div>
+      <div class="logo-text" id="logo-text">DeepKisan</div>
+      <div class="logo-sub" id="logo-sub">Fertilizer Planner</div>
     </div>
   </div>
-  <a href="fertilizer-calculator.html" class="lang-btn">🌐 English</a>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button class="lang-opt active" id="btn-en" onclick="setLang('en')">English</button>
+    <button class="lang-opt" id="btn-pa" onclick="setLang('pa')">ਪੰਜਾਬੀ</button>
+  </div>
 </header>
 
 <section class="hero">
-  <div class="hero-eyebrow">ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਸਿਫ਼ਾਰਸ਼</div>
-  <h1>ਆਪਣੀ ਫ਼ਸਲ ਲਈ <em>ਸਹੀ ਖਾਦ</em> ਦੀ ਲੋੜ ਜਾਣੋ</h1>
-  <p>ਟੀਚਾ ਝਾੜ ਅਤੇ ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ ਦਰਜ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਅਨੁਸਾਰ N, P₂O₅ ਅਤੇ K₂O ਦੀ ਸਿਫ਼ਾਰਸ਼ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ ਪ੍ਰਾਪਤ ਕਰੋ।</p>
+  <div class="hero-eyebrow" id="hero-eyebrow">Soil-Test Based Recommendation</div>
+  <h1 id="hero-title">Calculate your <em>precise</em> fertilizer requirement</h1>
+  <p id="hero-desc">Enter your target yield and soil nutrient levels to get crop-specific N, P₂O₅ and K₂O recommendations in kg/acre.</p>
 </section>
 
 <div class="card-wrap">
   <div class="card">
 
-    <!-- ਕਦਮ 1: ਫ਼ਸਲ -->
+    <!-- Step 1 -->
     <div class="card-header">
-      <span class="step-pill">ਕਦਮ ੧</span>
-      <h2>ਫ਼ਸਲ ਚੁਣੋ</h2>
+      <span class="step-pill" id="step1-pill">Step 1</span>
+      <h2 id="step1-title">Select crop</h2>
     </div>
     <div class="card-body">
       <div class="crop-grid">
         <button class="crop-btn active" data-crop="rice" onclick="selectCrop('rice')">
           <span class="crop-icon">🌾</span>
-          <span class="crop-name">ਝੋਨਾ</span>
-          <span class="crop-desc">੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ</span>
+          <span class="crop-name" data-i18n="crop-rice">Rice</span>
+          <span class="crop-desc" data-i18n="crop-rice-desc">25–35 qtl/acre</span>
         </button>
         <button class="crop-btn" data-crop="maize" onclick="selectCrop('maize')">
           <span class="crop-icon">🌽</span>
-          <span class="crop-name">ਮੱਕੀ</span>
-          <span class="crop-desc">੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ</span>
+          <span class="crop-name" data-i18n="crop-maize">Maize</span>
+          <span class="crop-desc" data-i18n="crop-maize-desc">25–30 qtl/acre</span>
         </button>
         <button class="crop-btn" data-crop="wheat" onclick="selectCrop('wheat')">
           <span class="crop-icon">🌿</span>
-          <span class="crop-name">ਕਣਕ</span>
-          <span class="crop-desc">੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ</span>
+          <span class="crop-name" data-i18n="crop-wheat">Wheat</span>
+          <span class="crop-desc" data-i18n="crop-wheat-desc">20–25 qtl/acre</span>
         </button>
       </div>
 
-      <!-- ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ — ਸਿਰਫ਼ ਕਣਕ ਲਈ -->
-      <div id="wheat-residue-wrap" class="wheat-residue-wrap">
-        <div class="residue-label">ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ</div>
+      <div class="residue-section" id="wheat-residue-wrap">
+        <div class="residue-section-label" id="residue-label">Rice residue management practice</div>
         <div class="residue-grid">
           <button class="residue-btn active" data-residue="removed" onclick="selectResidue('removed')">
             <span class="residue-icon">🪣</span>
-            <span class="residue-name">ਹਟਾਈ ਗਈ</span>
+            <span class="residue-name" data-i18n="res-removed">Removed</span>
           </button>
           <button class="residue-btn" data-residue="incorporated" onclick="selectResidue('incorporated')">
             <span class="residue-icon">🚜</span>
-            <span class="residue-name">ਵਾਹੀ ਗਈ</span>
+            <span class="residue-name" data-i18n="res-incorporated">Incorporated</span>
           </button>
           <button class="residue-btn" data-residue="mulching" onclick="selectResidue('mulching')">
             <span class="residue-icon">🌱</span>
-            <span class="residue-name">ਮਲਚਿੰਗ</span>
+            <span class="residue-name" data-i18n="res-mulching">Mulching</span>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- ਕਦਮ 2: ਟੀਚਾ ਝਾੜ -->
+    <!-- Step 2 -->
     <div class="card-header">
-      <span class="step-pill">ਕਦਮ ੨</span>
-      <h2>ਟੀਚਾ ਝਾੜ (T)</h2>
+      <span class="step-pill" id="step2-pill">Step 2</span>
+      <h2 id="step2-title">Target yield (T)</h2>
     </div>
     <div class="card-body">
       <div class="field-row">
         <div class="field-label">
-          <label for="T">ਟੀਚਾ ਝਾੜ — ਕੁਇੰਟਲ / ਏਕੜ</label>
-          <span class="badge" id="t-range-badge">੨੫–੩੫ ਕੁਇੰਟਲ</span>
+          <label for="T" id="t-label">Target yield — quintals / acre</label>
+          <span class="badge" id="t-range-badge">25–35 qtl</span>
         </div>
-        <input type="number" id="T" placeholder="ਜਿਵੇਂ 30" min="0" step="0.5" oninput="onInput()" />
-        <div id="range-note" class="range-note">ਝੋਨੇ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ।</div>
+        <input type="number" id="T" placeholder="e.g. 30" min="0" step="0.5" oninput="onInput()" />
+        <div id="range-note" class="range-note"></div>
         <div class="error-msg" id="t-error"></div>
       </div>
     </div>
 
-    <!-- ਕਦਮ 3: ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤ -->
+    <!-- Step 3 -->
     <div class="card-header">
-      <span class="step-pill">ਕਦਮ ੩</span>
-      <h2>ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ</h2>
+      <span class="step-pill" id="step3-pill">Step 3</span>
+      <h2 id="step3-title">Soil nutrient status</h2>
     </div>
     <div class="card-body">
       <div class="soil-grid">
         <div class="field-row">
           <div class="field-label">
             <label for="SN">SN</label>
-            <span class="hint">ਨਾਈਟ੍ਰੋਜਨ</span>
+            <span class="hint" data-i18n="nitrogen">Nitrogen</span>
           </div>
-          <input type="number" id="SN" placeholder="ਕਿੱਲੋ/ਏਕੜ" min="0" step="0.1" oninput="onInput()" />
+          <input type="number" id="SN" min="0" step="0.1" oninput="onInput()" />
         </div>
         <div class="field-row">
           <div class="field-label">
             <label for="SP">SP</label>
-            <span class="hint">ਫਾਸਫੋਰਸ</span>
+            <span class="hint" data-i18n="phosphorus">Phosphorus</span>
           </div>
-          <input type="number" id="SP" placeholder="ਕਿੱਲੋ/ਏਕੜ" min="0" step="0.1" oninput="onInput()" />
+          <input type="number" id="SP" min="0" step="0.1" oninput="onInput()" />
         </div>
         <div class="field-row">
           <div class="field-label">
             <label for="SK">SK</label>
-            <span class="hint">ਪੋਟਾਸ਼ੀਅਮ</span>
+            <span class="hint" data-i18n="potassium">Potassium</span>
           </div>
-          <input type="number" id="SK" placeholder="ਕਿੱਲੋ/ਏਕੜ" min="0" step="0.1" oninput="onInput()" />
+          <input type="number" id="SK" min="0" step="0.1" oninput="onInput()" />
         </div>
       </div>
       <div class="error-msg" id="soil-error"></div>
       <button class="calc-btn" onclick="calculate()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M8 12h8M12 8v8"/></svg>
-        ਖਾਦ ਦੀ ਲੋੜ ਹਿਸਾਬ ਕਰੋ
+        <span id="calc-btn-text">Calculate fertilizer requirement</span>
       </button>
     </div>
 
-    <!-- ਨਤੀਜੇ -->
+    <!-- Results -->
     <div class="results-section" id="results-section">
       <div class="results-header">
-        <h3>ਖਾਦ ਸਿਫ਼ਾਰਸ਼</h3>
-        <span class="results-crop-tag" id="results-crop-tag">ਝੋਨਾ</span>
+        <h3 id="results-heading">Fertilizer recommendation</h3>
+        <span class="results-crop-tag" id="results-crop-tag"></span>
       </div>
       <div class="result-cards">
         <div class="result-card n" id="card-fn">
           <div class="r-label">FN</div>
           <div class="r-value" id="r-fn">—</div>
-          <div class="r-unit">ਕਿੱਲੋ N / ਏਕੜ</div>
-          <div class="r-negative" id="fn-neg" style="display:none">ਮਿੱਟੀ N ਵੱਧ — ਜਾਂਚ ਕਰੋ</div>
+          <div class="r-unit" data-i18n="unit-n">kg N / acre</div>
+          <div class="r-negative" id="fn-neg" style="display:none" data-i18n="high-n">High soil N — review</div>
         </div>
         <div class="result-card p" id="card-fp">
           <div class="r-label">FP₂O₅</div>
           <div class="r-value" id="r-fp">—</div>
-          <div class="r-unit">ਕਿੱਲੋ P₂O₅ / ਏਕੜ</div>
-          <div class="r-negative" id="fp-neg" style="display:none">ਮਿੱਟੀ P ਵੱਧ — ਜਾਂਚ ਕਰੋ</div>
+          <div class="r-unit" data-i18n="unit-p">kg P₂O₅ / acre</div>
+          <div class="r-negative" id="fp-neg" style="display:none" data-i18n="high-p">High soil P — review</div>
         </div>
         <div class="result-card k" id="card-fk">
           <div class="r-label">FK₂O</div>
           <div class="r-value" id="r-fk">—</div>
-          <div class="r-unit">ਕਿੱਲੋ K₂O / ਏਕੜ</div>
-          <div class="r-negative" id="fk-neg" style="display:none">ਮਿੱਟੀ K ਵੱਧ — ਜਾਂਚ ਕਰੋ</div>
+          <div class="r-unit" data-i18n="unit-k">kg K₂O / acre</div>
+          <div class="r-negative" id="fk-neg" style="display:none" data-i18n="high-k">High soil K — review</div>
         </div>
       </div>
-      <div class="results-footnote">
-        ਨਤੀਜੇ ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਸਮੀਕਰਨਾਂ ਅਨੁਸਾਰ ਹਨ। ਜੇ ਕੋਈ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਆਵੇ, ਤਾਂ ਉਸ ਪੌਸ਼ਟਿਕ ਤੱਤ ਦੀ ਖਾਦ ਨਹੀਂ ਪਾਉਣੀ।
+      <div class="results-footnote" id="results-footnote">
+        Results computed using soil-test based fertilizer adjustment equations. Negative values indicate soil nutrients exceed crop requirements — no fertilizer needed for that nutrient.
       </div>
 
-      <!-- ਖਾਦ ਉਤਪਾਦ ਸਾਰਣੀ -->
+      <!-- Fertilizer table -->
       <div class="fert-table-wrap">
-        <div class="fert-table-title">ਖਾਦ ਉਤਪਾਦ ਦੀ ਲੋੜ</div>
-
+        <div class="fert-table-title" id="fert-title">Fertilizer product requirement</div>
         <div class="scenario-tabs">
-          <button class="scenario-tab active" id="tab-dap" onclick="switchScenario('dap')">
-            DAP ਨਾਲ ਫਾਸਫੋਰਸ
-          </button>
-          <button class="scenario-tab" id="tab-ssp" onclick="switchScenario('ssp')">
-            SSP ਨਾਲ ਫਾਸਫੋਰਸ
-          </button>
+          <button class="scenario-tab active" id="tab-dap" onclick="switchScenario('dap')" data-i18n="tab-dap">Using DAP for phosphorus</button>
+          <button class="scenario-tab" id="tab-ssp" onclick="switchScenario('ssp')" data-i18n="tab-ssp">Using SSP for phosphorus</button>
         </div>
 
-        <!-- DAP ਤਰੀਕਾ -->
+        <!-- DAP -->
         <div id="scenario-dap">
           <table class="fert-table">
-            <thead>
-              <tr>
-                <th>ਖਾਦ</th>
-                <th>ਪੌਸ਼ਟਿਕ ਤੱਤ</th>
-                <th>ਕਿੱਲੋ / ਏਕੜ</th>
-              </tr>
-            </thead>
+            <thead><tr>
+              <th data-i18n="th-fert">Fertilizer</th>
+              <th data-i18n="th-nutrient">Nutrient supplied</th>
+              <th data-i18n="th-qty">kg / acre</th>
+            </tr></thead>
             <tbody>
               <tr>
-                <td>
-                  <span class="fert-dot" style="background:#4caf7d;"></span>
-                  <strong>ਯੂਰੀਆ</strong>
-                  <span class="fert-source">46% N — DAP ਦੇ N ਕ੍ਰੈਡਿਟ ਤੋਂ ਬਾਅਦ</span>
-                </td>
-                <td>ਨਾਈਟ੍ਰੋਜਨ (N)</td>
+                <td><span class="fert-dot" style="background:#4caf7d"></span><strong data-i18n="urea">Urea</strong><span class="fert-source" data-i18n="urea-src-dap">46% N — adjusted after DAP N credit</span></td>
+                <td data-i18n="nitrogen-n">Nitrogen (N)</td>
                 <td id="t-urea-dap">—</td>
               </tr>
               <tr>
-                <td>
-                  <span class="fert-dot" style="background:#e07b3f;"></span>
-                  <strong>DAP</strong>
-                  <span class="fert-source">ਡਾਈ-ਅਮੋਨੀਅਮ ਫਾਸਫੇਟ — 18% N, 46% P₂O₅</span>
-                </td>
-                <td>ਫਾਸਫੋਰਸ (P₂O₅) + N ਕ੍ਰੈਡਿਟ</td>
+                <td><span class="fert-dot" style="background:#e07b3f"></span><strong>DAP</strong><span class="fert-source" data-i18n="dap-src">Di-Ammonium Phosphate — 18% N, 46% P₂O₅</span></td>
+                <td data-i18n="phosphorus-p">Phosphorus (P₂O₅) + N credit</td>
                 <td id="t-dap">—</td>
               </tr>
               <tr>
-                <td>
-                  <span class="fert-dot" style="background:#7b8ee0;"></span>
-                  <strong>MOP</strong>
-                  <span class="fert-source">ਮਿਊਰੇਟ ਆਫ਼ ਪੋਟਾਸ਼ — 60% K₂O</span>
-                </td>
-                <td>ਪੋਟਾਸ਼ੀਅਮ (K₂O)</td>
+                <td><span class="fert-dot" style="background:#7b8ee0"></span><strong data-i18n="mop">MOP</strong><span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span></td>
+                <td data-i18n="potassium-k">Potassium (K₂O)</td>
                 <td id="t-mop-dap">—</td>
               </tr>
             </tbody>
           </table>
           <div class="fert-n-credit" id="dap-n-credit"></div>
-          <div class="fert-table-footnote">
-            DAP ਵਿੱਚ 18% N ਹੁੰਦਾ ਹੈ ਜੋ ਯੂਰੀਆ ਦੀ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ ਜਾਂਦਾ ਹੈ। ਜੇ DAP ਦਾ N ਪੂਰੀ FN ਲੋੜ ਪੂਰੀ ਕਰ ਦੇਵੇ, ਤਾਂ ਯੂਰੀਆ = 0।
-          </div>
+          <div class="fert-table-footnote" id="dap-footnote">DAP supplies 18% N alongside P₂O₅. This nitrogen is credited and deducted from the Urea dose. If DAP N exceeds FN requirement, Urea = 0.</div>
         </div>
 
-        <!-- SSP ਤਰੀਕਾ -->
-        <div id="scenario-ssp" style="display:none;">
+        <!-- SSP -->
+        <div id="scenario-ssp" style="display:none">
           <table class="fert-table">
-            <thead>
-              <tr>
-                <th>ਖਾਦ</th>
-                <th>ਪੌਸ਼ਟਿਕ ਤੱਤ</th>
-                <th>ਕਿੱਲੋ / ਏਕੜ</th>
-              </tr>
-            </thead>
+            <thead><tr>
+              <th data-i18n="th-fert">Fertilizer</th>
+              <th data-i18n="th-nutrient">Nutrient supplied</th>
+              <th data-i18n="th-qty">kg / acre</th>
+            </tr></thead>
             <tbody>
               <tr>
-                <td>
-                  <span class="fert-dot" style="background:#4caf7d;"></span>
-                  <strong>ਯੂਰੀਆ</strong>
-                  <span class="fert-source">46% N — ਪੂਰੀ FN ਮਾਤਰਾ (SSP ਤੋਂ N ਕ੍ਰੈਡਿਟ ਨਹੀਂ)</span>
-                </td>
-                <td>ਨਾਈਟ੍ਰੋਜਨ (N)</td>
+                <td><span class="fert-dot" style="background:#4caf7d"></span><strong data-i18n="urea">Urea</strong><span class="fert-source" data-i18n="urea-src-ssp">46% N — full FN dose (no N credit from SSP)</span></td>
+                <td data-i18n="nitrogen-n">Nitrogen (N)</td>
                 <td id="t-urea-ssp">—</td>
               </tr>
               <tr>
-                <td>
-                  <span class="fert-dot" style="background:#c77b3a;"></span>
-                  <strong>SSP</strong>
-                  <span class="fert-source">ਸਿੰਗਲ ਸੁਪਰ ਫਾਸਫੇਟ — 16% P₂O₅</span>
-                </td>
-                <td>ਫਾਸਫੋਰਸ (P₂O₅)</td>
+                <td><span class="fert-dot" style="background:#c77b3a"></span><strong>SSP</strong><span class="fert-source" data-i18n="ssp-src">Single Super Phosphate — 16% P₂O₅</span></td>
+                <td data-i18n="phosphorus-p2">Phosphorus (P₂O₅)</td>
                 <td id="t-ssp">—</td>
               </tr>
               <tr>
-                <td>
-                  <span class="fert-dot" style="background:#7b8ee0;"></span>
-                  <strong>MOP</strong>
-                  <span class="fert-source">ਮਿਊਰੇਟ ਆਫ਼ ਪੋਟਾਸ਼ — 60% K₂O</span>
-                </td>
-                <td>ਪੋਟਾਸ਼ੀਅਮ (K₂O)</td>
+                <td><span class="fert-dot" style="background:#7b8ee0"></span><strong data-i18n="mop">MOP</strong><span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span></td>
+                <td data-i18n="potassium-k2">Potassium (K₂O)</td>
                 <td id="t-mop-ssp">—</td>
               </tr>
             </tbody>
           </table>
-          <div class="fert-table-footnote">
-            SSP ਵਿੱਚ N ਨਹੀਂ ਹੁੰਦਾ, ਇਸ ਲਈ ਯੂਰੀਆ ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਪਾਓ। SSP ਮਾਤਰਾ = FP₂O₅ ÷ 0.16।
-          </div>
+          <div class="fert-table-footnote" id="ssp-footnote">SSP contains no nitrogen, so the full Urea dose is applied. SSP dose = FP₂O₅ ÷ 0.16. Negative FP₂O₅ values are treated as 0.</div>
         </div>
-
       </div>
     </div>
 
   </div>
 </div>
 
-<footer>
-  ਫ਼ਸਲ ਕੈਲਕ &mdash; ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਯੋਜਨਾ &nbsp;|&nbsp; ਸਾਰੇ ਮੁੱਲ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ
-</footer>
+<footer id="footer-text">DeepKisan &mdash; Soil-test based fertilizer planning &nbsp;|&nbsp; All values in kg/acre</footer>
 
 <script>
-const crops = {
-  rice:  { FN:[3.02,-0.63],   FP:[1.78,-8.37],  FK:[2.75,-1.39],  tMin:25, tMax:35 },
-  maize: { FN:[6.51,-1.11],   FP:[2.95,-6.72],  FK:[1.89,-0.32],  tMin:25, tMax:30 }
+/* ===================== TRANSLATIONS ===================== */
+const T18N = {
+  en: {
+    lang: 'en',
+    bodyClass: '',
+    title: 'DeepKisan — Fertilizer Requirement Calculator',
+    'logo-text': 'DeepKisan',
+    'logo-sub': 'Fertilizer Planner',
+    'hero-eyebrow': 'Soil-Test Based Recommendation',
+    'hero-title': 'Calculate your <em>precise</em> fertilizer requirement',
+    'hero-desc': 'Enter your target yield and soil nutrient levels to get crop-specific N, P₂O₅ and K₂O recommendations in kg/acre.',
+    'step1-pill': 'Step 1', 'step1-title': 'Select crop',
+    'step2-pill': 'Step 2', 'step2-title': 'Target yield (T)',
+    'step3-pill': 'Step 3', 'step3-title': 'Soil nutrient status',
+    'crop-rice': 'Rice', 'crop-rice-desc': '25–35 qtl/acre',
+    'crop-maize': 'Maize', 'crop-maize-desc': '25–30 qtl/acre',
+    'crop-wheat': 'Wheat', 'crop-wheat-desc': '20–25 qtl/acre',
+    'residue-label': 'Rice residue management practice',
+    'res-removed': 'Removed', 'res-incorporated': 'Incorporated', 'res-mulching': 'Mulching',
+    't-label': 'Target yield — quintals / acre',
+    'sn-ph': 'kg/acre', 'sp-ph': 'kg/acre', 'sk-ph': 'kg/acre',
+    'tin-ph': 'e.g. 30',
+    'nitrogen': 'Nitrogen', 'phosphorus': 'Phosphorus', 'potassium': 'Potassium',
+    'calc-btn-text': 'Calculate fertilizer requirement',
+    'results-heading': 'Fertilizer recommendation',
+    'unit-n': 'kg N / acre', 'unit-p': 'kg P₂O₅ / acre', 'unit-k': 'kg K₂O / acre',
+    'high-n': 'High soil N — review', 'high-p': 'High soil P — review', 'high-k': 'High soil K — review',
+    'results-footnote': 'Results computed using soil-test based fertilizer adjustment equations. Negative values indicate soil nutrients exceed crop requirements — no fertilizer needed for that nutrient.',
+    'fert-title': 'Fertilizer product requirement',
+    'tab-dap': 'Using DAP for phosphorus', 'tab-ssp': 'Using SSP for phosphorus',
+    'th-fert': 'Fertilizer', 'th-nutrient': 'Nutrient supplied', 'th-qty': 'kg / acre',
+    'urea': 'Urea', 'urea-src-dap': '46% N — adjusted after DAP N credit',
+    'urea-src-ssp': '46% N — full FN dose (no N credit from SSP)',
+    'dap-src': 'Di-Ammonium Phosphate — 18% N, 46% P₂O₅',
+    'mop': 'MOP', 'mop-src': 'Muriate of Potash — 60% K₂O',
+    'ssp-src': 'Single Super Phosphate — 16% P₂O₅',
+    'nitrogen-n': 'Nitrogen (N)', 'phosphorus-p': 'Phosphorus (P₂O₅) + N credit',
+    'phosphorus-p2': 'Phosphorus (P₂O₅)', 'potassium-k': 'Potassium (K₂O)', 'potassium-k2': 'Potassium (K₂O)',
+    'dap-footnote': 'DAP supplies 18% N alongside P₂O₅. This nitrogen is credited and deducted from the Urea dose. If DAP N exceeds FN requirement, Urea = 0.',
+    'ssp-footnote': 'SSP contains no nitrogen, so the full Urea dose is applied. SSP dose = FP₂O₅ ÷ 0.16. Negative FP₂O₅ values are treated as 0.',
+    'footer-text': 'DeepKisan — Soil-test based fertilizer planning &nbsp;|&nbsp; All values in kg/acre',
+    'err-t': 'Please enter a target yield.',
+    'err-soil': 'Please fill in all soil nutrient values (SN, SP, SK).',
+    'err-t-zero': 'Target yield must be greater than 0.',
+    'err-soil-neg': 'Soil values cannot be negative.',
+    'err-range': (min, max, crop) => `Note: T is outside the recommended ${min}–${max} range for ${crop}.`,
+    'crop-labels': { rice:'Rice', maize:'Maize', wheat:'Wheat' },
+    'residue-labels': { removed:'Removed', incorporated:'Incorporated', mulching:'Mulching' },
+    'crop-tag-wheat': (r) => `Wheat — Residue ${r}`,
+    'hints': {
+      rice: 'Recommended range for rice is 25–35 quintals/acre.',
+      maize: 'Recommended range for maize is 25–30 quintals/acre.',
+      wheat: 'Recommended range for wheat is 20–25 quintals/acre.'
+    },
+    'badge': { rice:'25–35 qtl', maize:'25–30 qtl', wheat:'20–25 qtl' },
+    'dap-credit': (n, full) => `DAP supplies ${n} kg N/acre — this has been deducted from the Urea dose.` + (full ? ' DAP alone meets the full N requirement; no Urea needed.' : ''),
+  },
+  pa: {
+    lang: 'pa',
+    bodyClass: 'pa',
+    title: 'ਡੀਪਕਿਸਾਨ — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ',
+    'logo-text': 'ਡੀਪਕਿਸਾਨ',
+    'logo-sub': 'ਖਾਦ ਯੋਜਨਾਕਾਰ',
+    'hero-eyebrow': 'ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਸਿਫ਼ਾਰਸ਼',
+    'hero-title': 'ਆਪਣੀ ਫ਼ਸਲ ਲਈ <em>ਸਹੀ ਖਾਦ</em> ਦੀ ਲੋੜ ਜਾਣੋ',
+    'hero-desc': 'ਟੀਚਾ ਝਾੜ ਅਤੇ ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ ਦਰਜ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਅਨੁਸਾਰ N, P₂O₅ ਅਤੇ K₂O ਦੀ ਸਿਫ਼ਾਰਸ਼ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ ਪ੍ਰਾਪਤ ਕਰੋ।',
+    'step1-pill': 'ਕਦਮ ੧', 'step1-title': 'ਫ਼ਸਲ ਚੁਣੋ',
+    'step2-pill': 'ਕਦਮ ੨', 'step2-title': 'ਟੀਚਾ ਝਾੜ (T)',
+    'step3-pill': 'ਕਦਮ ੩', 'step3-title': 'ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ',
+    'crop-rice': 'ਝੋਨਾ', 'crop-rice-desc': '੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ',
+    'crop-maize': 'ਮੱਕੀ', 'crop-maize-desc': '੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ',
+    'crop-wheat': 'ਕਣਕ', 'crop-wheat-desc': '੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ',
+    'residue-label': 'ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ',
+    'res-removed': 'ਹਟਾਈ ਗਈ', 'res-incorporated': 'ਵਾਹੀ ਗਈ', 'res-mulching': 'ਮਲਚਿੰਗ',
+    't-label': 'ਟੀਚਾ ਝਾੜ — ਕੁਇੰਟਲ / ਏਕੜ',
+    'sn-ph': 'ਕਿੱਲੋ/ਏਕੜ', 'sp-ph': 'ਕਿੱਲੋ/ਏਕੜ', 'sk-ph': 'ਕਿੱਲੋ/ਏਕੜ',
+    'tin-ph': 'ਜਿਵੇਂ 30',
+    'nitrogen': 'ਨਾਈਟ੍ਰੋਜਨ', 'phosphorus': 'ਫਾਸਫੋਰਸ', 'potassium': 'ਪੋਟਾਸ਼ੀਅਮ',
+    'calc-btn-text': 'ਖਾਦ ਦੀ ਲੋੜ ਹਿਸਾਬ ਕਰੋ',
+    'results-heading': 'ਖਾਦ ਸਿਫ਼ਾਰਸ਼',
+    'unit-n': 'ਕਿੱਲੋ N / ਏਕੜ', 'unit-p': 'ਕਿੱਲੋ P₂O₅ / ਏਕੜ', 'unit-k': 'ਕਿੱਲੋ K₂O / ਏਕੜ',
+    'high-n': 'ਮਿੱਟੀ N ਵੱਧ — ਜਾਂਚ ਕਰੋ', 'high-p': 'ਮਿੱਟੀ P ਵੱਧ — ਜਾਂਚ ਕਰੋ', 'high-k': 'ਮਿੱਟੀ K ਵੱਧ — ਜਾਂਚ ਕਰੋ',
+    'results-footnote': 'ਨਤੀਜੇ ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਸਮੀਕਰਨਾਂ ਅਨੁਸਾਰ ਹਨ। ਜੇ ਕੋਈ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਆਵੇ, ਉਸ ਪੌਸ਼ਟਿਕ ਤੱਤ ਦੀ ਖਾਦ ਨਹੀਂ ਪਾਉਣੀ।',
+    'fert-title': 'ਖਾਦ ਉਤਪਾਦ ਦੀ ਲੋੜ',
+    'tab-dap': 'DAP ਨਾਲ ਫਾਸਫੋਰਸ', 'tab-ssp': 'SSP ਨਾਲ ਫਾਸਫੋਰਸ',
+    'th-fert': 'ਖਾਦ', 'th-nutrient': 'ਪੌਸ਼ਟਿਕ ਤੱਤ', 'th-qty': 'ਕਿੱਲੋ / ਏਕੜ',
+    'urea': 'ਯੂਰੀਆ', 'urea-src-dap': '46% N — DAP ਦੇ N ਕ੍ਰੈਡਿਟ ਤੋਂ ਬਾਅਦ',
+    'urea-src-ssp': '46% N — ਪੂਰੀ FN ਮਾਤਰਾ (SSP ਤੋਂ N ਕ੍ਰੈਡਿਟ ਨਹੀਂ)',
+    'dap-src': 'ਡਾਈ-ਅਮੋਨੀਅਮ ਫਾਸਫੇਟ — 18% N, 46% P₂O₅',
+    'mop': 'MOP', 'mop-src': 'ਮਿਊਰੇਟ ਆਫ਼ ਪੋਟਾਸ਼ — 60% K₂O',
+    'ssp-src': 'ਸਿੰਗਲ ਸੁਪਰ ਫਾਸਫੇਟ — 16% P₂O₅',
+    'nitrogen-n': 'ਨਾਈਟ੍ਰੋਜਨ (N)', 'phosphorus-p': 'ਫਾਸਫੋਰਸ (P₂O₅) + N ਕ੍ਰੈਡਿਟ',
+    'phosphorus-p2': 'ਫਾਸਫੋਰਸ (P₂O₅)', 'potassium-k': 'ਪੋਟਾਸ਼ੀਅਮ (K₂O)', 'potassium-k2': 'ਪੋਟਾਸ਼ੀਅਮ (K₂O)',
+    'dap-footnote': 'DAP ਵਿੱਚ 18% N ਹੁੰਦਾ ਹੈ ਜੋ ਯੂਰੀਆ ਦੀ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ ਜਾਂਦਾ ਹੈ। ਜੇ DAP ਦਾ N ਪੂਰੀ FN ਲੋੜ ਪੂਰੀ ਕਰ ਦੇਵੇ, ਯੂਰੀਆ = 0।',
+    'ssp-footnote': 'SSP ਵਿੱਚ N ਨਹੀਂ ਹੁੰਦਾ, ਇਸ ਲਈ ਯੂਰੀਆ ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਪਾਓ। SSP ਮਾਤਰਾ = FP₂O₅ ÷ 0.16।',
+    'footer-text': 'ਡੀਪਕਿਸਾਨ — ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਯੋਜਨਾ &nbsp;|&nbsp; ਸਾਰੇ ਮੁੱਲ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ',
+    'err-t': 'ਕਿਰਪਾ ਕਰਕੇ ਟੀਚਾ ਝਾੜ ਦਰਜ ਕਰੋ।',
+    'err-soil': 'ਕਿਰਪਾ ਕਰਕੇ ਮਿੱਟੀ ਦੇ ਸਾਰੇ ਮੁੱਲ (SN, SP, SK) ਦਰਜ ਕਰੋ।',
+    'err-t-zero': 'ਟੀਚਾ ਝਾੜ ਜ਼ੀਰੋ ਤੋਂ ਵੱਧ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।',
+    'err-soil-neg': 'ਮਿੱਟੀ ਦੇ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਨਹੀਂ ਹੋ ਸਕਦੇ।',
+    'err-range': (min, max, crop) => `ਨੋਟ: T ਮੁੱਲ ${min}–${max} ਦੀ ਸਿਫ਼ਾਰਸ਼ੀ ਸੀਮਾ ਤੋਂ ਬਾਹਰ ਹੈ।`,
+    'crop-labels': { rice:'ਝੋਨਾ', maize:'ਮੱਕੀ', wheat:'ਕਣਕ' },
+    'residue-labels': { removed:'ਹਟਾਈ ਗਈ', incorporated:'ਵਾਹੀ ਗਈ', mulching:'ਮਲਚਿੰਗ' },
+    'crop-tag-wheat': (r) => `ਕਣਕ — ਰਹਿੰਦ-ਖੂੰਹਦ ${r}`,
+    'hints': {
+      rice: 'ਝੋਨੇ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ।',
+      maize: 'ਮੱਕੀ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ।',
+      wheat: 'ਕਣਕ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ।'
+    },
+    'badge': { rice:'੨੫–੩੫ ਕੁਇੰਟਲ', maize:'੨੫–੩੦ ਕੁਇੰਟਲ', wheat:'੨੦–੨੫ ਕੁਇੰਟਲ' },
+    'dap-credit': (n, full) => `DAP ਤੋਂ ${n} ਕਿੱਲੋ N/ਏਕੜ ਮਿਲਦਾ ਹੈ — ਇਹ ਯੂਰੀਆ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ ਗਿਆ ਹੈ।` + (full ? ' DAP ਇਕੱਲਾ ਪੂਰੀ N ਲੋੜ ਪੂਰੀ ਕਰਦਾ ਹੈ; ਯੂਰੀਆ ਦੀ ਲੋੜ ਨਹੀਂ।' : ''),
+  }
 };
 
+/* ===================== APP STATE ===================== */
+const cropData = {
+  rice:  { FN:[3.02,-0.63],   FP:[1.78,-8.37],  FK:[2.75,-1.39] },
+  maize: { FN:[6.51,-1.11],   FP:[2.95,-6.72],  FK:[1.89,-0.32] }
+};
 const wheatVariants = {
   removed:      { FN:[4.750,-0.339],  FP:[3.213,-3.173], FK:[0.998,-0.108] },
   incorporated: { FN:[5.476,-1.753],  FP:[1.04,-0.64],   FK:[0.603,-0.078] },
   mulching:     { FN:[4.275,-0.992],  FP:[2.182,-2.314], FK:[0.672,-0.075] }
 };
-
-const badgeMap = { rice:'੨੫–੩੫ ਕੁਇੰਟਲ', maize:'੨੫–੩੦ ਕੁਇੰਟਲ', wheat:'੨੦–੨੫ ਕੁਇੰਟਲ' };
-const hints = {
-  rice:  'ਝੋਨੇ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ।',
-  maize: 'ਮੱਕੀ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ।',
-  wheat: 'ਕਣਕ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ।'
-};
-const cropLabels = { rice:'ਝੋਨਾ', maize:'ਮੱਕੀ', wheat:'ਕਣਕ' };
-const residueLabels = { removed:'ਹਟਾਈ ਗਈ', incorporated:'ਵਾਹੀ ਗਈ', mulching:'ਮਲਚਿੰਗ' };
 const ranges = { rice:{min:25,max:35}, maize:{min:25,max:30}, wheat:{min:20,max:25} };
 
+let activeLang = 'en';
 let activeCrop = 'rice';
 let activeResidue = 'removed';
+let lastFN = null, lastFP = null, lastFK = null;
 
-function selectCrop(crop) {
+/* ===================== LANGUAGE ===================== */
+function t(key) { return T18N[activeLang][key] || T18N['en'][key] || key; }
+
+function setLang(lang) {
+  activeLang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-pa').classList.toggle('active', lang === 'pa');
+  document.body.className = T18N[lang].bodyClass;
+  document.documentElement.lang = lang;
+  document.title = t('title');
+
+  // IDs with innerHTML
+  const htmlIds = ['hero-title', 'footer-text'];
+  htmlIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = t(id);
+  });
+
+  // IDs with textContent
+  const textIds = ['logo-text','logo-sub','hero-eyebrow','hero-desc',
+    'step1-pill','step1-title','step2-pill','step2-title','step3-pill','step3-title',
+    'residue-label','t-label','calc-btn-text','results-heading','fert-title',
+    'dap-footnote','ssp-footnote','results-footnote'];
+  textIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t(id);
+  });
+
+  // data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = t(key);
+    if (val) el.textContent = val;
+  });
+
+  // Placeholders
+  document.getElementById('T').placeholder = t('tin-ph');
+  document.getElementById('SN').placeholder = t('sn-ph');
+  document.getElementById('SP').placeholder = t('sp-ph');
+  document.getElementById('SK').placeholder = t('sk-ph');
+
+  // Re-apply dynamic content
+  selectCrop(activeCrop, true);
+  if (lastFN !== null) refreshResultLabels();
+}
+
+function refreshResultLabels() {
+  // Refresh crop tag
+  const rl = t('residue-labels');
+  const cl = t('crop-labels');
+  const cropLabel = activeCrop === 'wheat'
+    ? t('crop-tag-wheat')(rl[activeResidue])
+    : cl[activeCrop];
+  document.getElementById('results-crop-tag').textContent = cropLabel;
+
+  // Refresh DAP credit note if visible
+  const creditEl = document.getElementById('dap-n-credit');
+  if (creditEl.style.display !== 'none' && lastFN !== null) {
+    const FP_eff = Math.max(0, lastFP);
+    const DAP = FP_eff / 0.46;
+    const N_from_DAP = DAP * 0.18;
+    const FN_eff = Math.max(0, lastFN);
+    creditEl.textContent = t('dap-credit')(N_from_DAP.toFixed(2), N_from_DAP >= FN_eff);
+  }
+}
+
+/* ===================== CROP / RESIDUE ===================== */
+function selectCrop(crop, silent) {
   activeCrop = crop;
-  document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`[data-crop="${crop}"]`).classList.add('active');
+  if (!silent) {
+    document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`[data-crop="${crop}"]`).classList.add('active');
+  }
   document.getElementById('wheat-residue-wrap').style.display = crop === 'wheat' ? 'block' : 'none';
-  document.getElementById('t-range-badge').textContent = badgeMap[crop];
-  document.getElementById('range-note').style.display = 'block';
-  document.getElementById('range-note').textContent = hints[crop];
-  clearResults();
+  document.getElementById('t-range-badge').textContent = t('badge')[crop];
+  const noteEl = document.getElementById('range-note');
+  noteEl.style.display = 'block';
+  noteEl.textContent = t('hints')[crop];
+  if (!silent) clearResults();
 }
 
 function selectResidue(r) {
@@ -944,51 +661,53 @@ function clearResults() {
   document.getElementById('t-error').textContent = '';
   document.getElementById('soil-error').textContent = '';
   ['fn','fp','fk'].forEach(id => document.getElementById('card-'+id)?.classList.remove('animate'));
+  lastFN = lastFP = lastFK = null;
 }
 
-function val(id) { return parseFloat(document.getElementById(id).value); }
+/* ===================== CALCULATE ===================== */
+function v(id) { return parseFloat(document.getElementById(id).value); }
 
-function setResult(id, v) {
-  document.getElementById('r-'+id).textContent = v.toFixed(2);
+function setResult(id, val) {
+  document.getElementById('r-'+id).textContent = val.toFixed(2);
   const neg = document.getElementById(id+'-neg');
-  if (neg) neg.style.display = v < 0 ? 'block' : 'none';
+  if (neg) neg.style.display = val < 0 ? 'block' : 'none';
 }
 
 function calculate() {
   document.getElementById('t-error').textContent = '';
   document.getElementById('soil-error').textContent = '';
 
-  const T  = val('T'), SN = val('SN'), SP = val('SP'), SK = val('SK');
+  const T = v('T'), SN = v('SN'), SP = v('SP'), SK = v('SK');
 
-  if (isNaN(T))  { document.getElementById('t-error').textContent = 'ਕਿਰਪਾ ਕਰਕੇ ਟੀਚਾ ਝਾੜ ਦਰਜ ਕਰੋ।'; return; }
-  if (isNaN(SN)||isNaN(SP)||isNaN(SK)) { document.getElementById('soil-error').textContent = 'ਕਿਰਪਾ ਕਰਕੇ ਮਿੱਟੀ ਦੇ ਸਾਰੇ ਮੁੱਲ (SN, SP, SK) ਦਰਜ ਕਰੋ।'; return; }
-  if (T <= 0)    { document.getElementById('t-error').textContent = 'ਟੀਚਾ ਝਾੜ ਜ਼ੀਰੋ ਤੋਂ ਵੱਧ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।'; return; }
-  if (SN<0||SP<0||SK<0) { document.getElementById('soil-error').textContent = 'ਮਿੱਟੀ ਦੇ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਨਹੀਂ ਹੋ ਸਕਦੇ।'; return; }
+  if (isNaN(T))  { document.getElementById('t-error').textContent = t('err-t'); return; }
+  if (isNaN(SN)||isNaN(SP)||isNaN(SK)) { document.getElementById('soil-error').textContent = t('err-soil'); return; }
+  if (T <= 0)    { document.getElementById('t-error').textContent = t('err-t-zero'); return; }
+  if (SN<0||SP<0||SK<0) { document.getElementById('soil-error').textContent = t('err-soil-neg'); return; }
 
   const r = ranges[activeCrop];
   if (T < r.min || T > r.max) {
-    document.getElementById('t-error').textContent = `ਨੋਟ: T ਮੁੱਲ ${r.min}–${r.max} ਦੀ ਸਿਫ਼ਾਰਸ਼ੀ ਸੀਮਾ ਤੋਂ ਬਾਹਰ ਹੈ।`;
+    document.getElementById('t-error').textContent = t('err-range')(r.min, r.max, activeCrop);
   }
 
-  const c = activeCrop === 'wheat' ? wheatVariants[activeResidue] : crops[activeCrop];
+  const c = activeCrop === 'wheat' ? wheatVariants[activeResidue] : cropData[activeCrop];
   const FN = c.FN[0]*T + c.FN[1]*SN;
   const FP = c.FP[0]*T + c.FP[1]*SP;
   const FK = c.FK[0]*T + c.FK[1]*SK;
+  lastFN = FN; lastFP = FP; lastFK = FK;
 
   setResult('fn', FN); setResult('fp', FP); setResult('fk', FK);
 
-  const cropLabel = activeCrop === 'wheat'
-    ? `ਕਣਕ — ਰਹਿੰਦ-ਖੂੰਹਦ ${residueLabels[activeResidue]}`
-    : cropLabels[activeCrop];
+  const rl = t('residue-labels');
+  const cl = t('crop-labels');
+  const cropLabel = activeCrop === 'wheat' ? t('crop-tag-wheat')(rl[activeResidue]) : cl[activeCrop];
   document.getElementById('results-crop-tag').textContent = cropLabel;
 
   const FN_eff = Math.max(0,FN), FP_eff = Math.max(0,FP), FK_eff = Math.max(0,FK);
-  const MOP    = FK_eff / 0.60;
-
-  // DAP ਤਰੀਕਾ
-  const DAP        = FP_eff / 0.46;
+  const MOP = FK_eff / 0.60;
+  const DAP = FP_eff / 0.46;
   const N_from_DAP = DAP * 0.18;
-  const Urea_DAP   = Math.max(0, FN_eff - N_from_DAP) / 0.46;
+  const Urea_DAP = Math.max(0, FN_eff - N_from_DAP) / 0.46;
+
   document.getElementById('t-urea-dap').textContent = Urea_DAP.toFixed(2);
   document.getElementById('t-dap').textContent      = DAP.toFixed(2);
   document.getElementById('t-mop-dap').textContent  = MOP.toFixed(2);
@@ -996,13 +715,11 @@ function calculate() {
   const creditEl = document.getElementById('dap-n-credit');
   if (N_from_DAP > 0) {
     creditEl.style.display = 'block';
-    creditEl.textContent = `DAP ਤੋਂ ${N_from_DAP.toFixed(2)} ਕਿੱਲੋ N/ਏਕੜ ਮਿਲਦਾ ਹੈ — ਇਹ ਯੂਰੀਆ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ ਗਿਆ ਹੈ।`
-      + (N_from_DAP >= FN_eff ? ' DAP ਇਕੱਲਾ ਪੂਰੀ N ਲੋੜ ਪੂਰੀ ਕਰਦਾ ਹੈ; ਯੂਰੀਆ ਦੀ ਲੋੜ ਨਹੀਂ।' : '');
+    creditEl.textContent = t('dap-credit')(N_from_DAP.toFixed(2), N_from_DAP >= FN_eff);
   } else { creditEl.style.display = 'none'; }
 
-  // SSP ਤਰੀਕਾ
-  document.getElementById('t-urea-ssp').textContent = (FN_eff / 0.46).toFixed(2);
-  document.getElementById('t-ssp').textContent      = (FP_eff / 0.16).toFixed(2);
+  document.getElementById('t-urea-ssp').textContent = (FN_eff/0.46).toFixed(2);
+  document.getElementById('t-ssp').textContent      = (FP_eff/0.16).toFixed(2);
   document.getElementById('t-mop-ssp').textContent  = MOP.toFixed(2);
 
   const rs = document.getElementById('results-section');
@@ -1012,7 +729,7 @@ function calculate() {
   ['fn','fp','fk'].forEach((id,i) => {
     const card = document.getElementById('card-'+id);
     card.classList.remove('animate');
-    setTimeout(() => card.classList.add('animate'), i * 80);
+    setTimeout(() => card.classList.add('animate'), i*80);
   });
 }
 
@@ -1024,9 +741,8 @@ function switchScenario(s) {
 }
 
 // Init
+setLang('en');
 selectCrop('rice');
-document.getElementById('range-note').style.display = 'block';
-document.getElementById('range-note').textContent = hints['rice'];
 </script>
 </body>
 </html>
