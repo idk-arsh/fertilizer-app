@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CropCalc — Fertilizer Requirement Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #1a3a2a;
+    --green-mid:  #2d6a4f;
+    --green-light:#52b788;
+    --green-pale: #d8f3dc;
+    --cream:      #f8f4ec;
+    --cream-dark: #ede8da;
+    --brown:      #7c5c3a;
+    --text:       #1c1c1c;
+    --text-muted: #6b6b6b;
+    --white:      #ffffff;
+    --shadow:     0 4px 32px rgba(26,58,42,0.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Decorative background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(82,183,136,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 75%, rgba(45,106,79,0.10) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grain texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---- HEADER ---- */
+  header {
+    position: relative;
+    z-index: 10;
+    background: var(--green-dark);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: 3px solid var(--green-light);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    letter-spacing: -0.5px;
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    color: var(--green-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 3.5rem 2rem 2rem;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    background: var(--green-pale);
+    color: var(--green-mid);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--green-dark);
+    line-height: 1.15;
+    max-width: 580px;
+    margin: 0 auto 0.75rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--green-mid);
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ---- MAIN CARD ---- */
+  .card-wrap {
+    position: relative;
+    z-index: 5;
+    max-width: 640px;
+    margin: 2rem auto 4rem;
+    padding: 0 1.25rem;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow), 0 1px 0 rgba(82,183,136,0.2);
+    overflow: hidden;
+  }
+
+  .card-header {
+    background: var(--green-dark);
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .step-pill {
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  .card-header h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--cream);
+  }
+
+  .card-body {
+    padding: 1.75rem;
+  }
+
+  /* ---- CROP SELECTOR ---- */
+  .crop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1.75rem;
+  }
+
+  .crop-btn {
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 14px;
+    background: var(--cream);
+    padding: 14px 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .crop-btn:hover {
+    border-color: var(--green-light);
+    background: var(--green-pale);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(82,183,136,0.18);
+  }
+
+  .crop-btn.active {
+    border-color: var(--green-mid);
+    background: var(--green-pale);
+    box-shadow: 0 0 0 3px rgba(82,183,136,0.2);
+  }
+
+  .crop-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .crop-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green-dark);
+  }
+
+  .crop-desc {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ---- FORM FIELDS ---- */
+  .field-row {
+    margin-bottom: 1.1rem;
+  }
+
+  .field-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .field-label label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green-dark);
+  }
+
+  .field-label .hint {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .field-label .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    background: var(--cream-dark);
+    color: var(--brown);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus {
+    border-color: var(--green-light);
+    box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
+    background: var(--white);
+  }
+
+  input[type="number"].has-error {
+    border-color: #e07070;
+    box-shadow: 0 0 0 3px rgba(220,100,100,0.12);
+  }
+
+  .soil-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1.5px dashed var(--cream-dark);
+    margin: 1.5rem 0;
+  }
+
+  /* ---- WHEAT NOTE ---- */
+  .wheat-note {
+    display: none;
+    background: #fff8ec;
+    border: 1px solid #f0d4a0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #7c5c20;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ---- RANGE NOTE ---- */
+  .range-note {
+    display: none;
+    background: var(--green-pale);
+    border: 1px solid #a8dab5;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--green-mid);
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  /* ---- ERROR ---- */
+  .error-msg {
+    font-size: 12px;
+    color: #c0392b;
+    margin-top: 5px;
+    min-height: 16px;
+  }
+
+  /* ---- SUBMIT ---- */
+  .calc-btn {
+    width: 100%;
+    background: var(--green-dark);
+    color: var(--cream);
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 0.5rem;
+  }
+
+  .calc-btn:hover {
+    background: var(--green-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,58,42,0.25);
+  }
+
+  .calc-btn:active { transform: scale(0.98); }
+
+  /* ---- RESULTS ---- */
+  .results-section {
+    display: none;
+    padding: 1.75rem;
+    border-top: 1.5px dashed var(--cream-dark);
+    background: linear-gradient(180deg, var(--green-pale) 0%, var(--white) 100%);
+  }
+
+  .results-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .results-header h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--green-dark);
+  }
+
+  .results-crop-tag {
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--green-dark);
+    color: var(--green-pale);
+    padding: 3px 10px;
+    border-radius: 100px;
+    text-transform: capitalize;
+  }
+
+  .result-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .result-card {
+    background: var(--white);
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .result-card.n::before { background: #4caf7d; }
+  .result-card.p::before { background: #e07b3f; }
+  .result-card.k::before { background: #7b8ee0; }
+
+  .result-card.animate {
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .r-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .r-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: var(--green-dark);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .r-unit {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .r-negative {
+    font-size: 10px;
+    color: #c0392b;
+    margin-top: 4px;
+  }
+
+  .results-footnote {
+    margin-top: 1rem;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding: 10px 14px;
+    background: var(--cream);
+    border-radius: 10px;
+    border: 1px solid var(--cream-dark);
+  }
+
+  /* ---- EQUATIONS PANEL ---- */
+  .equations-section {
+    position: relative;
+    z-index: 5;
+    max-width: 640px;
+    margin: 0 auto 4rem;
+    padding: 0 1.25rem;
+  }
+
+  .eq-toggle {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s;
+  }
+
+  .eq-toggle:hover {
+    background: var(--white);
+    border-color: var(--green-light);
+    color: var(--green-dark);
+  }
+
+  .eq-panel {
+    display: none;
+    background: var(--white);
+    border: 1.5px solid var(--cream-dark);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .eq-panel.open { display: block; }
+
+  .eq-crop-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+    margin-top: 1rem;
+  }
+
+  .eq-crop-name:first-child { margin-top: 0; }
+
+  .eq-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 2;
+  }
+
+  .eq-line span {
+    color: var(--green-mid);
+    font-weight: 500;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--cream-dark);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 480px) {
+    .soil-grid { grid-template-columns: 1fr; }
+    .result-cards { grid-template-columns: 1fr; }
+    .crop-grid { grid-template-columns: repeat(3,1fr); gap: 6px; }
+    .r-value { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="16" fill="#2d6a4f"/>
+      <path d="M16 6 C16 6 10 12 10 18 C10 21.3 12.7 24 16 24 C19.3 24 22 21.3 22 18 C22 12 16 6 16 6Z" fill="#52b788"/>
+      <path d="M16 10 L16 24" stroke="#d8f3dc" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M16 16 L12 13" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M16 19 L20 16" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <div class="logo-text">CropCalc</div>
+      <div class="logo-sub">Fertilizer Planner</div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Soil-Test Based Recommendation</div>
+  <h1>Calculate your <em>precise</em> fertilizer requirement</h1>
+  <p>Enter your target yield and soil nutrient levels to get crop-specific N, P₂O₅, and K₂O recommendations in kg/acre.</p>
+</section>
+
+<div class="card-wrap">
+  <div class="card">
+
+    <!-- STEP 1: Crop -->
+    <div class="card-header">
+      <span class="step-pill">Step 1</span>
+      <h2>Select crop</h2>
+    </div>
+    <div class="card-body">
+      <div class="crop-grid">
+        <button class="crop-btn active" data-crop="rice" onclick="selectCrop('rice')">
+          <span class="crop-icon">🌾</span>
+          <span class="crop-name">Rice</span>
+          <span class="crop-desc">25–35 qtl/acre</span>
+        </button>
+        <button class="crop-btn" data-crop="maize" onclick="selectCrop('maize')">
+          <span class="crop-icon">🌽</span>
+          <span class="crop-name">Maize</span>
+          <span class="crop-desc">Target yield</span>
+        </button>
+        <button class="crop-btn" data-crop="wheat" onclick="selectCrop('wheat')">
+          <span class="crop-icon">🌿</span>
+          <span class="crop-name">Wheat</span>
+          <span class="crop-desc">Without FYM</span>
+        </button>
+      </div>
+
+      <div id="wheat-note" class="wheat-note">
+        ⚠️ Wheat equations apply to conditions <strong>without residual FYM</strong> (Farmyard Manure).
+      </div>
+    </div>
+
+    <!-- STEP 2: Yield -->
+    <div class="card-header">
+      <span class="step-pill">Step 2</span>
+      <h2>Target yield (T)</h2>
+    </div>
+    <div class="card-body">
+      <div class="field-row">
+        <div class="field-label">
+          <label for="T">Target yield — quintals / acre</label>
+          <span class="badge" id="t-range-badge">25–35 qtl</span>
+        </div>
+        <input type="number" id="T" placeholder="e.g. 30" min="0" step="0.5" oninput="onInput()" />
+        <div id="range-note" class="range-note">Recommended range for rice is 25–35 quintals/acre.</div>
+        <div class="error-msg" id="t-error"></div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Soil -->
+    <div class="card-header">
+      <span class="step-pill">Step 3</span>
+      <h2>Soil nutrient status</h2>
+    </div>
+    <div class="card-body">
+      <div class="soil-grid">
+        <div class="field-row">
+          <div class="field-label">
+            <label for="SN">SN</label>
+            <span class="hint">Nitrogen</span>
+          </div>
+          <input type="number" id="SN" placeholder="kg/acre" min="0" step="0.1" oninput="onInput()" />
+        </div>
+        <div class="field-row">
+          <div class="field-label">
+            <label for="SP">SP</label>
+            <span class="hint">Phosphorus</span>
+          </div>
+          <input type="number" id="SP" placeholder="kg/acre" min="0" step="0.1" oninput="onInput()" />
+        </div>
+        <div class="field-row">
+          <div class="field-label">
+            <label for="SK">SK</label>
+            <span class="hint">Potassium</span>
+          </div>
+          <input type="number" id="SK" placeholder="kg/acre" min="0" step="0.1" oninput="onInput()" />
+        </div>
+      </div>
+      <div class="error-msg" id="soil-error"></div>
+      <button class="calc-btn" onclick="calculate()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M8 12h8M12 8v8"/></svg>
+        Calculate fertilizer requirement
+      </button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-section" id="results-section">
+      <div class="results-header">
+        <h3>Fertilizer recommendation</h3>
+        <span class="results-crop-tag" id="results-crop-tag">Rice</span>
+      </div>
+      <div class="result-cards">
+        <div class="result-card n" id="card-fn">
+          <div class="r-label">FN</div>
+          <div class="r-value" id="r-fn">—</div>
+          <div class="r-unit">kg N / acre</div>
+          <div class="r-negative" id="fn-neg" style="display:none">High soil N — review input</div>
+        </div>
+        <div class="result-card p" id="card-fp">
+          <div class="r-label">FP₂O₅</div>
+          <div class="r-value" id="r-fp">—</div>
+          <div class="r-unit">kg P₂O₅ / acre</div>
+          <div class="r-negative" id="fp-neg" style="display:none">High soil P — review input</div>
+        </div>
+        <div class="result-card k" id="card-fk">
+          <div class="r-label">FK₂O</div>
+          <div class="r-value" id="r-fk">—</div>
+          <div class="r-unit">kg K₂O / acre</div>
+          <div class="r-negative" id="fk-neg" style="display:none">High soil K — review input</div>
+        </div>
+      </div>
+      <div class="results-footnote" id="results-footnote">
+        Results computed using soil-test based fertilizer adjustment equations. Negative values indicate that soil nutrient levels exceed crop requirements for the given target yield — no fertilizer may be needed for that nutrient.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EQUATIONS REFERENCE -->
+<div class="equations-section">
+  <button class="eq-toggle" onclick="toggleEq(this)">
+    <span>View fertilizer adjustment equations</span>
+    <span id="eq-arrow">▾</span>
+  </button>
+  <div class="eq-panel" id="eq-panel">
+    <div class="eq-crop-name">Rice</div>
+    <div class="eq-line">FN &nbsp;&nbsp;&nbsp;= <span>3.02</span>T − <span>0.63</span>SN</div>
+    <div class="eq-line">FP₂O₅ = <span>1.78</span>T − <span>8.37</span>SP</div>
+    <div class="eq-line">FK₂O &nbsp;= <span>2.75</span>T − <span>1.39</span>SK</div>
+
+    <div class="eq-crop-name">Maize</div>
+    <div class="eq-line">FN &nbsp;&nbsp;&nbsp;= <span>6.51</span>T − <span>1.11</span>SN</div>
+    <div class="eq-line">FP₂O₅ = <span>2.95</span>T − <span>6.72</span>SP</div>
+    <div class="eq-line">FK₂O &nbsp;= <span>1.89</span>T − <span>0.32</span>SK</div>
+
+    <div class="eq-crop-name">Wheat (without residual FYM)</div>
+    <div class="eq-line">FN &nbsp;&nbsp;&nbsp;= <span>4.750</span>T − <span>0.339</span>SN</div>
+    <div class="eq-line">FP₂O₅ = <span>3.213</span>T − <span>3.173</span>SP</div>
+    <div class="eq-line">FK₂O &nbsp;= <span>0.998</span>T − <span>0.108</span>SK</div>
+  </div>
+</div>
+
+<footer>
+  CropCalc &mdash; Soil-test based fertilizer planning &nbsp;|&nbsp; All values in kg/acre
+</footer>
+
+<script>
+const crops = {
+  rice:  { FN:[3.02,-0.63],   FP:[1.78,-8.37],  FK:[2.75,-1.39],  tMin:25, tMax:35, badgeText:'25–35 qtl' },
+  maize: { FN:[6.51,-1.11],   FP:[2.95,-6.72],  FK:[1.89,-0.32],  tMin:null, tMax:null, badgeText:'quintals/acre' },
+  wheat: { FN:[4.750,-0.339], FP:[3.213,-3.173], FK:[0.998,-0.108], tMin:null, tMax:null, badgeText:'quintals/acre' }
+};
+
+let activeCrop = 'rice';
+
+function selectCrop(crop) {
+  activeCrop = crop;
+  document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-crop="${crop}"]`).classList.add('active');
+  document.getElementById('wheat-note').style.display = crop === 'wheat' ? 'block' : 'none';
+  document.getElementById('t-range-badge').textContent = crops[crop].badgeText;
+  document.getElementById('range-note').style.display = crop === 'rice' ? 'block' : 'none';
+  clearResults();
+}
+
+function onInput() { clearResults(); }
+
+function clearResults() {
+  document.getElementById('results-section').style.display = 'none';
+  document.getElementById('t-error').textContent = '';
+  document.getElementById('soil-error').textContent = '';
+  ['fn','fp','fk'].forEach(id => {
+    document.getElementById('card-' + id)?.classList.remove('animate');
+  });
+}
+
+function val(id) { return parseFloat(document.getElementById(id).value); }
+
+function setResult(id, v) {
+  const el = document.getElementById('r-' + id);
+  const negEl = document.getElementById(id + '-neg');
+  el.textContent = v.toFixed(2);
+  if (negEl) negEl.style.display = v < 0 ? 'block' : 'none';
+}
+
+function calculate() {
+  document.getElementById('t-error').textContent = '';
+  document.getElementById('soil-error').textContent = '';
+
+  const T  = val('T');
+  const SN = val('SN');
+  const SP = val('SP');
+  const SK = val('SK');
+
+  if (isNaN(T)) { document.getElementById('t-error').textContent = 'Please enter a target yield.'; return; }
+  if (isNaN(SN) || isNaN(SP) || isNaN(SK)) { document.getElementById('soil-error').textContent = 'Please fill in all soil nutrient values (SN, SP, SK).'; return; }
+  if (T <= 0) { document.getElementById('t-error').textContent = 'Target yield must be greater than 0.'; return; }
+  if (SN < 0 || SP < 0 || SK < 0) { document.getElementById('soil-error').textContent = 'Soil values cannot be negative.'; return; }
+
+  const c = crops[activeCrop];
+
+  if (activeCrop === 'rice' && (T < c.tMin || T > c.tMax)) {
+    document.getElementById('t-error').textContent = `Note: T is outside the recommended 25–35 range for rice.`;
+  }
+
+  const FN = c.FN[0]*T + c.FN[1]*SN;
+  const FP = c.FP[0]*T + c.FP[1]*SP;
+  const FK = c.FK[0]*T + c.FK[1]*SK;
+
+  setResult('fn', FN);
+  setResult('fp', FP);
+  setResult('fk', FK);
+
+  document.getElementById('results-crop-tag').textContent = activeCrop.charAt(0).toUpperCase() + activeCrop.slice(1);
+
+  const rs = document.getElementById('results-section');
+  rs.style.display = 'block';
+  rs.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  ['fn','fp','fk'].forEach((id, i) => {
+    const card = document.getElementById('card-' + id);
+    card.classList.remove('animate');
+    setTimeout(() => card.classList.add('animate'), i * 80);
+  });
+}
+
+function toggleEq(btn) {
+  const panel = document.getElementById('eq-panel');
+  const arrow = document.getElementById('eq-arrow');
+  const isOpen = panel.classList.toggle('open');
+  arrow.textContent = isOpen ? '▴' : '▾';
+  btn.style.borderRadius = isOpen ? '12px 12px 0 0' : '12px';
+}
+
+// Init
+selectCrop('rice');
+document.getElementById('range-note').style.display = 'block';
+</script>
+</body>
+</html>
