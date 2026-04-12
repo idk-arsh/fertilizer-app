@@ -480,69 +480,90 @@
     border: 1px solid var(--cream-dark);
   }
 
-  /* ---- EQUATIONS PANEL ---- */
-  .equations-section {
-    position: relative;
-    z-index: 5;
-    max-width: 640px;
-    margin: 0 auto 4rem;
-    padding: 0 1.25rem;
+  /* ---- FERTILIZER TABLE ---- */
+  .fert-table-wrap {
+    margin-top: 1.5rem;
+    border-top: 1.5px dashed var(--cream-dark);
+    padding-top: 1.25rem;
   }
 
-  .eq-toggle {
-    width: 100%;
-    background: transparent;
-    border: 1.5px solid var(--cream-dark);
-    border-radius: 12px;
-    padding: 12px 20px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.2s;
-  }
-
-  .eq-toggle:hover {
-    background: var(--white);
-    border-color: var(--green-light);
-    color: var(--green-dark);
-  }
-
-  .eq-panel {
-    display: none;
-    background: var(--white);
-    border: 1.5px solid var(--cream-dark);
-    border-top: none;
-    border-radius: 0 0 12px 12px;
-    padding: 1.25rem 1.5rem;
-  }
-
-  .eq-panel.open { display: block; }
-
-  .eq-crop-name {
+  .fert-table-title {
     font-family: 'DM Serif Display', serif;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--green-dark);
-    margin-bottom: 8px;
-    margin-top: 1rem;
+    margin-bottom: 0.75rem;
   }
 
-  .eq-crop-name:first-child { margin-top: 0; }
-
-  .eq-line {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 2;
+  .fert-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
   }
 
-  .eq-line span {
-    color: var(--green-mid);
+  .fert-table thead tr {
+    background: var(--green-dark);
+    color: var(--cream);
+  }
+
+  .fert-table thead th {
+    padding: 10px 14px;
+    text-align: left;
     font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  .fert-table thead th:last-child { text-align: right; }
+
+  .fert-table tbody tr {
+    border-bottom: 1px solid var(--cream-dark);
+    transition: background 0.15s;
+  }
+
+  .fert-table tbody tr:last-child { border-bottom: none; }
+  .fert-table tbody tr:hover { background: var(--green-pale); }
+
+  .fert-table td {
+    padding: 11px 14px;
+    color: var(--text);
+    vertical-align: middle;
+  }
+
+  .fert-table td:last-child {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--green-dark);
+  }
+
+  .fert-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .fert-source {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .fert-neg-note {
+    font-size: 11px;
+    color: #c0392b;
+    margin-top: 8px;
+  }
+
+  .fert-table-footnote {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
   }
 
   /* ---- FOOTER ---- */
@@ -703,32 +724,55 @@
       <div class="results-footnote" id="results-footnote">
         Results computed using soil-test based fertilizer adjustment equations. Negative values indicate that soil nutrient levels exceed crop requirements for the given target yield — no fertilizer may be needed for that nutrient.
       </div>
+
+      <!-- FERTILIZER PRODUCT TABLE -->
+      <div class="fert-table-wrap">
+        <div class="fert-table-title">Fertilizer product requirement</div>
+        <table class="fert-table">
+          <thead>
+            <tr>
+              <th>Fertilizer</th>
+              <th>Nutrient supplied</th>
+              <th>kg / acre</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="fert-dot" style="background:#4caf7d;"></span>
+                <strong>Urea</strong>
+                <span class="fert-source">46% N</span>
+              </td>
+              <td>Nitrogen (N)</td>
+              <td id="t-urea">—</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="fert-dot" style="background:#e07b3f;"></span>
+                <strong>DAP</strong>
+                <span class="fert-source">Di-Ammonium Phosphate — 18% N, 46% P₂O₅</span>
+              </td>
+              <td>Phosphorus (P₂O₅)</td>
+              <td id="t-dap">—</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="fert-dot" style="background:#7b8ee0;"></span>
+                <strong>MOP</strong>
+                <span class="fert-source">Muriate of Potash — 60% K₂O</span>
+              </td>
+              <td>Potassium (K₂O)</td>
+              <td id="t-mop">—</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="fert-table-footnote">
+          Urea quantity is adjusted to account for nitrogen already supplied by DAP. Negative FN or FP₂O₅ values are treated as 0 (no application needed).
+        </div>
+      </div>
+
     </div>
 
-  </div>
-</div>
-
-<!-- EQUATIONS REFERENCE -->
-<div class="equations-section">
-  <button class="eq-toggle" onclick="toggleEq(this)">
-    <span>View fertilizer adjustment equations</span>
-    <span id="eq-arrow">▾</span>
-  </button>
-  <div class="eq-panel" id="eq-panel">
-    <div class="eq-crop-name">Rice</div>
-    <div class="eq-line">FN &nbsp;&nbsp;&nbsp;= <span>3.02</span>T − <span>0.63</span>SN</div>
-    <div class="eq-line">FP₂O₅ = <span>1.78</span>T − <span>8.37</span>SP</div>
-    <div class="eq-line">FK₂O &nbsp;= <span>2.75</span>T − <span>1.39</span>SK</div>
-
-    <div class="eq-crop-name">Maize</div>
-    <div class="eq-line">FN &nbsp;&nbsp;&nbsp;= <span>6.51</span>T − <span>1.11</span>SN</div>
-    <div class="eq-line">FP₂O₅ = <span>2.95</span>T − <span>6.72</span>SP</div>
-    <div class="eq-line">FK₂O &nbsp;= <span>1.89</span>T − <span>0.32</span>SK</div>
-
-    <div class="eq-crop-name">Wheat (without residual FYM)</div>
-    <div class="eq-line">FN &nbsp;&nbsp;&nbsp;= <span>4.750</span>T − <span>0.339</span>SN</div>
-    <div class="eq-line">FP₂O₅ = <span>3.213</span>T − <span>3.173</span>SP</div>
-    <div class="eq-line">FK₂O &nbsp;= <span>0.998</span>T − <span>0.108</span>SK</div>
   </div>
 </div>
 
@@ -805,6 +849,24 @@ function calculate() {
 
   document.getElementById('results-crop-tag').textContent = activeCrop.charAt(0).toUpperCase() + activeCrop.slice(1);
 
+  // Fertilizer product conversions
+  const FN_eff  = Math.max(0, FN);
+  const FP_eff  = Math.max(0, FP);
+  const FK_eff  = Math.max(0, FK);
+
+  // DAP: 46% P2O5, 18% N
+  const DAP     = FP_eff / 0.46;
+  const N_from_DAP = DAP * 0.18;
+  // Urea: remaining N after DAP contribution, 46% N
+  const N_remaining = Math.max(0, FN_eff - N_from_DAP);
+  const Urea    = N_remaining / 0.46;
+  // MOP: 60% K2O
+  const MOP     = FK_eff / 0.60;
+
+  document.getElementById('t-urea').textContent = Urea.toFixed(2);
+  document.getElementById('t-dap').textContent  = DAP.toFixed(2);
+  document.getElementById('t-mop').textContent  = MOP.toFixed(2);
+
   const rs = document.getElementById('results-section');
   rs.style.display = 'block';
   rs.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -814,14 +876,6 @@ function calculate() {
     card.classList.remove('animate');
     setTimeout(() => card.classList.add('animate'), i * 80);
   });
-}
-
-function toggleEq(btn) {
-  const panel = document.getElementById('eq-panel');
-  const arrow = document.getElementById('eq-arrow');
-  const isOpen = panel.classList.toggle('open');
-  arrow.textContent = isOpen ? '▴' : '▾';
-  btn.style.borderRadius = isOpen ? '12px 12px 0 0' : '12px';
 }
 
 // Init
