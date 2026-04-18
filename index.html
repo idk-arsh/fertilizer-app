@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>DeepKisan — Fertilizer Requirement Calculator</title>
+<title>Fertcal — Fertilizer Requirement Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&family=Noto+Sans+Gurmukhi:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -135,7 +135,7 @@
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button { -webkit-appearance:none; }
   input[type="number"]:focus { border-color:var(--green-light); box-shadow:0 0 0 3px rgba(82,183,136,.15); background:var(--white); }
-  .soil-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .soil-grid { display:grid; grid-template-columns:1fr; gap:10px; }
   .range-note { display:none; background:var(--green-pale); border:1px solid #a8dab5; border-radius:10px; padding:10px 14px; font-size:12px; color:var(--green-mid); margin-top:6px; line-height:1.7; }
   .error-msg { font-size:12px; color:#c0392b; margin-top:5px; min-height:16px; }
 
@@ -165,7 +165,11 @@
   body.pa .r-label { text-transform:none; letter-spacing:0; }
   .r-value { font-family:'DM Mono',monospace; font-size:28px; font-weight:500; color:var(--green-dark); line-height:1; margin-bottom:4px; }
   .r-unit { font-size:10px; color:var(--text-muted); font-weight:500; }
+  .r-divider { border:none; border-top:1px dashed var(--cream-dark); margin:7px 0; }
+  .r-ha-val { font-family:'DM Mono',monospace; font-size:13px; font-weight:500; color:var(--green-mid); min-height:16px; }
+  .r-ha-unit { font-size:10px; color:var(--text-muted); font-weight:400; margin-left:2px; }
   .r-negative { font-size:10px; color:#c0392b; margin-top:4px; }
+  .t-conv-note { margin-top:10px; font-size:11.5px; color:var(--text-muted); background:var(--cream); border:1px solid var(--cream-dark); border-radius:8px; padding:8px 12px; line-height:1.65; }
   .results-footnote { margin-top:1rem; font-size:11.5px; color:var(--text-muted); line-height:1.7; padding:10px 14px; background:var(--cream); border-radius:10px; border:1px solid var(--cream-dark); }
 
   /* FERT TABLE */
@@ -193,7 +197,79 @@
 
   footer { position:relative; z-index:5; text-align:center; padding:1.5rem; font-size:12px; color:var(--text-muted); border-top:1px solid var(--cream-dark); }
 
-  @media(max-width:480px) {
+  /* UNIT NOTE */
+  .unit-note {
+    display: flex; align-items: flex-start; gap: 7px;
+    background: #eef6ff; border: 1px solid #b8d8f8;
+    border-radius: 10px; padding: 10px 13px;
+    font-size: 12px; color: #2a5a8c; line-height: 1.65;
+    margin-top: 12px;
+  }
+  body.pa .unit-note { font-size: 12px; }
+
+  /* CONVERSION PANEL */
+  .conversion-panel {
+    margin-top: 1.25rem;
+    background: var(--cream);
+    border: 1px solid var(--cream-dark);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .conversion-title {
+    font-size: 12px; font-weight: 600;
+    color: var(--green-dark); margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: .07em;
+  }
+  body.pa .conversion-title { text-transform: none; letter-spacing: 0; }
+  .conversion-steps { display: flex; flex-direction: column; gap: 4px; }
+  .conv-step {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--white); border: 1px solid var(--cream-dark);
+    border-radius: 9px; padding: 10px 12px;
+  }
+  .conv-step-icon {
+    font-size: 14px; font-weight: 700; color: var(--green-mid);
+    flex-shrink: 0; width: 20px; text-align: center; margin-top: 1px;
+  }
+  .conv-step-label {
+    font-size: 11.5px; font-weight: 600; color: var(--green-dark); margin-bottom: 4px;
+  }
+  .conv-step-vals {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--text-muted); line-height: 1.7;
+  }
+  .conv-arrow {
+    text-align: center; font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500; color: var(--green-light);
+    padding: 2px 0; letter-spacing: .03em;
+  }
+  .founder-strip {
+    position: relative; z-index: 9;
+    background: var(--green-mid);
+    padding: 7px 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; flex-wrap: wrap; text-align: center;
+  }
+  .founder-label {
+    font-size: 11px; font-weight: 500; color: rgba(216,243,220,0.75);
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  body.pa .founder-label { text-transform: none; letter-spacing: 0; }
+  .founder-name {
+    font-size: 13px; font-weight: 600; color: var(--green-pale);
+    letter-spacing: .01em;
+  }
+  .founder-sep { color: rgba(216,243,220,0.4); font-size: 14px; }
+  .founder-dept {
+    font-size: 11.5px; color: rgba(216,243,220,0.8);
+    font-style: italic;
+  }
+  body.pa .founder-dept { font-style: normal; }
+
+  @media(max-width:520px) {
+    .founder-sep { display: none; }
+    .founder-dept { width: 100%; }
+  }
     .soil-grid{grid-template-columns:1fr;}
     .result-cards{grid-template-columns:1fr;}
     .r-value{font-size:22px;}
@@ -213,7 +289,7 @@
       <path d="M16 19L20 16" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
     </svg>
     <div>
-      <div class="logo-text" id="logo-text">DeepKisan</div>
+      <div class="logo-text" id="logo-text">Fertcal</div>
       <div class="logo-sub" id="logo-sub">Fertilizer Planner</div>
     </div>
   </div>
@@ -224,6 +300,13 @@
     <button class="lang-opt" id="btn-pa" onclick="setLang('pa')">ਪੰਜਾਬੀ</button>
   </div>
 </header>
+
+<div class="founder-strip">
+  <span class="founder-label" id="founder-label">Founded by</span>
+  <span class="founder-name" id="founder-name">Dr. Jagdeep Singh</span>
+  <span class="founder-sep">·</span>
+  <span class="founder-dept" id="founder-dept">Department of Soil Science, Punjab Agricultural University, Ludhiana</span>
+</div>
 
 <section class="hero">
   <div class="hero-eyebrow" id="hero-eyebrow">Soil-Test Based Recommendation</div>
@@ -303,22 +386,19 @@
       <div class="soil-grid">
         <div class="field-row">
           <div class="field-label">
-            <label for="SN">SN</label>
-            <span class="hint" data-i18n="nitrogen">Nitrogen</span>
+            <label for="SN" data-i18n="sn-label">Soil Nitrogen (SN)</label>
           </div>
           <input type="number" id="SN" min="0" step="0.1" oninput="onInput()" />
         </div>
         <div class="field-row">
           <div class="field-label">
-            <label for="SP">SP</label>
-            <span class="hint" data-i18n="phosphorus">Phosphorus</span>
+            <label for="SP" data-i18n="sp-label">Soil Phosphorus (SP)</label>
           </div>
           <input type="number" id="SP" min="0" step="0.1" oninput="onInput()" />
         </div>
         <div class="field-row">
           <div class="field-label">
-            <label for="SK">SK</label>
-            <span class="hint" data-i18n="potassium">Potassium</span>
+            <label for="SK" data-i18n="sk-label">Soil Potassium (SK)</label>
           </div>
           <input type="number" id="SK" min="0" step="0.1" oninput="onInput()" />
         </div>
@@ -341,20 +421,30 @@
           <div class="r-label">FN</div>
           <div class="r-value" id="r-fn">—</div>
           <div class="r-unit" data-i18n="unit-n">kg N / acre</div>
+          <div class="r-divider"></div>
+          <div class="r-ha-val" id="r-fn-ha">— <span class="r-ha-unit">kg/ha</span></div>
           <div class="r-negative" id="fn-neg" style="display:none" data-i18n="high-n">High soil N — review</div>
         </div>
         <div class="result-card p" id="card-fp">
           <div class="r-label">FP₂O₅</div>
           <div class="r-value" id="r-fp">—</div>
           <div class="r-unit" data-i18n="unit-p">kg P₂O₅ / acre</div>
+          <div class="r-divider"></div>
+          <div class="r-ha-val" id="r-fp-ha">— <span class="r-ha-unit">kg/ha</span></div>
           <div class="r-negative" id="fp-neg" style="display:none" data-i18n="high-p">High soil P — review</div>
         </div>
         <div class="result-card k" id="card-fk">
           <div class="r-label">FK₂O</div>
           <div class="r-value" id="r-fk">—</div>
           <div class="r-unit" data-i18n="unit-k">kg K₂O / acre</div>
+          <div class="r-divider"></div>
+          <div class="r-ha-val" id="r-fk-ha">— <span class="r-ha-unit">kg/ha</span></div>
           <div class="r-negative" id="fk-neg" style="display:none" data-i18n="high-k">High soil K — review</div>
         </div>
+      </div>
+      <!-- T conversion note -->
+      <div class="t-conv-note" id="t-conv-note" style="display:none;">
+        <span id="t-conv-text"></span>
       </div>
       <div class="results-footnote" id="results-footnote">
         Results computed using soil-test based fertilizer adjustment equations. Negative values indicate soil nutrients exceed crop requirements — no fertilizer needed for that nutrient.
@@ -375,22 +465,26 @@
               <th data-i18n="th-fert">Fertilizer</th>
               <th data-i18n="th-nutrient">Nutrient supplied</th>
               <th data-i18n="th-qty">kg / acre</th>
+              <th data-i18n="th-qty-ha">kg / ha</th>
             </tr></thead>
             <tbody>
               <tr>
                 <td><span class="fert-dot" style="background:#4caf7d"></span><strong data-i18n="urea">Urea</strong><span class="fert-source" data-i18n="urea-src-dap">46% N — adjusted after DAP N credit</span></td>
                 <td data-i18n="nitrogen-n">Nitrogen (N)</td>
                 <td id="t-urea-dap">—</td>
+                <td id="t-urea-dap-ha">—</td>
               </tr>
               <tr>
                 <td><span class="fert-dot" style="background:#e07b3f"></span><strong>DAP</strong><span class="fert-source" data-i18n="dap-src">Di-Ammonium Phosphate — 18% N, 46% P₂O₅</span></td>
                 <td data-i18n="phosphorus-p">Phosphorus (P₂O₅) + N credit</td>
                 <td id="t-dap">—</td>
+                <td id="t-dap-ha">—</td>
               </tr>
               <tr>
                 <td><span class="fert-dot" style="background:#7b8ee0"></span><strong data-i18n="mop">MOP</strong><span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span></td>
                 <td data-i18n="potassium-k">Potassium (K₂O)</td>
                 <td id="t-mop-dap">—</td>
+                <td id="t-mop-dap-ha">—</td>
               </tr>
             </tbody>
           </table>
@@ -405,22 +499,26 @@
               <th data-i18n="th-fert">Fertilizer</th>
               <th data-i18n="th-nutrient">Nutrient supplied</th>
               <th data-i18n="th-qty">kg / acre</th>
+              <th data-i18n="th-qty-ha">kg / ha</th>
             </tr></thead>
             <tbody>
               <tr>
                 <td><span class="fert-dot" style="background:#4caf7d"></span><strong data-i18n="urea">Urea</strong><span class="fert-source" data-i18n="urea-src-ssp">46% N — full FN dose (no N credit from SSP)</span></td>
                 <td data-i18n="nitrogen-n">Nitrogen (N)</td>
                 <td id="t-urea-ssp">—</td>
+                <td id="t-urea-ssp-ha">—</td>
               </tr>
               <tr>
                 <td><span class="fert-dot" style="background:#c77b3a"></span><strong>SSP</strong><span class="fert-source" data-i18n="ssp-src">Single Super Phosphate — 16% P₂O₅</span></td>
                 <td data-i18n="phosphorus-p2">Phosphorus (P₂O₅)</td>
                 <td id="t-ssp">—</td>
+                <td id="t-ssp-ha">—</td>
               </tr>
               <tr>
                 <td><span class="fert-dot" style="background:#7b8ee0"></span><strong data-i18n="mop">MOP</strong><span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span></td>
                 <td data-i18n="potassium-k2">Potassium (K₂O)</td>
                 <td id="t-mop-ssp">—</td>
+                <td id="t-mop-ssp-ha">—</td>
               </tr>
             </tbody>
           </table>
@@ -432,7 +530,7 @@
   </div>
 </div>
 
-<footer id="footer-text">DeepKisan &mdash; Soil-test based fertilizer planning &nbsp;|&nbsp; All values in kg/acre</footer>
+<footer id="footer-text">Fertcal &mdash; Soil-test based fertilizer planning &nbsp;|&nbsp; All values in kg/acre &nbsp;|&nbsp; Dr. Jagdeep Singh, PAU Ludhiana</footer>
 
 <script>
 /* ===================== TRANSLATIONS ===================== */
@@ -440,8 +538,8 @@ const T18N = {
   en: {
     lang: 'en',
     bodyClass: '',
-    title: 'DeepKisan — Fertilizer Requirement Calculator',
-    'logo-text': 'DeepKisan',
+    title: 'Fertcal — Fertilizer Requirement Calculator',
+    'logo-text': 'Fertcal',
     'logo-sub': 'Fertilizer Planner',
     'hero-eyebrow': 'Soil-Test Based Recommendation',
     'hero-title': 'Calculate your <em>precise</em> fertilizer requirement',
@@ -458,14 +556,18 @@ const T18N = {
     'sn-ph': 'kg/acre', 'sp-ph': 'kg/acre', 'sk-ph': 'kg/acre',
     'tin-ph': 'e.g. 30',
     'nitrogen': 'Nitrogen', 'phosphorus': 'Phosphorus', 'potassium': 'Potassium',
+    'sn-label': 'Soil Nitrogen (SN)',
+    'sp-label': 'Soil Phosphorus (SP)',
+    'sk-label': 'Soil Potassium (SK)',
     'calc-btn-text': 'Calculate fertilizer requirement',
     'results-heading': 'Fertilizer recommendation',
     'unit-n': 'kg N / acre', 'unit-p': 'kg P₂O₅ / acre', 'unit-k': 'kg K₂O / acre',
     'high-n': 'High soil N — review', 'high-p': 'High soil P — review', 'high-k': 'High soil K — review',
     'results-footnote': 'Results computed using soil-test based fertilizer adjustment equations. Negative values indicate soil nutrients exceed crop requirements — no fertilizer needed for that nutrient.',
+    't-conv-note': (T_acre, T_ha, sn, sp, sk) => `T: ${T_acre} q/acre → ${T_ha} q/ha · SN: ${sn} kg/ha · SP: ${sp} kg/ha · SK: ${sk} kg/ha. Fertilizer outputs ÷ 2.471 → kg/acre.`,
     'fert-title': 'Fertilizer product requirement',
     'tab-dap': 'Using DAP for phosphorus', 'tab-ssp': 'Using SSP for phosphorus',
-    'th-fert': 'Fertilizer', 'th-nutrient': 'Nutrient supplied', 'th-qty': 'kg / acre',
+    'th-fert': 'Fertilizer', 'th-nutrient': 'Nutrient supplied', 'th-qty': 'kg / acre', 'th-qty-ha': 'kg / ha',
     'urea': 'Urea', 'urea-src-dap': '46% N — adjusted after DAP N credit',
     'urea-src-ssp': '46% N — full FN dose (no N credit from SSP)',
     'dap-src': 'Di-Ammonium Phosphate — 18% N, 46% P₂O₅',
@@ -475,7 +577,10 @@ const T18N = {
     'phosphorus-p2': 'Phosphorus (P₂O₅)', 'potassium-k': 'Potassium (K₂O)', 'potassium-k2': 'Potassium (K₂O)',
     'dap-footnote': 'DAP supplies 18% N alongside P₂O₅. This nitrogen is credited and deducted from the Urea dose. If DAP N exceeds FN requirement, Urea = 0.',
     'ssp-footnote': 'SSP contains no nitrogen, so the full Urea dose is applied. SSP dose = FP₂O₅ ÷ 0.16. Negative FP₂O₅ values are treated as 0.',
-    'footer-text': 'DeepKisan — Soil-test based fertilizer planning &nbsp;|&nbsp; All values in kg/acre',
+    'footer-text': 'Fertcal — Soil-test based fertilizer planning &nbsp;|&nbsp; All values in kg/acre &nbsp;|&nbsp; Dr. Jagdeep Singh, PAU Ludhiana',
+    'founder-label': 'Founded by',
+    'founder-name': 'Dr. Jagdeep Singh',
+    'founder-dept': 'Department of Soil Science, Punjab Agricultural University, Ludhiana',
     'err-t': 'Please enter a target yield.',
     'err-soil': 'Please fill in all soil nutrient values (SN, SP, SK).',
     'err-t-zero': 'Target yield must be greater than 0.',
@@ -490,13 +595,13 @@ const T18N = {
       wheat: 'Recommended range for wheat is 20–25 quintals/acre.'
     },
     'badge': { rice:'25–35 qtl', maize:'25–30 qtl', wheat:'20–25 qtl' },
-    'dap-credit': (n, full) => `DAP supplies ${n} kg N/acre — this has been deducted from the Urea dose.` + (full ? ' DAP alone meets the full N requirement; no Urea needed.' : ''),
+    'dap-credit': (n_acre, n_ha, full) => `DAP supplies ${n_acre} kg N/acre (${n_ha} kg N/ha) — deducted from Urea dose.` + (full ? ' DAP alone meets full N requirement; no Urea needed.' : ''),
   },
   pa: {
     lang: 'pa',
     bodyClass: 'pa',
-    title: 'ਡੀਪਕਿਸਾਨ — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ',
-    'logo-text': 'ਡੀਪਕਿਸਾਨ',
+    title: 'ਫਰਟਕੈਲ — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ',
+    'logo-text': 'Fertcal',
     'logo-sub': 'ਖਾਦ ਯੋਜਨਾਕਾਰ',
     'hero-eyebrow': 'ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਸਿਫ਼ਾਰਸ਼',
     'hero-title': 'ਆਪਣੀ ਫ਼ਸਲ ਲਈ <em>ਸਹੀ ਖਾਦ</em> ਦੀ ਲੋੜ ਜਾਣੋ',
@@ -513,14 +618,18 @@ const T18N = {
     'sn-ph': 'ਕਿੱਲੋ/ਏਕੜ', 'sp-ph': 'ਕਿੱਲੋ/ਏਕੜ', 'sk-ph': 'ਕਿੱਲੋ/ਏਕੜ',
     'tin-ph': 'ਜਿਵੇਂ 30',
     'nitrogen': 'ਨਾਈਟ੍ਰੋਜਨ', 'phosphorus': 'ਫਾਸਫੋਰਸ', 'potassium': 'ਪੋਟਾਸ਼ੀਅਮ',
+    'sn-label': 'ਮਿੱਟੀ ਨਾਈਟ੍ਰੋਜਨ (SN)',
+    'sp-label': 'ਮਿੱਟੀ ਫਾਸਫੋਰਸ (SP)',
+    'sk-label': 'ਮਿੱਟੀ ਪੋਟਾਸ਼ੀਅਮ (SK)',
     'calc-btn-text': 'ਖਾਦ ਦੀ ਲੋੜ ਹਿਸਾਬ ਕਰੋ',
     'results-heading': 'ਖਾਦ ਸਿਫ਼ਾਰਸ਼',
     'unit-n': 'ਕਿੱਲੋ N / ਏਕੜ', 'unit-p': 'ਕਿੱਲੋ P₂O₅ / ਏਕੜ', 'unit-k': 'ਕਿੱਲੋ K₂O / ਏਕੜ',
     'high-n': 'ਮਿੱਟੀ N ਵੱਧ — ਜਾਂਚ ਕਰੋ', 'high-p': 'ਮਿੱਟੀ P ਵੱਧ — ਜਾਂਚ ਕਰੋ', 'high-k': 'ਮਿੱਟੀ K ਵੱਧ — ਜਾਂਚ ਕਰੋ',
     'results-footnote': 'ਨਤੀਜੇ ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਸਮੀਕਰਨਾਂ ਅਨੁਸਾਰ ਹਨ। ਜੇ ਕੋਈ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਆਵੇ, ਉਸ ਪੌਸ਼ਟਿਕ ਤੱਤ ਦੀ ਖਾਦ ਨਹੀਂ ਪਾਉਣੀ।',
+    't-conv-note': (T_acre, T_ha, sn, sp, sk) => `T: ${T_acre} ਕੁਇੰਟਲ/ਏਕੜ → ${T_ha} ਕੁਇੰਟਲ/ਹੈਕਟੇਅਰ · SN: ${sn} kg/ha · SP: ${sp} kg/ha · SK: ${sk} kg/ha। ਖਾਦ ÷ 2.471 → ਕਿੱਲੋ/ਏਕੜ।`,
     'fert-title': 'ਖਾਦ ਉਤਪਾਦ ਦੀ ਲੋੜ',
     'tab-dap': 'DAP ਨਾਲ ਫਾਸਫੋਰਸ', 'tab-ssp': 'SSP ਨਾਲ ਫਾਸਫੋਰਸ',
-    'th-fert': 'ਖਾਦ', 'th-nutrient': 'ਪੌਸ਼ਟਿਕ ਤੱਤ', 'th-qty': 'ਕਿੱਲੋ / ਏਕੜ',
+    'th-fert': 'ਖਾਦ', 'th-nutrient': 'ਪੌਸ਼ਟਿਕ ਤੱਤ', 'th-qty': 'ਕਿੱਲੋ / ਏਕੜ', 'th-qty-ha': 'ਕਿੱਲੋ / ਹੈਕਟੇਅਰ',
     'urea': 'ਯੂਰੀਆ', 'urea-src-dap': '46% N — DAP ਦੇ N ਕ੍ਰੈਡਿਟ ਤੋਂ ਬਾਅਦ',
     'urea-src-ssp': '46% N — ਪੂਰੀ FN ਮਾਤਰਾ (SSP ਤੋਂ N ਕ੍ਰੈਡਿਟ ਨਹੀਂ)',
     'dap-src': 'ਡਾਈ-ਅਮੋਨੀਅਮ ਫਾਸਫੇਟ — 18% N, 46% P₂O₅',
@@ -530,7 +639,10 @@ const T18N = {
     'phosphorus-p2': 'ਫਾਸਫੋਰਸ (P₂O₅)', 'potassium-k': 'ਪੋਟਾਸ਼ੀਅਮ (K₂O)', 'potassium-k2': 'ਪੋਟਾਸ਼ੀਅਮ (K₂O)',
     'dap-footnote': 'DAP ਵਿੱਚ 18% N ਹੁੰਦਾ ਹੈ ਜੋ ਯੂਰੀਆ ਦੀ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ ਜਾਂਦਾ ਹੈ। ਜੇ DAP ਦਾ N ਪੂਰੀ FN ਲੋੜ ਪੂਰੀ ਕਰ ਦੇਵੇ, ਯੂਰੀਆ = 0।',
     'ssp-footnote': 'SSP ਵਿੱਚ N ਨਹੀਂ ਹੁੰਦਾ, ਇਸ ਲਈ ਯੂਰੀਆ ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਪਾਓ। SSP ਮਾਤਰਾ = FP₂O₅ ÷ 0.16।',
-    'footer-text': 'ਡੀਪਕਿਸਾਨ — ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਯੋਜਨਾ &nbsp;|&nbsp; ਸਾਰੇ ਮੁੱਲ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ',
+    'footer-text': 'Fertcal — ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਯੋਜਨਾ &nbsp;|&nbsp; ਸਾਰੇ ਮੁੱਲ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ &nbsp;|&nbsp; ਡਾ. ਜਗਦੀਪ ਸਿੰਘ, PAU ਲੁਧਿਆਣਾ',
+    'founder-label': 'ਸੰਸਥਾਪਕ',
+    'founder-name': 'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ',
+    'founder-dept': 'ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, ਪੰਜਾਬ ਖੇਤੀਬਾੜੀ ਯੂਨੀਵਰਸਿਟੀ, ਲੁਧਿਆਣਾ',
     'err-t': 'ਕਿਰਪਾ ਕਰਕੇ ਟੀਚਾ ਝਾੜ ਦਰਜ ਕਰੋ।',
     'err-soil': 'ਕਿਰਪਾ ਕਰਕੇ ਮਿੱਟੀ ਦੇ ਸਾਰੇ ਮੁੱਲ (SN, SP, SK) ਦਰਜ ਕਰੋ।',
     'err-t-zero': 'ਟੀਚਾ ਝਾੜ ਜ਼ੀਰੋ ਤੋਂ ਵੱਧ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।',
@@ -545,7 +657,7 @@ const T18N = {
       wheat: 'ਕਣਕ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ।'
     },
     'badge': { rice:'੨੫–੩੫ ਕੁਇੰਟਲ', maize:'੨੫–੩੦ ਕੁਇੰਟਲ', wheat:'੨੦–੨੫ ਕੁਇੰਟਲ' },
-    'dap-credit': (n, full) => `DAP ਤੋਂ ${n} ਕਿੱਲੋ N/ਏਕੜ ਮਿਲਦਾ ਹੈ — ਇਹ ਯੂਰੀਆ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ ਗਿਆ ਹੈ।` + (full ? ' DAP ਇਕੱਲਾ ਪੂਰੀ N ਲੋੜ ਪੂਰੀ ਕਰਦਾ ਹੈ; ਯੂਰੀਆ ਦੀ ਲੋੜ ਨਹੀਂ।' : ''),
+    'dap-credit': (n_acre, n_ha, full) => `DAP ਤੋਂ ${n_acre} ਕਿੱਲੋ N/ਏਕੜ (${n_ha} ਕਿੱਲੋ N/ਹੈਕਟੇਅਰ) ਮਿਲਦਾ ਹੈ — ਯੂਰੀਆ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ।` + (full ? ' DAP ਇਕੱਲਾ ਪੂਰੀ N ਲੋੜ ਪੂਰੀ ਕਰਦਾ ਹੈ; ਯੂਰੀਆ ਦੀ ਲੋੜ ਨਹੀਂ।' : ''),
   }
 };
 
@@ -588,7 +700,8 @@ function setLang(lang) {
   const textIds = ['logo-text','logo-sub','hero-eyebrow','hero-desc',
     'step1-pill','step1-title','step2-pill','step2-title','step3-pill','step3-title',
     'residue-label','t-label','calc-btn-text','results-heading','fert-title',
-    'dap-footnote','ssp-footnote','results-footnote'];
+    'dap-footnote','ssp-footnote','results-footnote',
+    'founder-label','founder-name','founder-dept'];
   textIds.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = t(id);
@@ -660,7 +773,13 @@ function clearResults() {
   document.getElementById('results-section').style.display = 'none';
   document.getElementById('t-error').textContent = '';
   document.getElementById('soil-error').textContent = '';
-  ['fn','fp','fk'].forEach(id => document.getElementById('card-'+id)?.classList.remove('animate'));
+  ['fn','fp','fk'].forEach(id => {
+    document.getElementById('card-'+id)?.classList.remove('animate');
+    const haEl = document.getElementById('r-'+id+'-ha');
+    if (haEl) haEl.textContent = '';
+  });
+  const tNote = document.getElementById('t-conv-note');
+  if (tNote) tNote.style.display = 'none';
   lastFN = lastFP = lastFK = null;
 }
 
@@ -677,25 +796,66 @@ function calculate() {
   document.getElementById('t-error').textContent = '';
   document.getElementById('soil-error').textContent = '';
 
-  const T = v('T'), SN = v('SN'), SP = v('SP'), SK = v('SK');
+  // Farmer inputs: T in quintals/acre, soil values in kg/acre
+  const T   = v('T'),  SN_acre = v('SN'), SP_acre = v('SP'), SK_acre = v('SK');
 
   if (isNaN(T))  { document.getElementById('t-error').textContent = t('err-t'); return; }
-  if (isNaN(SN)||isNaN(SP)||isNaN(SK)) { document.getElementById('soil-error').textContent = t('err-soil'); return; }
+  if (isNaN(SN_acre)||isNaN(SP_acre)||isNaN(SK_acre)) { document.getElementById('soil-error').textContent = t('err-soil'); return; }
   if (T <= 0)    { document.getElementById('t-error').textContent = t('err-t-zero'); return; }
-  if (SN<0||SP<0||SK<0) { document.getElementById('soil-error').textContent = t('err-soil-neg'); return; }
+  if (SN_acre<0||SP_acre<0||SK_acre<0) { document.getElementById('soil-error').textContent = t('err-soil-neg'); return; }
 
   const r = ranges[activeCrop];
   if (T < r.min || T > r.max) {
     document.getElementById('t-error').textContent = t('err-range')(r.min, r.max, activeCrop);
   }
 
+  // ── Unit conversion ──────────────────────────────────────────
+  // STCR equations are calibrated with:
+  //   T  in q/ha   (target yield)
+  //   SN, SP, SK in kg/ha  (soil nutrients)
+  //   FN, FP, FK outputs in kg/ha  (fertilizer doses)
+  //
+  // Farmer provides:
+  //   T  in q/acre  → must convert to q/ha  before equations
+  //   SN, SP, SK in kg/acre → must convert to kg/ha before equations
+  //   Display outputs in kg/acre → divide kg/ha result by 2.471
+  //
+  // 1 ha = 2.471 acres  ∴  value_ha = value_acre × 2.471
+
+  const ACRE_TO_HA = 2.471;
+
+  // Step 1: Convert target yield q/acre → q/ha
+  const T_ha = T * ACRE_TO_HA;
+
+  // Step 2: Convert soil nutrients kg/acre → kg/ha
+  const SN = SN_acre * ACRE_TO_HA;
+  const SP = SP_acre * ACRE_TO_HA;
+  const SK = SK_acre * ACRE_TO_HA;
+
+  // ── Step 3: Apply STCR equations — ALL inputs in ha units ────
   const c = activeCrop === 'wheat' ? wheatVariants[activeResidue] : cropData[activeCrop];
-  const FN = c.FN[0]*T + c.FN[1]*SN;
-  const FP = c.FP[0]*T + c.FP[1]*SP;
-  const FK = c.FK[0]*T + c.FK[1]*SK;
+  const FN_ha = c.FN[0]*T_ha + c.FN[1]*SN;
+  const FP_ha = c.FP[0]*T_ha + c.FP[1]*SP;
+  const FK_ha = c.FK[0]*T_ha + c.FK[1]*SK;
+
+  // ── Step 4: Convert fertilizer results kg/ha → kg/acre ───────
+  const FN = FN_ha / ACRE_TO_HA;
+  const FP = FP_ha / ACRE_TO_HA;
+  const FK = FK_ha / ACRE_TO_HA;
+
   lastFN = FN; lastFP = FP; lastFK = FK;
 
+  // Result cards — primary value kg/acre, secondary kg/ha
   setResult('fn', FN); setResult('fp', FP); setResult('fk', FK);
+  document.getElementById('r-fn-ha').innerHTML = `${FN_ha.toFixed(2)} <span class="r-ha-unit">kg/ha</span>`;
+  document.getElementById('r-fp-ha').innerHTML = `${FP_ha.toFixed(2)} <span class="r-ha-unit">kg/ha</span>`;
+  document.getElementById('r-fk-ha').innerHTML = `${FK_ha.toFixed(2)} <span class="r-ha-unit">kg/ha</span>`;
+
+  // T conversion note
+  const tNote = document.getElementById('t-conv-note');
+  const tText = document.getElementById('t-conv-text');
+  tNote.style.display = 'block';
+  tText.textContent = t('t-conv-note')(T.toFixed(1), T_ha.toFixed(2), (SN_acre * ACRE_TO_HA).toFixed(2), (SP_acre * ACRE_TO_HA).toFixed(2), (SK_acre * ACRE_TO_HA).toFixed(2));
 
   const rl = t('residue-labels');
   const cl = t('crop-labels');
@@ -703,24 +863,41 @@ function calculate() {
   document.getElementById('results-crop-tag').textContent = cropLabel;
 
   const FN_eff = Math.max(0,FN), FP_eff = Math.max(0,FP), FK_eff = Math.max(0,FK);
-  const MOP = FK_eff / 0.60;
-  const DAP = FP_eff / 0.46;
-  const N_from_DAP = DAP * 0.18;
-  const Urea_DAP = Math.max(0, FN_eff - N_from_DAP) / 0.46;
+  const FN_eff_ha = Math.max(0,FN_ha), FP_eff_ha = Math.max(0,FP_ha), FK_eff_ha = Math.max(0,FK_ha);
+  const MOP    = FK_eff / 0.60;
+  const MOP_ha = FK_eff_ha / 0.60;
+  const DAP    = FP_eff / 0.46;
+  const DAP_ha = FP_eff_ha / 0.46;
+  const N_from_DAP    = DAP * 0.18;
+  const N_from_DAP_ha = DAP_ha * 0.18;
+  const Urea_DAP    = Math.max(0, FN_eff    - N_from_DAP)    / 0.46;
+  const Urea_DAP_ha = Math.max(0, FN_eff_ha - N_from_DAP_ha) / 0.46;
 
-  document.getElementById('t-urea-dap').textContent = Urea_DAP.toFixed(2);
-  document.getElementById('t-dap').textContent      = DAP.toFixed(2);
-  document.getElementById('t-mop-dap').textContent  = MOP.toFixed(2);
+  // DAP table — kg/acre and kg/ha
+  document.getElementById('t-urea-dap').textContent    = Urea_DAP.toFixed(2);
+  document.getElementById('t-urea-dap-ha').textContent = Urea_DAP_ha.toFixed(2);
+  document.getElementById('t-dap').textContent         = DAP.toFixed(2);
+  document.getElementById('t-dap-ha').textContent      = DAP_ha.toFixed(2);
+  document.getElementById('t-mop-dap').textContent     = MOP.toFixed(2);
+  document.getElementById('t-mop-dap-ha').textContent  = MOP_ha.toFixed(2);
 
   const creditEl = document.getElementById('dap-n-credit');
   if (N_from_DAP > 0) {
     creditEl.style.display = 'block';
-    creditEl.textContent = t('dap-credit')(N_from_DAP.toFixed(2), N_from_DAP >= FN_eff);
+    creditEl.textContent = t('dap-credit')(N_from_DAP.toFixed(2), N_from_DAP_ha.toFixed(2), N_from_DAP >= FN_eff);
   } else { creditEl.style.display = 'none'; }
 
-  document.getElementById('t-urea-ssp').textContent = (FN_eff/0.46).toFixed(2);
-  document.getElementById('t-ssp').textContent      = (FP_eff/0.16).toFixed(2);
-  document.getElementById('t-mop-ssp').textContent  = MOP.toFixed(2);
+  // SSP table — kg/acre and kg/ha
+  const Urea_SSP    = FN_eff    / 0.46;
+  const Urea_SSP_ha = FN_eff_ha / 0.46;
+  const SSP         = FP_eff    / 0.16;
+  const SSP_ha      = FP_eff_ha / 0.16;
+  document.getElementById('t-urea-ssp').textContent    = Urea_SSP.toFixed(2);
+  document.getElementById('t-urea-ssp-ha').textContent = Urea_SSP_ha.toFixed(2);
+  document.getElementById('t-ssp').textContent         = SSP.toFixed(2);
+  document.getElementById('t-ssp-ha').textContent      = SSP_ha.toFixed(2);
+  document.getElementById('t-mop-ssp').textContent     = MOP.toFixed(2);
+  document.getElementById('t-mop-ssp-ha').textContent  = MOP_ha.toFixed(2);
 
   const rs = document.getElementById('results-section');
   rs.style.display = 'block';
