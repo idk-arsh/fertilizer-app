@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fertcal — Fertilizer Requirement Calculator</title>
+<title>PAU KHAD app — Fertilizer Requirement Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&family=Noto+Sans+Gurmukhi:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -267,7 +267,123 @@
     background: var(--cream); border-radius: 8px; border: 1px solid var(--cream-dark);
   }
 
-  /* UNIT NOTE */
+  /* ---- FERTILIZER BAG ---- */
+  .fert-bag-cell { display:inline-flex; align-items:center; gap:8px; vertical-align:middle; }
+  .fert-bag-cell svg { flex-shrink:0; }
+
+  /* ---- UREA SPLIT SCHEDULE ---- */
+  .split-schedule {
+    margin-top:1.25rem; padding:14px 16px;
+    background:var(--cream); border:1px solid var(--cream-dark); border-radius:12px;
+  }
+  .split-title {
+    font-size:14px; font-weight:600; color:var(--green-dark); margin-bottom:6px;
+  }
+  .split-pk-note {
+    font-size:12px; color:var(--green-mid); background:var(--green-pale);
+    border-radius:8px; padding:6px 10px; margin-bottom:12px; line-height:1.6;
+  }
+  .split-rows { display:flex; flex-direction:column; gap:8px; }
+  .split-row {
+    display:flex; align-items:flex-start; gap:10px;
+    background: linear-gradient(135deg, var(--green-pale) 0%, var(--white) 100%);
+    border:1.5px solid var(--green-light); border-radius:12px; padding:12px 14px;
+    position: relative; overflow: hidden;
+  }
+  .split-row::before {
+    content:''; position:absolute; left:0; top:0; bottom:0;
+    width:4px; background:var(--green-mid);
+  }
+  .split-row:nth-child(2)::before { background: #e07b3f; }
+  .split-row:nth-child(3)::before { background: #7b8ee0; }
+  .split-num {
+    width:30px; height:30px; border-radius:50%; background:var(--green-dark);
+    color:#fff; font-size:13px; font-weight:700; display:flex;
+    align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
+  }
+  .split-row:nth-child(2) .split-num { background: #e07b3f; }
+  .split-row:nth-child(3) .split-num { background: #7b8ee0; }
+  .split-body { flex:1; }
+  .split-timing { font-size:13px; font-weight:700; color:var(--green-dark); margin-bottom:4px; }
+  .split-amount { font-family:'DM Mono',monospace; font-size:14px; font-weight:600; color:var(--green-mid); }
+  .split-amount-ha { font-size:11px; color:var(--text-muted); margin-left:6px; font-family:'Outfit',sans-serif; font-weight:400; }
+
+  /* ---- CARD HELP TOGGLE ---- */
+  .help-card-toggle {
+    display:flex; align-items:center; gap:8px; padding:12px 1.75rem;
+    background:var(--green-pale); cursor:pointer; border-bottom:1px solid #a8dab5;
+    font-size:13px; font-weight:600; color:var(--green-dark);
+    transition:background .15s;
+  }
+  .help-card-toggle:hover { background:#c8ecd0; }
+  .help-card-body {
+    padding:1.25rem 1.75rem; background:#f4fbf5;
+    border-bottom:1.5px dashed var(--cream-dark);
+  }
+  .hc-section { margin-bottom:1rem; }
+  .hc-section:last-child { margin-bottom:0; }
+  .hc-q { font-size:12px; font-weight:700; color:var(--green-mid); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
+  body.pa .hc-q { text-transform:none; letter-spacing:0; }
+  .hc-section p, .hc-section li, .hc-step span:last-child { font-size:12.5px; color:var(--text-muted); line-height:1.65; }
+  .hc-steps { display:flex; flex-direction:column; gap:5px; }
+  .hc-step { display:flex; gap:8px; align-items:flex-start; }
+  .hc-num { width:18px; height:18px; border-radius:50%; background:var(--green-mid); color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+  .hc-list { margin:0; padding-left:16px; }
+  .hc-list li { font-size:12.5px; color:var(--text-muted); line-height:1.65; margin-bottom:3px; }
+  .help-footer-wrap {
+    background: linear-gradient(180deg, #1a3a2a 0%, #0f2318 100%);
+  }
+
+  /* ---- HELP SECTION (always visible at bottom) ---- */
+  .help-panel {
+    padding: 2rem 1.5rem 1.5rem;
+    max-width: 800px; margin: 0 auto;
+  }
+  .help-heading {
+    font-size: 16px; font-weight: 700; color: var(--green-light);
+    letter-spacing: .12em; text-transform: uppercase;
+    margin-bottom: 1.25rem; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(82,183,136,0.3);
+  }
+  body.pa .help-heading { text-transform: none; letter-spacing: 0; }
+  .help-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+  }
+  @media(max-width:540px) { .help-inner { grid-template-columns: 1fr; } }
+  .help-q {
+    font-size: 11px; font-weight: 700; color: var(--green-light);
+    letter-spacing: .08em; text-transform: uppercase; margin-bottom: 7px;
+  }
+  body.pa .help-q { text-transform: none; letter-spacing: 0; font-size: 12px; }
+  .help-section p { font-size: 12.5px; color: rgba(216,243,220,0.8); line-height: 1.7; margin: 0; }
+  .help-steps { display: flex; flex-direction: column; gap: 6px; }
+  .help-step { display: flex; gap: 8px; align-items: flex-start; }
+  .help-step-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--green-light); color: var(--green-dark);
+    font-size: 10px; font-weight: 700; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+  .help-step span:last-child { font-size: 12.5px; color: rgba(216,243,220,0.8); line-height: 1.65; }
+  .help-list { margin: 0; padding-left: 16px; }
+  .help-list li { font-size: 12.5px; color: rgba(216,243,220,0.8); line-height: 1.7; margin-bottom: 4px; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    position: relative; z-index: 5;
+    background: transparent;
+    border-top: 1px solid rgba(82,183,136,0.25);
+    color: rgba(216,243,220,0.5);
+    text-align: center; padding: 1.25rem 1.5rem;
+    max-width: 800px; margin: 0 auto;
+  }
+  .footer-line1 { font-size: 12px; margin-bottom: 5px; line-height: 1.6; }
+  .footer-line1 a { color: var(--green-light); text-decoration: none; }
+  .footer-line1 a:hover { text-decoration: underline; }
+  .footer-line2 { font-size: 11px; color: rgba(216,243,220,0.4); }
+
+  /* ---- REMOVE OLD FERT-DOT (replaced by bags) ---- */
+  .fert-dot { display:none; }
   .unit-note {
     display: flex; align-items: flex-start; gap: 7px;
     background: #eef6ff; border: 1px solid #b8d8f8;
@@ -359,7 +475,7 @@
       <path d="M16 19L20 16" stroke="#d8f3dc" stroke-width="1.2" stroke-linecap="round"/>
     </svg>
     <div>
-      <div class="logo-text" id="logo-text">Fertcal</div>
+      <div class="logo-text" id="logo-text">PAU KHAD app</div>
       <div class="logo-sub" id="logo-sub">Fertilizer Planner</div>
     </div>
   </div>
@@ -371,12 +487,6 @@
   </div>
 </header>
 
-<div class="founder-strip">
-  <span class="founder-label" id="founder-label">Founded by</span>
-  <span class="founder-name" id="founder-name">Dr. Jagdeep Singh</span>
-  <span class="founder-sep">·</span>
-  <span class="founder-dept" id="founder-dept">Department of Soil Science, Punjab Agricultural University, Ludhiana</span>
-</div>
 
 <section class="hero">
   <div class="hero-eyebrow" id="hero-eyebrow">Soil-Test Based Recommendation</div>
@@ -386,6 +496,46 @@
 
 <div class="card-wrap">
   <div class="card">
+
+    <!-- HELP (collapsible, above Step 1) -->
+    <div class="help-card-toggle" onclick="toggleCardHelp()" id="help-card-toggle">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span id="help-card-label">Help — How to use this app</span>
+      <svg id="help-card-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="help-card-body" id="help-card-body" style="display:none;">
+      <div class="hc-section">
+        <div class="hc-q" id="hc-q1">What is this app?</div>
+        <p id="hc-p1">PAU KHAD helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield. It gives you crop-specific recommendations for Nitrogen (N), Phosphorus (P₂O₅), and Potassium (K₂O).</p>
+      </div>
+      <div class="hc-section">
+        <div class="hc-q" id="hc-q2">How to use — 3 simple steps</div>
+        <div class="hc-steps">
+          <div class="hc-step"><span class="hc-num">1</span><span id="hc-s1">Select your crop (Rice, Maize or Wheat) and, for Wheat, the rice residue management practice you follow.</span></div>
+          <div class="hc-step"><span class="hc-num">2</span><span id="hc-s2">Enter your target yield in quintals per acre.</span></div>
+          <div class="hc-step"><span class="hc-num">3</span><span id="hc-s3">Enter Soil N, Soil P and Soil K (kg/acre) from your PAU soil test report — or enter Organic Carbon % if Soil N is not available.</span></div>
+        </div>
+      </div>
+      <div class="hc-section">
+        <div class="hc-q" id="hc-q3">What you get</div>
+        <ul class="hc-list">
+          <li id="hc-g1">Recommended fertilizer doses in kg/acre (and kg/ha)</li>
+          <li id="hc-g2">Ready-to-use product quantities — Urea, DAP or SSP, and MOP — so you know exactly how many bags to buy</li>
+          <li id="hc-g3">Results in both kg/acre and kg/ha</li>
+        </ul>
+      </div>
+      <div class="hc-section">
+        <div class="hc-q" id="hc-q4">Important tips</div>
+        <ul class="hc-list">
+          <li id="hc-t1">Always get your soil tested before applying fertilizers — it saves money and improves yield.</li>
+          <li id="hc-t2">Use soil test values from an approved soil testing laboratory for best results.</li>
+          <li id="hc-t3">If your soil nutrient level is high, the app may show zero dose for that nutrient — your soil already has enough; save the cost.</li>
+          <li id="hc-t4">Target yield should be realistic for your field conditions — over-estimating leads to wasteful fertilizer use.</li>
+          <li id="hc-t5">This app is calibrated for Punjab agro-climatic conditions and may not apply directly to other regions.</li>
+          <li id="hc-t6">Recommendations assume normal crop management; abnormal weather, pest pressure or irrigation constraints may alter actual fertilizer response.</li>
+        </ul>
+      </div>
+    </div>
 
     <!-- Step 1 -->
     <div class="card-header">
@@ -561,19 +711,73 @@
             </tr></thead>
             <tbody>
               <tr>
-                <td><span class="fert-dot" style="background:#4caf7d"></span><strong data-i18n="urea">Urea</strong><span class="fert-source" data-i18n="urea-src-dap">46% N — adjusted after DAP N credit</span></td>
+                <td>
+                  <div class="fert-bag-cell">
+                    <svg width="52" height="70" viewBox="0 0 110 148" role="img"><title>Urea bag</title>
+                      <rect x="0" y="18" width="110" height="122" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+                      <line x1="4" y1="30" x2="106" y2="30" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="42" x2="106" y2="42" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="54" x2="106" y2="54" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="66" x2="106" y2="66" stroke="#a5d6a7" stroke-width="0.8"/>
+                      <line x1="4" y1="102" x2="106" y2="102" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="114" x2="106" y2="114" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="126" x2="106" y2="126" stroke="#a5d6a7" stroke-width="0.8"/>
+                      <line x1="20" y1="22" x2="20" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="40" y1="22" x2="40" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="60" y1="22" x2="60" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="80" y1="22" x2="80" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="100" y1="22" x2="100" y2="138" stroke="#a5d6a7" stroke-width="0.8"/>
+                      <rect x="0" y="68" width="110" height="34" fill="#2e7d32"/>
+                      <rect x="8" y="13" width="94" height="11" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+                      <line x1="14" y1="19" x2="96" y2="19" stroke="#2e7d32" stroke-width="0.8" stroke-dasharray="4,3"/>
+                      <rect x="8" y="136" width="94" height="8" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+                      <text x="55" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#fff">UREA</text>
+                      <text x="55" y="93" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#a5d6a7">Nitrogen Fertilizer</text>
+                      <text x="55" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#2e7d32">45 kg NET</text>
+                      <text x="55" y="115" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#2e7d32">N: 46%</text>
+                    </svg>
+                  </div>
+                  <span class="fert-source" data-i18n="urea-src-dap">46% N — adjusted after DAP N credit</span>
+                </td>
                 <td data-i18n="nitrogen-n">Nitrogen (N)</td>
                 <td id="t-urea-dap">—</td>
                 <td id="t-urea-dap-ha">—</td>
               </tr>
               <tr>
-                <td><span class="fert-dot" style="background:#e07b3f"></span><strong>DAP</strong><span class="fert-source" data-i18n="dap-src">Di-Ammonium Phosphate — 18% N, 46% P₂O₅</span></td>
+                <td>
+                  <div class="fert-bag-cell">
+                    <svg width="52" height="70" viewBox="0 0 110 148" role="img"><title>DAP bag</title>
+                      <rect x="0" y="18" width="110" height="122" rx="6" fill="#fff3e0" stroke="#bf360c" stroke-width="1.5"/>
+                      <line x1="4" y1="30" x2="106" y2="30" stroke="#ffcc80" stroke-width="0.8"/><line x1="4" y1="42" x2="106" y2="42" stroke="#ffcc80" stroke-width="0.8"/><line x1="4" y1="54" x2="106" y2="54" stroke="#ffcc80" stroke-width="0.8"/><line x1="4" y1="66" x2="106" y2="66" stroke="#ffcc80" stroke-width="0.8"/>
+                      <line x1="4" y1="102" x2="106" y2="102" stroke="#ffcc80" stroke-width="0.8"/><line x1="4" y1="114" x2="106" y2="114" stroke="#ffcc80" stroke-width="0.8"/><line x1="4" y1="126" x2="106" y2="126" stroke="#ffcc80" stroke-width="0.8"/>
+                      <line x1="20" y1="22" x2="20" y2="138" stroke="#ffcc80" stroke-width="0.8"/><line x1="40" y1="22" x2="40" y2="138" stroke="#ffcc80" stroke-width="0.8"/><line x1="60" y1="22" x2="60" y2="138" stroke="#ffcc80" stroke-width="0.8"/><line x1="80" y1="22" x2="80" y2="138" stroke="#ffcc80" stroke-width="0.8"/><line x1="100" y1="22" x2="100" y2="138" stroke="#ffcc80" stroke-width="0.8"/>
+                      <rect x="0" y="68" width="110" height="34" fill="#bf360c"/>
+                      <rect x="8" y="13" width="94" height="11" rx="3" fill="#ffe0b2" stroke="#bf360c" stroke-width="1"/>
+                      <line x1="14" y1="19" x2="96" y2="19" stroke="#bf360c" stroke-width="0.8" stroke-dasharray="4,3"/>
+                      <rect x="8" y="136" width="94" height="8" rx="3" fill="#ffe0b2" stroke="#bf360c" stroke-width="1"/>
+                      <text x="55" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#fff">DAP</text>
+                      <text x="55" y="93" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#ffccbc">Di-Ammonium Phosphate</text>
+                      <text x="55" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#bf360c">45 kg NET</text>
+                      <text x="55" y="113" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#bf360c">N:18%  P₂O₅:46%</text>
+                    </svg>
+                  </div>
+                  <span class="fert-source" data-i18n="dap-src">Di-Ammonium Phosphate — 18% N, 46% P₂O₅</span>
+                </td>
                 <td data-i18n="phosphorus-p">Phosphorus (P₂O₅) + N credit</td>
                 <td id="t-dap">—</td>
                 <td id="t-dap-ha">—</td>
               </tr>
               <tr>
-                <td><span class="fert-dot" style="background:#7b8ee0"></span><strong data-i18n="mop">MOP</strong><span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span></td>
+                <td>
+                  <div class="fert-bag-cell">
+                    <svg width="52" height="70" viewBox="0 0 110 148" role="img"><title>MOP bag</title>
+                      <rect x="0" y="18" width="110" height="122" rx="6" fill="#fce4ec" stroke="#880e4f" stroke-width="1.5"/>
+                      <line x1="4" y1="30" x2="106" y2="30" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="42" x2="106" y2="42" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="54" x2="106" y2="54" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="66" x2="106" y2="66" stroke="#f48fb1" stroke-width="0.8"/>
+                      <line x1="4" y1="102" x2="106" y2="102" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="114" x2="106" y2="114" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="126" x2="106" y2="126" stroke="#f48fb1" stroke-width="0.8"/>
+                      <line x1="20" y1="22" x2="20" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="40" y1="22" x2="40" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="60" y1="22" x2="60" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="80" y1="22" x2="80" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="100" y1="22" x2="100" y2="138" stroke="#f48fb1" stroke-width="0.8"/>
+                      <rect x="0" y="68" width="110" height="34" fill="#880e4f"/>
+                      <rect x="8" y="13" width="94" height="11" rx="3" fill="#f8bbd0" stroke="#880e4f" stroke-width="1"/>
+                      <line x1="14" y1="19" x2="96" y2="19" stroke="#880e4f" stroke-width="0.8" stroke-dasharray="4,3"/>
+                      <rect x="8" y="136" width="94" height="8" rx="3" fill="#f8bbd0" stroke="#880e4f" stroke-width="1"/>
+                      <text x="55" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#fff">MOP</text>
+                      <text x="55" y="93" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#f8bbd0">Muriate of Potash</text>
+                      <text x="55" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#880e4f">45 kg NET</text>
+                      <text x="55" y="115" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#880e4f">K₂O: 60%</text>
+                    </svg>
+                  </div>
+                  <span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span>
+                </td>
                 <td data-i18n="potassium-k">Potassium (K₂O)</td>
                 <td id="t-mop-dap">—</td>
                 <td id="t-mop-dap-ha">—</td>
@@ -595,19 +799,73 @@
             </tr></thead>
             <tbody>
               <tr>
-                <td><span class="fert-dot" style="background:#4caf7d"></span><strong data-i18n="urea">Urea</strong><span class="fert-source" data-i18n="urea-src-ssp">46% N — full FN dose (no N credit from SSP)</span></td>
+                <td>
+                  <div class="fert-bag-cell">
+                    <svg width="52" height="70" viewBox="0 0 110 148" role="img"><title>Urea bag</title>
+                      <rect x="0" y="18" width="110" height="122" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+                      <line x1="4" y1="30" x2="106" y2="30" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="42" x2="106" y2="42" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="54" x2="106" y2="54" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="66" x2="106" y2="66" stroke="#a5d6a7" stroke-width="0.8"/>
+                      <line x1="4" y1="102" x2="106" y2="102" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="114" x2="106" y2="114" stroke="#a5d6a7" stroke-width="0.8"/><line x1="4" y1="126" x2="106" y2="126" stroke="#a5d6a7" stroke-width="0.8"/>
+                      <line x1="20" y1="22" x2="20" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="40" y1="22" x2="40" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="60" y1="22" x2="60" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="80" y1="22" x2="80" y2="138" stroke="#a5d6a7" stroke-width="0.8"/><line x1="100" y1="22" x2="100" y2="138" stroke="#a5d6a7" stroke-width="0.8"/>
+                      <rect x="0" y="68" width="110" height="34" fill="#2e7d32"/>
+                      <rect x="8" y="13" width="94" height="11" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+                      <line x1="14" y1="19" x2="96" y2="19" stroke="#2e7d32" stroke-width="0.8" stroke-dasharray="4,3"/>
+                      <rect x="8" y="136" width="94" height="8" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+                      <text x="55" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#fff">UREA</text>
+                      <text x="55" y="93" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#a5d6a7">Nitrogen Fertilizer</text>
+                      <text x="55" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#2e7d32">45 kg NET</text>
+                      <text x="55" y="115" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#2e7d32">N: 46%</text>
+                    </svg>
+                  </div>
+                  <span class="fert-source" data-i18n="urea-src-ssp">46% N — full FN dose (no N credit from SSP)</span>
+                </td>
                 <td data-i18n="nitrogen-n">Nitrogen (N)</td>
                 <td id="t-urea-ssp">—</td>
                 <td id="t-urea-ssp-ha">—</td>
               </tr>
               <tr>
-                <td><span class="fert-dot" style="background:#c77b3a"></span><strong>SSP</strong><span class="fert-source" data-i18n="ssp-src">Single Super Phosphate — 16% P₂O₅</span></td>
+                <td>
+                  <div class="fert-bag-cell">
+                    <svg width="52" height="70" viewBox="0 0 110 148" role="img"><title>SSP bag</title>
+                      <rect x="0" y="18" width="110" height="122" rx="6" fill="#fafafa" stroke="#5d4037" stroke-width="1.5"/>
+                      <line x1="4" y1="30" x2="106" y2="30" stroke="#d7ccc8" stroke-width="0.8"/><line x1="4" y1="42" x2="106" y2="42" stroke="#d7ccc8" stroke-width="0.8"/><line x1="4" y1="54" x2="106" y2="54" stroke="#d7ccc8" stroke-width="0.8"/><line x1="4" y1="66" x2="106" y2="66" stroke="#d7ccc8" stroke-width="0.8"/>
+                      <line x1="4" y1="102" x2="106" y2="102" stroke="#d7ccc8" stroke-width="0.8"/><line x1="4" y1="114" x2="106" y2="114" stroke="#d7ccc8" stroke-width="0.8"/><line x1="4" y1="126" x2="106" y2="126" stroke="#d7ccc8" stroke-width="0.8"/>
+                      <line x1="20" y1="22" x2="20" y2="138" stroke="#d7ccc8" stroke-width="0.8"/><line x1="40" y1="22" x2="40" y2="138" stroke="#d7ccc8" stroke-width="0.8"/><line x1="60" y1="22" x2="60" y2="138" stroke="#d7ccc8" stroke-width="0.8"/><line x1="80" y1="22" x2="80" y2="138" stroke="#d7ccc8" stroke-width="0.8"/><line x1="100" y1="22" x2="100" y2="138" stroke="#d7ccc8" stroke-width="0.8"/>
+                      <rect x="0" y="68" width="110" height="34" fill="#5d4037"/>
+                      <rect x="8" y="13" width="94" height="11" rx="3" fill="#efebe9" stroke="#5d4037" stroke-width="1"/>
+                      <line x1="14" y1="19" x2="96" y2="19" stroke="#5d4037" stroke-width="0.8" stroke-dasharray="4,3"/>
+                      <rect x="8" y="136" width="94" height="8" rx="3" fill="#efebe9" stroke="#5d4037" stroke-width="1"/>
+                      <text x="55" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#fff">SSP</text>
+                      <text x="55" y="93" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#d7ccc8">Single Super Phosphate</text>
+                      <text x="55" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#5d4037">45 kg NET</text>
+                      <text x="55" y="115" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#5d4037">P₂O₅: 16%</text>
+                    </svg>
+                  </div>
+                  <span class="fert-source" data-i18n="ssp-src">Single Super Phosphate — 16% P₂O₅</span>
+                </td>
                 <td data-i18n="phosphorus-p2">Phosphorus (P₂O₅)</td>
                 <td id="t-ssp">—</td>
                 <td id="t-ssp-ha">—</td>
               </tr>
               <tr>
-                <td><span class="fert-dot" style="background:#7b8ee0"></span><strong data-i18n="mop">MOP</strong><span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span></td>
+                <td>
+                  <div class="fert-bag-cell">
+                    <svg width="52" height="70" viewBox="0 0 110 148" role="img"><title>MOP bag</title>
+                      <rect x="0" y="18" width="110" height="122" rx="6" fill="#fce4ec" stroke="#880e4f" stroke-width="1.5"/>
+                      <line x1="4" y1="30" x2="106" y2="30" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="42" x2="106" y2="42" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="54" x2="106" y2="54" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="66" x2="106" y2="66" stroke="#f48fb1" stroke-width="0.8"/>
+                      <line x1="4" y1="102" x2="106" y2="102" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="114" x2="106" y2="114" stroke="#f48fb1" stroke-width="0.8"/><line x1="4" y1="126" x2="106" y2="126" stroke="#f48fb1" stroke-width="0.8"/>
+                      <line x1="20" y1="22" x2="20" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="40" y1="22" x2="40" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="60" y1="22" x2="60" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="80" y1="22" x2="80" y2="138" stroke="#f48fb1" stroke-width="0.8"/><line x1="100" y1="22" x2="100" y2="138" stroke="#f48fb1" stroke-width="0.8"/>
+                      <rect x="0" y="68" width="110" height="34" fill="#880e4f"/>
+                      <rect x="8" y="13" width="94" height="11" rx="3" fill="#f8bbd0" stroke="#880e4f" stroke-width="1"/>
+                      <line x1="14" y1="19" x2="96" y2="19" stroke="#880e4f" stroke-width="0.8" stroke-dasharray="4,3"/>
+                      <rect x="8" y="136" width="94" height="8" rx="3" fill="#f8bbd0" stroke="#880e4f" stroke-width="1"/>
+                      <text x="55" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#fff">MOP</text>
+                      <text x="55" y="93" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#f8bbd0">Muriate of Potash</text>
+                      <text x="55" y="24" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#880e4f">45 kg NET</text>
+                      <text x="55" y="115" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#880e4f">K₂O: 60%</text>
+                    </svg>
+                  </div>
+                  <span class="fert-source" data-i18n="mop-src">Muriate of Potash — 60% K₂O</span>
+                </td>
                 <td data-i18n="potassium-k2">Potassium (K₂O)</td>
                 <td id="t-mop-ssp">—</td>
                 <td id="t-mop-ssp-ha">—</td>
@@ -617,9 +875,30 @@
           <div class="fert-table-footnote" id="ssp-footnote">SSP contains no nitrogen, so the full Urea dose is applied. SSP dose = FP₂O₅ ÷ 0.16. Negative FP₂O₅ values are treated as 0.</div>
         </div>
       </div>
+
+      <!-- Urea Application Schedule -->
+      <div class="split-schedule" id="split-schedule" style="display:none;">
+        <div class="split-title" id="split-title">Urea Application Schedule</div>
+        <div class="split-pk-note" id="split-pk-note">Apply full dose of DAP/SSP and MOP at the time of sowing / transplanting.</div>
+        <div class="split-rows" id="split-rows"></div>
+      </div>
+
     </div>
 
   </div>
+</div>
+
+<!-- FOOTER -->
+<div class="help-footer-wrap">
+  <footer id="footer-el">
+    <div class="footer-line1">
+      Copyright &copy; 2026 &nbsp;&middot;&nbsp;
+      <a href="http://pau.edu/" target="_blank">Punjab Agricultural University, Ludhiana — All rights reserved.</a>
+    </div>
+    <div class="footer-line2" id="footer-line2">
+      Developed by Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, PAU, Ludhiana
+    </div>
+  </footer>
 </div>
 
 
@@ -629,8 +908,8 @@ const T18N = {
   en: {
     lang: 'en',
     bodyClass: '',
-    title: 'Fertcal — Fertilizer Requirement Calculator',
-    'logo-text': 'Fertcal',
+    title: 'PAU KHAD app — Fertilizer Requirement Calculator',
+    'logo-text': 'PAU KHAD app',
     'logo-sub': 'Fertilizer Planner',
     'hero-eyebrow': 'Soil-Test Based Recommendation',
     'hero-title': 'Calculate your <em>precise</em> fertilizer requirement',
@@ -699,8 +978,8 @@ const T18N = {
   pa: {
     lang: 'pa',
     bodyClass: 'pa',
-    title: 'ਫਰਟਕੈਲ — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ',
-    'logo-text': 'Fertcal',
+    title: 'PAU ਖਾਦ — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ',
+    'logo-text': 'PAU KHAD app',
     'logo-sub': 'ਖਾਦ ਯੋਜਨਾਕਾਰ',
     'hero-eyebrow': 'ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਸਿਫ਼ਾਰਸ਼',
     'hero-title': 'ਆਪਣੀ ਫ਼ਸਲ ਲਈ <em>ਸਹੀ ਖਾਦ</em> ਦੀ ਲੋੜ ਜਾਣੋ',
@@ -832,6 +1111,24 @@ function setLang(lang) {
   // Re-apply dynamic content
   selectCrop(activeCrop, true);
   if (lastFN !== null) refreshResultLabels();
+  // Always update help content on language change
+  renderHelpContent();
+  // Re-render split schedule in new language if results are showing
+  if (lastFN !== null) {
+    const activeScenario = document.getElementById('scenario-dap').style.display !== 'none' ? 'dap' : 'ssp';
+    const FN_eff = Math.max(0, lastFN), FP_eff = Math.max(0, lastFP);
+    const FN_eff_ha = FN_eff * 2.471, FP_eff_ha = FP_eff * 2.471;
+    const DAP = FP_eff / 0.46, N_from_DAP = DAP * 0.18;
+    const Urea_DAP = Math.max(0, FN_eff - N_from_DAP) / 0.46;
+    const Urea_SSP = FN_eff / 0.46;
+    const urea_acre = activeScenario === 'dap' ? Urea_DAP : Urea_SSP;
+    const urea_ha   = activeScenario === 'dap' ? (Math.max(0, FN_eff_ha - DAP*2.471*0.18) / 0.46) : (FN_eff_ha / 0.46);
+    renderSplitSchedule(urea_acre, urea_ha, activeCrop);
+  }
+  const line2 = document.getElementById('footer-line2');
+  if (line2) line2.textContent = lang === 'pa'
+    ? 'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ, ਸੀਨੀਅਰ ਸੁਆਇਲ ਕੈਮਿਸਟ, ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, ਪੰਜਾਬ ਖੇਤੀਬਾੜੀ ਯੂਨੀਵਰਸਿਟੀ, ਲੁਧਿਆਣਾ'
+    : 'Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, Punjab Agricultural University, Ludhiana';
   applyEqPanelLang();
 }
 
@@ -917,6 +1214,8 @@ function clearResults() {
   if (tNote) tNote.style.display = 'none';
   const ocBadge = document.getElementById('oc-result-badge');
   if (ocBadge) ocBadge.style.display = 'none';
+  const sched = document.getElementById('split-schedule');
+  if (sched) sched.style.display = 'none';
   lastFN = lastFP = lastFK = null;
 }
 
@@ -969,12 +1268,8 @@ function calculate() {
     SN_estimated_ha = 94 + 68 * OC_raw;
     SN_acre = SN_estimated_ha / 2.471;
     ocUsed = true;
-    // Show estimate note + accuracy warning
-    const noteEl = document.getElementById('oc-estimate-note');
-    const noteText = document.getElementById('oc-estimate-text');
-    noteEl.style.display = 'flex';
-    noteText.innerHTML = t('oc-estimate-msg')(OC_raw.toFixed(2), SN_estimated_ha.toFixed(1), SN_acre.toFixed(1))
-      + '<br><em style="color:#b35c00;">' + t('oc-warning') + '</em>';
+    // Hide the estimate note — no message shown to user
+    document.getElementById('oc-estimate-note').style.display = 'none';
   }
 
   const r = ranges[activeCrop];
@@ -1000,13 +1295,20 @@ function calculate() {
   const FP = FP_ha / ACRE_TO_HA;
   const FK = FK_ha / ACRE_TO_HA;
 
+  // Show 0 for negative FP and FK (soil has enough), keep FN as-is for display
+  const FN_disp = FN;
+  const FP_disp = Math.max(0, FP);
+  const FK_disp = Math.max(0, FK);
+  const FN_ha_disp = FN_ha;
+  const FP_ha_disp = Math.max(0, FP_ha);
+  const FK_ha_disp = Math.max(0, FK_ha);
+
   lastFN = FN; lastFP = FP; lastFK = FK;
 
-  // Result cards — ROUNDED to whole numbers
-  setResult('fn', FN); setResult('fp', FP); setResult('fk', FK);
-  document.getElementById('r-fn-ha').innerHTML = `${Math.round(FN_ha)} <span class="r-ha-unit">kg/ha</span>`;
-  document.getElementById('r-fp-ha').innerHTML = `${Math.round(FP_ha)} <span class="r-ha-unit">kg/ha</span>`;
-  document.getElementById('r-fk-ha').innerHTML = `${Math.round(FK_ha)} <span class="r-ha-unit">kg/ha</span>`;
+  setResult('fn', FN_disp); setResult('fp', FP_disp); setResult('fk', FK_disp);
+  document.getElementById('r-fn-ha').innerHTML = `${Math.round(FN_ha_disp)} <span class="r-ha-unit">kg/ha</span>`;
+  document.getElementById('r-fp-ha').innerHTML = `${Math.round(FP_ha_disp)} <span class="r-ha-unit">kg/ha</span>`;
+  document.getElementById('r-fk-ha').innerHTML = `${Math.round(FK_ha_disp)} <span class="r-ha-unit">kg/ha</span>`;
 
   // OC note in result crop tag area
   document.getElementById('oc-result-badge').style.display = ocUsed ? 'inline-flex' : 'none';
@@ -1053,6 +1355,12 @@ function calculate() {
   document.getElementById('t-mop-ssp').textContent     = Math.round(MOP);
   document.getElementById('t-mop-ssp-ha').textContent  = Math.round(MOP_ha);
 
+  // ── Urea application split schedule ──────────────────────────
+  const activeScenario = document.getElementById('scenario-dap').style.display !== 'none' ? 'dap' : 'ssp';
+  const urea_acre = activeScenario === 'dap' ? Urea_DAP : Urea_SSP;
+  const urea_ha   = activeScenario === 'dap' ? Urea_DAP_ha : Urea_SSP_ha;
+  renderSplitSchedule(urea_acre, urea_ha, activeCrop);
+
   const rs = document.getElementById('results-section');
   rs.style.display = 'block';
   rs.scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -1064,11 +1372,146 @@ function calculate() {
   });
 }
 
+function renderSplitSchedule(urea_acre, urea_ha, crop) {
+  const L = activeLang === 'pa';
+  const sched = document.getElementById('split-schedule');
+  const rowsEl = document.getElementById('split-rows');
+  const s1 = Math.round(urea_acre / 3), s2 = Math.round(urea_acre / 3), s3 = Math.round(urea_acre - s1 - s2);
+  const h1 = Math.round(urea_ha / 3),   h2 = Math.round(urea_ha / 3),   h3 = Math.round(urea_ha - h1 - h2);
+
+  const splits = {
+    rice: L ? [
+      {t:'ਲੁਆਈ ਤੋਂ 7 ਦਿਨਾਂ ਅੰਦਰ (ਪਹਿਲੀ ਖੁਰਾਕ)', kg:s1, ha:h1},
+      {t:'ਲੁਆਈ ਤੋਂ 21 ਦਿਨਾਂ ਬਾਅਦ (ਦੂਜੀ ਖੁਰਾਕ)', kg:s2, ha:h2},
+      {t:'ਲੁਆਈ ਤੋਂ 42 ਦਿਨਾਂ ਬਾਅਦ (ਤੀਜੀ ਖੁਰਾਕ)', kg:s3, ha:h3}
+    ] : [
+      {t:'Within 7 days of transplanting (1st dose)', kg:s1, ha:h1},
+      {t:'21 days after transplanting (2nd dose)', kg:s2, ha:h2},
+      {t:'42 days after transplanting (3rd dose)', kg:s3, ha:h3}
+    ],
+    wheat: L ? [
+      {t:'ਬਿਜਾਈ ਸਮੇਂ (⅓ ਖੁਰਾਕ)', kg:s1, ha:h1},
+      {t:'ਪਹਿਲੀ ਸਿੰਚਾਈ ਤੋਂ ਬਾਅਦ (⅓ ਖੁਰਾਕ)', kg:s2, ha:h2},
+      {t:'ਦੂਜੀ ਸਿੰਚਾਈ ਤੋਂ ਬਾਅਦ (⅓ ਖੁਰਾਕ)', kg:s3, ha:h3}
+    ] : [
+      {t:'At time of sowing (⅓ dose)', kg:s1, ha:h1},
+      {t:'After first irrigation (⅓ dose)', kg:s2, ha:h2},
+      {t:'After second irrigation (⅓ dose)', kg:s3, ha:h3}
+    ],
+    maize: L ? [
+      {t:'ਬਿਜਾਈ ਸਮੇਂ (⅓ ਖੁਰਾਕ)', kg:s1, ha:h1},
+      {t:'ਗੋਡੇ ਦੀ ਉਚਾਈ ਦੇ ਪੜਾਅ \'ਤੇ (⅓ ਖੁਰਾਕ)', kg:s2, ha:h2},
+      {t:'ਟੈਸਲਿੰਗ ਤੋਂ ਪਹਿਲਾਂ (⅓ ਖੁਰਾਕ)', kg:s3, ha:h3}
+    ] : [
+      {t:'At sowing (⅓ dose)', kg:s1, ha:h1},
+      {t:'At knee height stage (⅓ dose)', kg:s2, ha:h2},
+      {t:'At pre-tasseling stage (⅓ dose)', kg:s3, ha:h3}
+    ]
+  };
+
+  document.getElementById('split-title').textContent = L ? 'ਯੂਰੀਆ ਖੁਰਾਕ ਵੰਡ ਸਮਾਂ-ਸਾਰਣੀ' : 'Urea Application Schedule';
+  document.getElementById('split-pk-note').textContent = L
+    ? 'DAP/SSP ਅਤੇ MOP ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਬਿਜਾਈ/ਲੁਆਈ ਸਮੇਂ ਪਾਓ।'
+    : 'Apply full dose of DAP/SSP and MOP at the time of sowing / transplanting.';
+
+  const rows = splits[crop] || splits.rice;
+  const kgLabel  = L ? 'ਕਿੱਲੋ ਯੂਰੀਆ/ਏਕੜ' : 'kg Urea/acre';
+  const haLabel  = L ? 'ਕਿੱਲੋ/ਹੈਕਟੇਅਰ'   : 'kg/ha';
+  rowsEl.innerHTML = rows.map((r,i) => `
+    <div class="split-row">
+      <div class="split-num">${i+1}</div>
+      <div class="split-body">
+        <div class="split-timing">${r.t}</div>
+        <div class="split-amount">${r.kg} ${kgLabel} <span class="split-amount-ha">(${r.ha} ${haLabel})</span></div>
+      </div>
+    </div>`).join('');
+
+  sched.style.display = urea_acre > 0 ? 'block' : 'none';
+}
+
 function switchScenario(s) {
   document.getElementById('scenario-dap').style.display = s==='dap' ? 'block' : 'none';
   document.getElementById('scenario-ssp').style.display = s==='ssp' ? 'block' : 'none';
   document.getElementById('tab-dap').classList.toggle('active', s==='dap');
   document.getElementById('tab-ssp').classList.toggle('active', s==='ssp');
+  // Re-render split schedule with correct urea value for this scenario
+  if (lastFN !== null) {
+    const FN_eff = Math.max(0, lastFN), FP_eff = Math.max(0, lastFP), FK_eff = Math.max(0, lastFK);
+    const FN_eff_ha = FN_eff * 2.471, FP_eff_ha = FP_eff * 2.471;
+    const DAP = FP_eff / 0.46, N_from_DAP = DAP * 0.18;
+    const Urea_DAP = Math.max(0, FN_eff - N_from_DAP) / 0.46;
+    const Urea_SSP = FN_eff / 0.46;
+    const urea = s === 'dap' ? Urea_DAP : Urea_SSP;
+    const urea_ha = s === 'dap' ? (Math.max(0, FN_eff_ha - DAP*2.471*0.18) / 0.46) : (FN_eff_ha / 0.46);
+    renderSplitSchedule(urea, urea_ha, activeCrop);
+  }
+}
+
+function toggleCardHelp() {
+  const body    = document.getElementById('help-card-body');
+  const chevron = document.getElementById('help-card-chevron');
+  const isOpen  = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+function renderHelpContent() {
+  const L = activeLang === 'pa';
+  const content = {
+    q1: L ? 'ਇਹ ਐਪ ਕੀ ਹੈ?' : 'What is this app?',
+    p1: L ? 'PAU ਖਾਦ ਤੁਹਾਨੂੰ ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਅਤੇ ਟੀਚਾ ਝਾੜ ਦੇ ਆਧਾਰ \'ਤੇ ਤੁਹਾਡੀ ਫ਼ਸਲ ਲਈ ਸਹੀ ਖਾਦ ਦੀ ਮਾਤਰਾ ਹਿਸਾਬ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦੀ ਹੈ। ਇਹ N, P₂O₅ ਅਤੇ K₂O ਦੀ ਫ਼ਸਲ-ਅਨੁਸਾਰ ਸਿਫ਼ਾਰਸ਼ ਦਿੰਦੀ ਹੈ।' : 'PAU KHAD helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield. It gives you crop-specific recommendations for Nitrogen (N), Phosphorus (P₂O₅), and Potassium (K₂O).',
+    q2: L ? 'ਵਰਤੋਂ ਦੇ 3 ਸੌਖੇ ਕਦਮ' : 'How to use — 3 simple steps',
+    s1: L ? 'ਫ਼ਸਲ ਚੁਣੋ (ਝੋਨਾ, ਮੱਕੀ ਜਾਂ ਕਣਕ) ਅਤੇ ਕਣਕ ਲਈ ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ ਚੁਣੋ।' : 'Select your crop (Rice, Maize or Wheat) and, for Wheat, the rice residue management practice you follow.',
+    s2: L ? 'ਟੀਚਾ ਝਾੜ ਕੁਇੰਟਲ/ਏਕੜ ਵਿੱਚ ਦਰਜ ਕਰੋ।' : 'Enter your target yield in quintals per acre.',
+    s3: L ? 'PAU ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਤੋਂ SN, SP, SK (kg/ਏਕੜ) ਦਰਜ ਕਰੋ — ਜਾਂ OC% ਦਰਜ ਕਰੋ ਜੇ SN ਉਪਲਬਧ ਨਹੀਂ।' : 'Enter Soil N, Soil P and Soil K values (kg/acre) from your PAU soil test report — or enter Organic Carbon % if Soil N is not available.',
+    q3: L ? 'ਕੀ ਮਿਲਦਾ ਹੈ' : 'What you get',
+    g1: L ? 'ਖਾਦ ਦੀ ਲੋੜ kg/ਏਕੜ (ਅਤੇ kg/ha) ਵਿੱਚ' : 'Recommended fertilizer doses in kg/acre (and kg/ha)',
+    g2: L ? 'ਯੂਰੀਆ, DAP/SSP ਅਤੇ MOP ਦੀ ਮਾਤਰਾ — ਬੋਰੀਆਂ ਦੀ ਗਿਣਤੀ ਜਾਣੋ' : 'Ready-to-use fertilizer product quantities — Urea, DAP or SSP, and MOP — so you know exactly how many bags to buy',
+    g3: L ? 'ਨਤੀਜੇ kg/ਏਕੜ ਅਤੇ kg/ha ਦੋਵਾਂ ਵਿੱਚ' : 'Results in both kg/acre and kg/ha',
+    q4: L ? 'ਜ਼ਰੂਰੀ ਸੁਝਾਅ' : 'Important tips',
+    t1: L ? 'ਖਾਦ ਪਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਹਮੇਸ਼ਾ ਮਿੱਟੀ ਜਾਂਚ ਕਰਵਾਓ — ਪੈਸੇ ਬਚਦੇ ਹਨ ਅਤੇ ਝਾੜ ਵਧਦਾ ਹੈ।' : 'Always get your soil tested before applying fertilizers — it saves money and improves yield.',
+    t2: L ? 'ਮਨਜ਼ੂਰਸ਼ੁਦਾ ਮਿੱਟੀ ਜਾਂਚ ਪ੍ਰਯੋਗਸ਼ਾਲਾ ਦੇ ਮੁੱਲ ਵਰਤੋ।' : 'Use soil test values from an approved soil testing laboratory for best results.',
+    t3: L ? 'ਜੇ ਮਿੱਟੀ ਵਿੱਚ ਪੌਸ਼ਟਿਕ ਤੱਤ ਕਾਫ਼ੀ ਹੈ, ਐਪ ਜ਼ੀਰੋ ਦਿਖਾਵੇਗੀ — ਉਹ ਖਾਦ ਦੀ ਲੋੜ ਨਹੀਂ।' : 'If your soil nutrient level is high, the app may show zero dose for that nutrient — this means your soil already has enough; save the cost.',
+    t4: L ? 'ਟੀਚਾ ਝਾੜ ਆਪਣੇ ਖੇਤ ਅਨੁਸਾਰ ਯਥਾਰਥਵਾਦੀ ਰੱਖੋ।' : 'Target yield should be realistic for your field conditions — over-estimating leads to wasteful fertilizer use.',
+    t5: L ? 'ਇਹ ਐਪ ਪੰਜਾਬ ਦੀਆਂ ਖੇਤੀ-ਜਲਵਾਯੂ ਹਾਲਤਾਂ ਲਈ ਕੈਲੀਬ੍ਰੇਟ ਕੀਤੀ ਗਈ ਹੈ।' : 'This app is calibrated for Punjab agro-climatic conditions and may not apply directly to other regions.',
+    t6: L ? 'ਅਸਧਾਰਨ ਮੌਸਮ, ਕੀੜੇ ਜਾਂ ਸਿੰਚਾਈ ਰੁਕਾਵਟਾਂ ਅਸਲ ਖਾਦ ਪ੍ਰਤੀਕਿਰਿਆ ਨੂੰ ਬਦਲ ਸਕਦੀਆਂ ਹਨ।' : 'Recommendations assume normal crop management; abnormal weather, pest pressure or irrigation constraints may alter actual fertilizer response.'
+  };
+  ['q1','q2','q3','q4'].forEach(k => {
+    const el = document.getElementById('help-'+k);
+    if (el) el.textContent = content[k];
+  });
+  ['p1','s1','s2','s3','g1','g2','g3','t1','t2','t3','t4','t5','t6'].forEach(k => {
+    const el = document.getElementById('help-'+k);
+    if (el) el.textContent = content[k];
+  });
+  document.getElementById('help-btn-label') && (document.getElementById('help-btn-label').textContent = L ? 'ਮਦਦ' : 'Help');
+  document.getElementById('help-heading') && (document.getElementById('help-heading').textContent = L ? 'ਮਦਦ' : 'Help');
+  document.getElementById('help-card-label') && (document.getElementById('help-card-label').textContent = L ? 'ਮਦਦ — ਐਪ ਕਿਵੇਂ ਵਰਤੀਏ' : 'Help — How to use this app');
+  // Update card help content
+  const hcMap = {
+    'hc-q1': L ? 'ਇਹ ਐਪ ਕੀ ਹੈ?' : 'What is this app?',
+    'hc-p1': L ? 'PAU ਖਾਦ ਤੁਹਾਨੂੰ ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਅਤੇ ਟੀਚਾ ਝਾੜ ਦੇ ਆਧਾਰ \'ਤੇ ਸਹੀ ਖਾਦ ਦੀ ਮਾਤਰਾ ਦੱਸਦੀ ਹੈ।' : 'PAU KHAD helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield. It gives you crop-specific recommendations for Nitrogen (N), Phosphorus (P₂O₅), and Potassium (K₂O).',
+    'hc-q2': L ? 'ਵਰਤੋਂ ਦੇ 3 ਸੌਖੇ ਕਦਮ' : 'How to use — 3 simple steps',
+    'hc-s1': L ? 'ਫ਼ਸਲ ਚੁਣੋ (ਝੋਨਾ, ਮੱਕੀ ਜਾਂ ਕਣਕ) ਅਤੇ ਕਣਕ ਲਈ ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ ਚੁਣੋ।' : 'Select your crop (Rice, Maize or Wheat) and, for Wheat, the rice residue management practice you follow.',
+    'hc-s2': L ? 'ਟੀਚਾ ਝਾੜ ਕੁਇੰਟਲ/ਏਕੜ ਵਿੱਚ ਦਰਜ ਕਰੋ।' : 'Enter your target yield in quintals per acre.',
+    'hc-s3': L ? 'PAU ਰਿਪੋਰਟ ਤੋਂ SN, SP, SK (kg/ਏਕੜ) ਦਰਜ ਕਰੋ — ਜਾਂ OC% ਦਰਜ ਕਰੋ।' : 'Enter Soil N, Soil P and Soil K (kg/acre) from your PAU soil test report — or enter Organic Carbon % if Soil N is not available.',
+    'hc-q3': L ? 'ਕੀ ਮਿਲਦਾ ਹੈ' : 'What you get',
+    'hc-g1': L ? 'ਖਾਦ ਦੀ ਲੋੜ kg/ਏਕੜ (ਅਤੇ kg/ha) ਵਿੱਚ' : 'Recommended fertilizer doses in kg/acre (and kg/ha)',
+    'hc-g2': L ? 'ਯੂਰੀਆ, DAP/SSP ਅਤੇ MOP ਦੀ ਮਾਤਰਾ' : 'Ready-to-use product quantities — Urea, DAP or SSP, and MOP — so you know exactly how many bags to buy',
+    'hc-g3': L ? 'ਨਤੀਜੇ kg/ਏਕੜ ਅਤੇ kg/ha ਦੋਵਾਂ ਵਿੱਚ' : 'Results in both kg/acre and kg/ha',
+    'hc-q4': L ? 'ਜ਼ਰੂਰੀ ਸੁਝਾਅ' : 'Important tips',
+    'hc-t1': L ? 'ਖਾਦ ਪਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਮਿੱਟੀ ਜਾਂਚ ਕਰਵਾਓ — ਪੈਸੇ ਬਚਦੇ ਹਨ, ਝਾੜ ਵਧਦਾ ਹੈ।' : 'Always get your soil tested before applying fertilizers — it saves money and improves yield.',
+    'hc-t2': L ? 'ਮਨਜ਼ੂਰਸ਼ੁਦਾ ਪ੍ਰਯੋਗਸ਼ਾਲਾ ਦੇ ਮਿੱਟੀ ਮੁੱਲ ਵਰਤੋ।' : 'Use soil test values from an approved soil testing laboratory for best results.',
+    'hc-t3': L ? 'ਜੇ ਮਿੱਟੀ ਵਿੱਚ ਕਾਫ਼ੀ ਪੌਸ਼ਟਿਕ ਤੱਤ ਹੈ, ਐਪ ਜ਼ੀਰੋ ਦਿਖਾਵੇਗੀ।' : 'If your soil nutrient level is high, the app may show zero dose for that nutrient — your soil already has enough; save the cost.',
+    'hc-t4': L ? 'ਟੀਚਾ ਝਾੜ ਯਥਾਰਥਵਾਦੀ ਰੱਖੋ।' : 'Target yield should be realistic for your field conditions — over-estimating leads to wasteful fertilizer use.',
+    'hc-t5': L ? 'ਇਹ ਐਪ ਪੰਜਾਬ ਦੀਆਂ ਖੇਤੀ-ਜਲਵਾਯੂ ਹਾਲਤਾਂ ਲਈ ਕੈਲੀਬ੍ਰੇਟ ਕੀਤੀ ਗਈ ਹੈ ਅਤੇ ਹੋਰ ਖੇਤਰਾਂ ਲਈ ਸਿੱਧੀ ਲਾਗੂ ਨਹੀਂ ਹੋ ਸਕਦੀ।' : 'This app is calibrated for Punjab agro-climatic conditions and may not apply directly to other regions.',
+    'hc-t6': L ? 'ਸਿਫ਼ਾਰਸ਼ਾਂ ਆਮ ਫ਼ਸਲ ਪ੍ਰਬੰਧਨ ਦੀ ਮੰਨਦੀਆਂ ਹਨ; ਅਸਧਾਰਨ ਮੌਸਮ, ਕੀੜੇ-ਮਕੌੜੇ ਜਾਂ ਸਿੰਚਾਈ ਦੀਆਂ ਰੁਕਾਵਟਾਂ ਅਸਲ ਖਾਦ ਪ੍ਰਤੀਕਿਰਿਆ ਨੂੰ ਬਦਲ ਸਕਦੀਆਂ ਹਨ।' : 'Recommendations assume normal crop management; abnormal weather, pest pressure or irrigation constraints may alter actual fertilizer response.'
+  };
+  Object.entries(hcMap).forEach(([id, txt]) => { const el = document.getElementById(id); if (el) el.textContent = txt; });
+  const line2 = document.getElementById('footer-line2');
+  if (line2) line2.textContent = L
+    ? 'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ ਦੁਆਰਾ ਵਿਕਸਿਤ, ਸੀਨੀਅਰ ਸੁਆਇਲ ਕੈਮਿਸਟ, ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, PAU, ਲੁਧਿਆਣਾ'
+    : 'Developed by Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, PAU, Ludhiana';
 }
 
 function toggleEqPanel() {
