@@ -56,9 +56,7 @@
     font-family:'Outfit',sans-serif; letter-spacing:.02em;
     white-space:nowrap;
   }
-  .lang-opt.active {
-    background:var(--green-light); color:var(--green-dark);
-  }
+  .lang-opt.active { background:var(--green-light); color:var(--green-dark); }
   .lang-opt:not(.active):hover { background:rgba(82,183,136,.15); }
 
   /* HERO */
@@ -205,80 +203,20 @@
   .fert-table tbody tr:hover { background:var(--green-pale); }
   .fert-table td { padding:11px 14px; color:var(--text); vertical-align:middle; }
   .fert-table td:last-child { text-align:right; font-family:'DM Mono',monospace; font-size:14px; font-weight:500; color:var(--green-dark); }
-  .fert-dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+  .fert-dot { display:none; }
   .fert-source { font-size:11px; color:var(--text-muted); display:block; margin-top:2px; }
   .fert-table-footnote { margin-top:10px; font-size:11px; color:var(--text-muted); line-height:1.7; }
 
-  /* ---- EQUATIONS PANEL ---- */
-  .eq-panel-wrap {
-    position: relative; z-index: 5;
-    max-width: 640px; margin: 0 auto 2rem; padding: 0 1.25rem;
-  }
-  .eq-toggle-btn {
-    width: 100%; background: var(--white);
-    border: 1.5px solid var(--cream-dark); border-radius: 12px;
-    padding: 12px 18px; font-family: inherit; font-size: 13px;
-    font-weight: 500; color: var(--green-dark); cursor: pointer;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: all 0.2s;
-  }
-  .eq-toggle-btn:hover { border-color: var(--green-light); background: var(--green-pale); }
-  .eq-toggle-btn.open { border-radius: 12px 12px 0 0; border-color: var(--green-mid); }
-  #eq-chevron { transition: transform 0.2s; flex-shrink: 0; }
-  #eq-chevron.open { transform: rotate(180deg); }
-  .eq-content {
-    background: var(--white); border: 1.5px solid var(--green-mid);
-    border-top: none; border-radius: 0 0 12px 12px; padding: 1.25rem 1.5rem;
-  }
-  .eq-crop-block { margin-bottom: 1.25rem; }
-  .eq-crop-block:last-of-type { margin-bottom: 0; }
-  .eq-crop-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .eq-crop-icon { font-size: 18px; }
-  .eq-crop-name {
-    font-family: 'DM Serif Display', serif; font-size: 15px;
-    color: var(--green-dark); font-weight: 400;
-  }
-  body.pa .eq-crop-name { font-family: 'Noto Sans Gurmukhi', sans-serif; font-weight: 600; font-size: 14px; }
-  .eq-range { font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--text-muted); font-weight: 400; }
-  .eq-sub-label {
-    font-size: 12px; font-weight: 600; color: var(--green-mid);
-    margin: 10px 0 5px; letter-spacing: 0.03em;
-  }
-  .eq-table {
-    width: 100%; border-collapse: collapse;
-    font-size: 12.5px; margin-bottom: 4px;
-  }
-  .eq-table thead tr { background: var(--green-dark); color: var(--cream); }
-  .eq-table thead th { padding: 6px 12px; text-align: left; font-weight: 500; font-size: 11px; }
-  .eq-table tbody tr { border-bottom: 1px solid var(--cream-dark); }
-  .eq-table tbody tr:last-child { border-bottom: none; }
-  .eq-table tbody tr:hover { background: var(--green-pale); }
-  .eq-table td { padding: 7px 12px; color: var(--text); vertical-align: middle; }
-  .eq-table td:first-child { font-weight: 600; color: var(--green-dark); width: 70px; }
-  .eq-formula { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text); }
-  .eq-oc-note {
-    margin-top: 1rem; padding: 10px 14px;
-    background: #eefaf3; border: 1px solid #a8dab5; border-radius: 8px;
-    font-size: 12px; color: var(--green-mid); line-height: 1.7;
-  }
-  .eq-key-note {
-    margin-top: 10px; font-size: 11px; color: var(--text-muted);
-    line-height: 1.7; padding: 8px 12px;
-    background: var(--cream); border-radius: 8px; border: 1px solid var(--cream-dark);
-  }
-
-  /* ---- FERTILIZER BAG ---- */
+  /* FERTILIZER BAG */
   .fert-bag-cell { display:inline-flex; align-items:center; gap:8px; vertical-align:middle; }
   .fert-bag-cell svg { flex-shrink:0; }
 
-  /* ---- UREA SPLIT SCHEDULE ---- */
+  /* UREA SPLIT SCHEDULE */
   .split-schedule {
     margin-top:1.25rem; padding:14px 16px;
     background:var(--cream); border:1px solid var(--cream-dark); border-radius:12px;
   }
-  .split-title {
-    font-size:14px; font-weight:600; color:var(--green-dark); margin-bottom:6px;
-  }
+  .split-title { font-size:14px; font-weight:600; color:var(--green-dark); margin-bottom:6px; }
   .split-pk-note {
     font-size:12px; color:var(--green-mid); background:var(--green-pale);
     border-radius:8px; padding:6px 10px; margin-bottom:12px; line-height:1.6;
@@ -290,10 +228,7 @@
     border:1.5px solid var(--green-light); border-radius:12px; padding:12px 14px;
     position: relative; overflow: hidden;
   }
-  .split-row::before {
-    content:''; position:absolute; left:0; top:0; bottom:0;
-    width:4px; background:var(--green-mid);
-  }
+  .split-row::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--green-mid); }
   .split-row:nth-child(2)::before { background: #e07b3f; }
   .split-row:nth-child(3)::before { background: #7b8ee0; }
   .split-num {
@@ -308,12 +243,11 @@
   .split-amount { font-family:'DM Mono',monospace; font-size:14px; font-weight:600; color:var(--green-mid); }
   .split-amount-ha { font-size:11px; color:var(--text-muted); margin-left:6px; font-family:'Outfit',sans-serif; font-weight:400; }
 
-  /* ---- CARD HELP TOGGLE ---- */
+  /* CARD HELP TOGGLE */
   .help-card-toggle {
     display:flex; align-items:center; gap:8px; padding:12px 1.75rem;
     background:var(--green-pale); cursor:pointer; border-bottom:1px solid #a8dab5;
-    font-size:13px; font-weight:600; color:var(--green-dark);
-    transition:background .15s;
+    font-size:13px; font-weight:600; color:var(--green-dark); transition:background .15s;
   }
   .help-card-toggle:hover { background:#c8ecd0; }
   .help-card-body {
@@ -330,133 +264,21 @@
   .hc-num { width:18px; height:18px; border-radius:50%; background:var(--green-mid); color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
   .hc-list { margin:0; padding-left:16px; }
   .hc-list li { font-size:12.5px; color:var(--text-muted); line-height:1.65; margin-bottom:3px; }
-  .help-footer-wrap {
-    background: linear-gradient(180deg, #1a3a2a 0%, #0f2318 100%);
-  }
 
-  /* ---- HELP SECTION (always visible at bottom) ---- */
-  .help-panel {
-    padding: 2rem 1.5rem 1.5rem;
-    max-width: 800px; margin: 0 auto;
-  }
-  .help-heading {
-    font-size: 16px; font-weight: 700; color: var(--green-light);
-    letter-spacing: .12em; text-transform: uppercase;
-    margin-bottom: 1.25rem; padding-bottom: 8px;
-    border-bottom: 1px solid rgba(82,183,136,0.3);
-  }
-  body.pa .help-heading { text-transform: none; letter-spacing: 0; }
-  .help-inner {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
-  }
-  @media(max-width:540px) { .help-inner { grid-template-columns: 1fr; } }
-  .help-q {
-    font-size: 11px; font-weight: 700; color: var(--green-light);
-    letter-spacing: .08em; text-transform: uppercase; margin-bottom: 7px;
-  }
-  body.pa .help-q { text-transform: none; letter-spacing: 0; font-size: 12px; }
-  .help-section p { font-size: 12.5px; color: rgba(216,243,220,0.8); line-height: 1.7; margin: 0; }
-  .help-steps { display: flex; flex-direction: column; gap: 6px; }
-  .help-step { display: flex; gap: 8px; align-items: flex-start; }
-  .help-step-num {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--green-light); color: var(--green-dark);
-    font-size: 10px; font-weight: 700; display: flex; align-items: center;
-    justify-content: center; flex-shrink: 0; margin-top: 2px;
-  }
-  .help-step span:last-child { font-size: 12.5px; color: rgba(216,243,220,0.8); line-height: 1.65; }
-  .help-list { margin: 0; padding-left: 16px; }
-  .help-list li { font-size: 12.5px; color: rgba(216,243,220,0.8); line-height: 1.7; margin-bottom: 4px; }
-
-  /* ---- FOOTER ---- */
+  /* FOOTER */
+  .help-footer-wrap { background: linear-gradient(180deg, #1a3a2a 0%, #0f2318 100%); }
   footer {
-    position: relative; z-index: 5;
-    background: transparent;
-    border-top: 1px solid rgba(82,183,136,0.25);
-    color: #ffffff;
-    text-align: center; padding: 1.25rem 1.5rem;
-    max-width: 800px; margin: 0 auto;
+    position:relative; z-index:5; background:transparent;
+    border-top:1px solid rgba(82,183,136,0.25);
+    text-align:center; padding:1.25rem 1.5rem;
+    max-width:800px; margin:0 auto;
   }
-  .footer-line1 { font-size: 12px; margin-bottom: 5px; line-height: 1.6; }
-  .footer-line1 a { color: var(--green-light); text-decoration: none; }
-  .footer-line1 a:hover { text-decoration: underline; }
-  .footer-line2 { font-size: 11px; color: rgba(216,243,220,0.4); }
+  .footer-line1 { font-size:12px; margin-bottom:5px; line-height:1.6; color:#ffffff; }
+  .footer-line1 a { color:#ffffff; text-decoration:none; }
+  .footer-line1 a:hover { text-decoration:underline; }
+  .footer-line2 { font-size:11px; color:#ffffff; }
 
-  /* ---- REMOVE OLD FERT-DOT (replaced by bags) ---- */
-  .fert-dot { display:none; }
-  .unit-note {
-    display: flex; align-items: flex-start; gap: 7px;
-    background: #eef6ff; border: 1px solid #b8d8f8;
-    border-radius: 10px; padding: 10px 13px;
-    font-size: 12px; color: #2a5a8c; line-height: 1.65;
-    margin-top: 12px;
-  }
-  body.pa .unit-note { font-size: 12px; }
-
-  /* CONVERSION PANEL */
-  .conversion-panel {
-    margin-top: 1.25rem;
-    background: var(--cream);
-    border: 1px solid var(--cream-dark);
-    border-radius: 12px;
-    padding: 14px 16px;
-  }
-  .conversion-title {
-    font-size: 12px; font-weight: 600;
-    color: var(--green-dark); margin-bottom: 12px;
-    text-transform: uppercase; letter-spacing: .07em;
-  }
-  body.pa .conversion-title { text-transform: none; letter-spacing: 0; }
-  .conversion-steps { display: flex; flex-direction: column; gap: 4px; }
-  .conv-step {
-    display: flex; align-items: flex-start; gap: 10px;
-    background: var(--white); border: 1px solid var(--cream-dark);
-    border-radius: 9px; padding: 10px 12px;
-  }
-  .conv-step-icon {
-    font-size: 14px; font-weight: 700; color: var(--green-mid);
-    flex-shrink: 0; width: 20px; text-align: center; margin-top: 1px;
-  }
-  .conv-step-label {
-    font-size: 11.5px; font-weight: 600; color: var(--green-dark); margin-bottom: 4px;
-  }
-  .conv-step-vals {
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    color: var(--text-muted); line-height: 1.7;
-  }
-  .conv-arrow {
-    text-align: center; font-family: 'DM Mono', monospace;
-    font-size: 11px; font-weight: 500; color: var(--green-light);
-    padding: 2px 0; letter-spacing: .03em;
-  }
-  .founder-strip {
-    position: relative; z-index: 9;
-    background: var(--green-mid);
-    padding: 7px 1.5rem;
-    display: flex; align-items: center; justify-content: center;
-    gap: 8px; flex-wrap: wrap; text-align: center;
-  }
-  .founder-label {
-    font-size: 11px; font-weight: 500; color: rgba(216,243,220,0.75);
-    letter-spacing: .06em; text-transform: uppercase;
-  }
-  body.pa .founder-label { text-transform: none; letter-spacing: 0; }
-  .founder-name {
-    font-size: 13px; font-weight: 600; color: var(--green-pale);
-    letter-spacing: .01em;
-  }
-  .founder-sep { color: rgba(216,243,220,0.4); font-size: 14px; }
-  .founder-dept {
-    font-size: 11.5px; color: rgba(216,243,220,0.8);
-    font-style: italic;
-  }
-  body.pa .founder-dept { font-style: normal; }
-
-  @media(max-width:520px) {
-    .founder-sep { display: none; }
-    .founder-dept { width: 100%; }
-  }
-    .soil-grid{grid-template-columns:1fr;}
+  @media(max-width:480px) {
     .result-cards{grid-template-columns:1fr;}
     .r-value{font-size:22px;}
     .lang-opt{padding:5px 9px;}
@@ -479,14 +301,11 @@
       <div class="logo-sub" id="logo-sub">Fertilizer Planner</div>
     </div>
   </div>
-
-  <!-- Language Toggle -->
   <div class="lang-toggle">
     <button class="lang-opt active" id="btn-en" onclick="setLang('en')">English</button>
     <button class="lang-opt" id="btn-pa" onclick="setLang('pa')">ਪੰਜਾਬੀ</button>
   </div>
 </header>
-
 
 <section class="hero">
   <div class="hero-eyebrow" id="hero-eyebrow">Soil-Test Based Recommendation</div>
@@ -506,7 +325,7 @@
     <div class="help-card-body" id="help-card-body" style="display:none;">
       <div class="hc-section">
         <div class="hc-q" id="hc-q1">What is this app?</div>
-        <p id="hc-p1">PAU KHAD helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield. It gives you crop-specific recommendations for Nitrogen (N), Phosphorus (P₂O₅), and Potassium (K₂O).</p>
+        <p id="hc-p1">PAU KHAD app helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield. It gives you crop-specific recommendations for Nitrogen (N), Phosphorus (P₂O₅), and Potassium (K₂O).</p>
       </div>
       <div class="hc-section">
         <div class="hc-q" id="hc-q2">How to use — 3 simple steps</div>
@@ -560,7 +379,6 @@
           <span class="crop-desc" data-i18n="crop-wheat-desc">20–25 qtl/acre</span>
         </button>
       </div>
-
       <div class="residue-section" id="wheat-residue-wrap">
         <div class="residue-section-label" id="residue-label">Rice residue management practice</div>
         <div class="residue-grid">
@@ -610,8 +428,6 @@
           </div>
           <input type="number" id="SN" min="0" step="0.1" oninput="onSNInput()" />
         </div>
-
-        <!-- OC alternative -->
         <div class="oc-or-row">
           <div class="oc-or-line"></div>
           <span class="oc-or-text" id="oc-or-text">OR</span>
@@ -630,7 +446,6 @@
             </div>
           </div>
         </div>
-
         <div class="field-row">
           <div class="field-label">
             <label for="SP" data-i18n="sp-label">Soil Phosphorus (SP)</label>
@@ -684,12 +499,10 @@
           <div class="r-negative" id="fk-neg" style="display:none" data-i18n="high-k">High soil K — review</div>
         </div>
       </div>
-      <!-- T conversion note -->
       <div class="t-conv-note" id="t-conv-note" style="display:none;">
         <span id="t-conv-text"></span>
       </div>
 
-      <!-- Fertilizer table -->
       <div class="fert-table-wrap">
         <div class="fert-table-title" id="fert-title">Fertilizer product requirement</div>
         <div class="scenario-tabs">
@@ -881,7 +694,6 @@
       </div>
 
     </div>
-
   </div>
 </div>
 
@@ -893,656 +705,319 @@
       <a href="http://pau.edu/" target="_blank">Punjab Agricultural University, Ludhiana — All rights reserved.</a>
     </div>
     <div class="footer-line2" id="footer-line2">
-      Developed by Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, PAU, Ludhiana
+      Developed by Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, Punjab Agricultural University, Ludhiana
     </div>
   </footer>
 </div>
 
-
 <script>
-/* ===================== TRANSLATIONS ===================== */
 const T18N = {
   en: {
-    lang: 'en',
-    bodyClass: '',
-    title: 'PAU KHAD app — Fertilizer Requirement Calculator',
-    'logo-text': 'PAU KHAD app',
-    'logo-sub': 'Fertilizer Planner',
-    'hero-eyebrow': 'Soil-Test Based Recommendation',
-    'hero-title': 'Calculate your <em>precise</em> fertilizer requirement',
-    'hero-desc': 'Enter your target yield and soil nutrient levels to get crop-specific N, P₂O₅ and K₂O recommendations in kg/acre.',
-    'step1-pill': 'Step 1', 'step1-title': 'Select crop',
-    'step2-pill': 'Step 2', 'step2-title': 'Target yield (T)',
-    'step3-pill': 'Step 3', 'step3-title': 'Soil nutrient status',
-    'crop-rice': 'Rice', 'crop-rice-desc': '25–35 qtl/acre',
-    'crop-maize': 'Maize', 'crop-maize-desc': '25–30 qtl/acre',
-    'crop-wheat': 'Wheat', 'crop-wheat-desc': '20–25 qtl/acre',
-    'residue-label': 'Rice residue management practice',
-    'res-removed': 'Removed', 'res-incorporated': 'Incorporated', 'res-mulching': 'Mulching',
-    't-label': 'Target yield — quintals / acre',
-    'sn-ph': 'kg/acre', 'sp-ph': 'kg/acre', 'sk-ph': 'kg/acre',
-    'tin-ph': 'e.g. 30',
-    'nitrogen': 'Nitrogen', 'phosphorus': 'Phosphorus', 'potassium': 'Potassium',
-    'sn-label': 'Soil Nitrogen (SN)',
-    'sp-label': 'Soil Phosphorus (SP)',
-    'sk-label': 'Soil Potassium (SK)',
-    'oc-label': 'Organic Carbon (OC %)',
-    'oc-hint': 'if Soil N not available',
-    'oc-badge': 'N estimated from OC%',
-    'oc-estimate-msg': (oc, sn_ha, sn_ac) => `Soil N estimated from OC: ${oc}% → ${sn_ha} kg/ha (${sn_ac} kg/acre) using: SN = 94 + 68 × OC% (r=0.118, n=703, Punjab soils)`,
-    'oc-warning': 'For best results, use directly measured Soil N values. OC-based estimates are approximate and should only be used when Soil N is not available in your soil test report.',
-    'err-n-missing': 'Enter either Soil Nitrogen (SN) or Organic Carbon (OC%) — at least one is required.',
-    'err-oc-range': 'OC% must be between 0 and 5.',
-    'calc-btn-text': 'Calculate fertilizer requirement',
-    'results-heading': 'Fertilizer recommendation',
-    'unit-n': 'kg N / acre', 'unit-p': 'kg P₂O₅ / acre', 'unit-k': 'kg K₂O / acre',
-    'high-n': 'High soil N — review', 'high-p': 'High soil P — review', 'high-k': 'High soil K — review',
-    'results-footnote': 'Results computed using soil-test based fertilizer adjustment equations. Negative values indicate soil nutrients exceed crop requirements — no fertilizer needed for that nutrient.',
-    't-conv-note': (T_acre, T_ha, sn, sp, sk) => `T: ${T_acre} q/acre → ${T_ha} q/ha · SN: ${sn} kg/ha · SP: ${sp} kg/ha · SK: ${sk} kg/ha. Fertilizer outputs ÷ 2.471 → kg/acre.`,
-    'fert-title': 'Fertilizer product requirement',
-    'tab-dap': 'Using DAP for phosphorus', 'tab-ssp': 'Using SSP for phosphorus',
-    'th-fert': 'Fertilizer', 'th-nutrient': 'Nutrient supplied', 'th-qty': 'kg / acre', 'th-qty-ha': 'kg / ha',
-    'urea': 'Urea', 'urea-src-dap': '46% N — adjusted after DAP N credit',
-    'urea-src-ssp': '46% N — full FN dose (no N credit from SSP)',
-    'dap-src': 'Di-Ammonium Phosphate — 18% N, 46% P₂O₅',
-    'mop': 'MOP', 'mop-src': 'Muriate of Potash — 60% K₂O',
-    'ssp-src': 'Single Super Phosphate — 16% P₂O₅',
-    'nitrogen-n': 'Nitrogen (N)', 'phosphorus-p': 'Phosphorus (P₂O₅) + N credit',
-    'phosphorus-p2': 'Phosphorus (P₂O₅)', 'potassium-k': 'Potassium (K₂O)', 'potassium-k2': 'Potassium (K₂O)',
-    'dap-footnote': 'DAP supplies 18% N alongside P₂O₅. This nitrogen is credited and deducted from the Urea dose. If DAP N exceeds FN requirement, Urea = 0.',
-    'ssp-footnote': 'SSP contains no nitrogen, so the full Urea dose is applied. SSP dose = FP₂O₅ ÷ 0.16. Negative FP₂O₅ values are treated as 0.',
-    'eq-toggle-show': 'View STCR equations used in this app ▾',
-    'eq-toggle-hide': 'Hide STCR equations ▴',
-    'founder-label': 'Founded by',
-    'founder-name': 'Dr. Jagdeep Singh',
-    'founder-dept': 'Department of Soil Science, Punjab Agricultural University, Ludhiana',
-    'err-t': 'Please enter a target yield.',
-    'err-soil': 'Please fill in all soil nutrient values (SN, SP, SK).',
-    'err-t-zero': 'Target yield must be greater than 0.',
-    'err-soil-neg': 'Soil values cannot be negative.',
-    'err-range': (min, max, crop) => `Note: T is outside the recommended ${min}–${max} range for ${crop}.`,
-    'crop-labels': { rice:'Rice', maize:'Maize', wheat:'Wheat' },
-    'residue-labels': { removed:'Removed', incorporated:'Incorporated', mulching:'Mulching' },
-    'crop-tag-wheat': (r) => `Wheat — Residue ${r}`,
-    'hints': {
-      rice: 'Recommended range for rice is 25–35 quintals/acre.',
-      maize: 'Recommended range for maize is 25–30 quintals/acre.',
-      wheat: 'Recommended range for wheat is 20–25 quintals/acre.'
-    },
-    'badge': { rice:'25–35 qtl', maize:'25–30 qtl', wheat:'20–25 qtl' },
-    'dap-credit': (n_acre, n_ha, full) => `DAP supplies ${n_acre} kg N/acre (${n_ha} kg N/ha) — deducted from Urea dose.` + (full ? ' DAP alone meets full N requirement; no Urea needed.' : ''),
+    lang:'en', bodyClass:'',
+    title:'PAU KHAD app — Fertilizer Requirement Calculator',
+    'logo-text':'PAU KHAD app', 'logo-sub':'Fertilizer Planner',
+    'hero-eyebrow':'Soil-Test Based Recommendation',
+    'hero-title':'Calculate your <em>precise</em> fertilizer requirement',
+    'hero-desc':'Enter your target yield and soil nutrient levels to get crop-specific N, P₂O₅ and K₂O recommendations in kg/acre.',
+    'step1-pill':'Step 1','step1-title':'Select crop',
+    'step2-pill':'Step 2','step2-title':'Target yield (T)',
+    'step3-pill':'Step 3','step3-title':'Soil nutrient status',
+    'crop-rice':'Rice','crop-rice-desc':'25–35 qtl/acre',
+    'crop-maize':'Maize','crop-maize-desc':'25–30 qtl/acre',
+    'crop-wheat':'Wheat','crop-wheat-desc':'20–25 qtl/acre',
+    'residue-label':'Rice residue management practice',
+    'res-removed':'Removed','res-incorporated':'Incorporated','res-mulching':'Mulching',
+    't-label':'Target yield — quintals / acre',
+    'sn-ph':'kg/acre','sp-ph':'kg/acre','sk-ph':'kg/acre','tin-ph':'e.g. 30',
+    'sn-label':'Soil Nitrogen (SN)','sp-label':'Soil Phosphorus (SP)','sk-label':'Soil Potassium (SK)',
+    'oc-label':'Organic Carbon (OC %)','oc-hint':'if Soil N not available',
+    'oc-badge':'N estimated from OC%',
+    'oc-estimate-msg':(oc,sn_ha,sn_ac)=>`Soil N estimated from OC: ${oc}% → ${sn_ha} kg/ha (${sn_ac} kg/acre) using: SN = 94 + 68 × OC%`,
+    'oc-warning':'For best results, use directly measured Soil N values.',
+    'err-n-missing':'Enter either Soil Nitrogen (SN) or Organic Carbon (OC%) — at least one is required.',
+    'err-oc-range':'OC% must be between 0 and 5.',
+    'calc-btn-text':'Calculate fertilizer requirement',
+    'results-heading':'Fertilizer recommendation',
+    'unit-n':'kg N / acre','unit-p':'kg P₂O₅ / acre','unit-k':'kg K₂O / acre',
+    'high-n':'High soil N — review','high-p':'High soil P — review','high-k':'High soil K — review',
+    'results-footnote':'Results computed using soil-test based fertilizer adjustment equations.',
+    't-conv-note':(T_acre,T_ha,sn,sp,sk)=>`T: ${T_acre} q/acre → ${T_ha} q/ha · SN: ${sn} kg/ha · SP: ${sp} kg/ha · SK: ${sk} kg/ha. Fertilizer outputs ÷ 2.471 → kg/acre.`,
+    'fert-title':'Fertilizer product requirement',
+    'tab-dap':'Using DAP for phosphorus','tab-ssp':'Using SSP for phosphorus',
+    'th-fert':'Fertilizer','th-nutrient':'Nutrient supplied','th-qty':'kg / acre','th-qty-ha':'kg / ha',
+    'urea':'Urea','urea-src-dap':'46% N — adjusted after DAP N credit',
+    'urea-src-ssp':'46% N — full FN dose (no N credit from SSP)',
+    'dap-src':'Di-Ammonium Phosphate — 18% N, 46% P₂O₅',
+    'mop':'MOP','mop-src':'Muriate of Potash — 60% K₂O',
+    'ssp-src':'Single Super Phosphate — 16% P₂O₅',
+    'nitrogen-n':'Nitrogen (N)','phosphorus-p':'Phosphorus (P₂O₅) + N credit',
+    'phosphorus-p2':'Phosphorus (P₂O₅)','potassium-k':'Potassium (K₂O)','potassium-k2':'Potassium (K₂O)',
+    'dap-footnote':'DAP supplies 18% N alongside P₂O₅. This nitrogen is credited and deducted from the Urea dose. If DAP N exceeds FN requirement, Urea = 0.',
+    'ssp-footnote':'SSP contains no nitrogen, so the full Urea dose is applied. SSP dose = FP₂O₅ ÷ 0.16.',
+    'err-t':'Please enter a target yield.','err-soil':'Please fill in all soil nutrient values (SN, SP, SK).',
+    'err-t-zero':'Target yield must be greater than 0.','err-soil-neg':'Soil values cannot be negative.',
+    'err-range':(min,max,crop)=>`Note: T is outside the recommended ${min}–${max} range for ${crop}.`,
+    'crop-labels':{rice:'Rice',maize:'Maize',wheat:'Wheat'},
+    'residue-labels':{removed:'Removed',incorporated:'Incorporated',mulching:'Mulching'},
+    'crop-tag-wheat':(r)=>`Wheat — Residue ${r}`,
+    'hints':{rice:'Recommended range for rice is 25–35 quintals/acre.',maize:'Recommended range for maize is 25–30 quintals/acre.',wheat:'Recommended range for wheat is 20–25 quintals/acre.'},
+    'badge':{rice:'25–35 qtl',maize:'25–30 qtl',wheat:'20–25 qtl'},
+    'dap-credit':(n_acre,n_ha,full)=>`DAP supplies ${n_acre} kg N/acre (${n_ha} kg N/ha) — deducted from Urea dose.`+(full?' DAP alone meets full N requirement; no Urea needed.':''),
   },
   pa: {
-    lang: 'pa',
-    bodyClass: 'pa',
-    title: 'PAU ਖਾਦ — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ',
-    'logo-text': 'PAU KHAD app',
-    'logo-sub': 'ਖਾਦ ਯੋਜਨਾਕਾਰ',
-    'hero-eyebrow': 'ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਸਿਫ਼ਾਰਸ਼',
-    'hero-title': 'ਆਪਣੀ ਫ਼ਸਲ ਲਈ <em>ਸਹੀ ਖਾਦ</em> ਦੀ ਲੋੜ ਜਾਣੋ',
-    'hero-desc': 'ਟੀਚਾ ਝਾੜ ਅਤੇ ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ ਦਰਜ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਅਨੁਸਾਰ N, P₂O₅ ਅਤੇ K₂O ਦੀ ਸਿਫ਼ਾਰਸ਼ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ ਪ੍ਰਾਪਤ ਕਰੋ।',
-    'step1-pill': 'ਕਦਮ ੧', 'step1-title': 'ਫ਼ਸਲ ਚੁਣੋ',
-    'step2-pill': 'ਕਦਮ ੨', 'step2-title': 'ਟੀਚਾ ਝਾੜ (T)',
-    'step3-pill': 'ਕਦਮ ੩', 'step3-title': 'ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ',
-    'crop-rice': 'ਝੋਨਾ', 'crop-rice-desc': '੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ',
-    'crop-maize': 'ਮੱਕੀ', 'crop-maize-desc': '੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ',
-    'crop-wheat': 'ਕਣਕ', 'crop-wheat-desc': '੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ',
-    'residue-label': 'ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ',
-    'res-removed': 'ਹਟਾਈ ਗਈ', 'res-incorporated': 'ਵਾਹੀ ਗਈ', 'res-mulching': 'ਮਲਚਿੰਗ',
-    't-label': 'ਟੀਚਾ ਝਾੜ — ਕੁਇੰਟਲ / ਏਕੜ',
-    'sn-ph': 'ਕਿੱਲੋ/ਏਕੜ', 'sp-ph': 'ਕਿੱਲੋ/ਏਕੜ', 'sk-ph': 'ਕਿੱਲੋ/ਏਕੜ',
-    'tin-ph': 'ਜਿਵੇਂ 30',
-    'nitrogen': 'ਨਾਈਟ੍ਰੋਜਨ', 'phosphorus': 'ਫਾਸਫੋਰਸ', 'potassium': 'ਪੋਟਾਸ਼ੀਅਮ',
-    'sn-label': 'ਮਿੱਟੀ ਨਾਈਟ੍ਰੋਜਨ (SN)',
-    'sp-label': 'ਮਿੱਟੀ ਫਾਸਫੋਰਸ (SP)',
-    'sk-label': 'ਮਿੱਟੀ ਪੋਟਾਸ਼ੀਅਮ (SK)',
-    'oc-label': 'ਜੈਵਿਕ ਕਾਰਬਨ (OC %)',
-    'oc-hint': 'ਜੇ SN ਉਪਲਬਧ ਨਹੀਂ',
-    'oc-badge': 'N — OC% ਤੋਂ ਅੰਦਾਜ਼ਾ',
-    'oc-estimate-msg': (oc, sn_ha, sn_ac) => `SN ਦਾ ਅੰਦਾਜ਼ਾ OC ਤੋਂ: ${oc}% → ${sn_ha} kg/ha (${sn_ac} kg/ਏਕੜ) — ਫਾਰਮੂਲਾ: SN = 94 + 68 × OC% (r=0.118, n=703, ਪੰਜਾਬ ਮਿੱਟੀ)`,
-    'oc-warning': 'ਵਧੀਆ ਨਤੀਜਿਆਂ ਲਈ ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਵਿੱਚੋਂ ਸਿੱਧਾ ਮਿੱਟੀ N ਮੁੱਲ ਵਰਤੋ। OC ਆਧਾਰਿਤ ਅੰਦਾਜ਼ਾ ਕੇਵਲ ਉਦੋਂ ਵਰਤੋ ਜਦੋਂ ਮਿੱਟੀ N ਰਿਪੋਰਟ ਵਿੱਚ ਉਪਲਬਧ ਨਾ ਹੋਵੇ।',
-    'err-n-missing': 'SN (ਮਿੱਟੀ ਨਾਈਟ੍ਰੋਜਨ) ਜਾਂ OC% ਵਿੱਚੋਂ ਕੋਈ ਇੱਕ ਦਰਜ ਕਰੋ।',
-    'err-oc-range': 'OC% ਦਾ ਮੁੱਲ 0 ਅਤੇ 5 ਦੇ ਵਿਚਕਾਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।',
-    'calc-btn-text': 'ਖਾਦ ਦੀ ਲੋੜ ਹਿਸਾਬ ਕਰੋ',
-    'results-heading': 'ਖਾਦ ਸਿਫ਼ਾਰਸ਼',
-    'unit-n': 'ਕਿੱਲੋ N / ਏਕੜ', 'unit-p': 'ਕਿੱਲੋ P₂O₅ / ਏਕੜ', 'unit-k': 'ਕਿੱਲੋ K₂O / ਏਕੜ',
-    'high-n': 'ਮਿੱਟੀ N ਵੱਧ — ਜਾਂਚ ਕਰੋ', 'high-p': 'ਮਿੱਟੀ P ਵੱਧ — ਜਾਂਚ ਕਰੋ', 'high-k': 'ਮਿੱਟੀ K ਵੱਧ — ਜਾਂਚ ਕਰੋ',
-    'results-footnote': 'ਨਤੀਜੇ ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਸਮੀਕਰਨਾਂ ਅਨੁਸਾਰ ਹਨ। ਜੇ ਕੋਈ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਆਵੇ, ਉਸ ਪੌਸ਼ਟਿਕ ਤੱਤ ਦੀ ਖਾਦ ਨਹੀਂ ਪਾਉਣੀ।',
-    't-conv-note': (T_acre, T_ha, sn, sp, sk) => `T: ${T_acre} ਕੁਇੰਟਲ/ਏਕੜ → ${T_ha} ਕੁਇੰਟਲ/ਹੈਕਟੇਅਰ · SN: ${sn} kg/ha · SP: ${sp} kg/ha · SK: ${sk} kg/ha। ਖਾਦ ÷ 2.471 → ਕਿੱਲੋ/ਏਕੜ।`,
-    'fert-title': 'ਖਾਦ ਉਤਪਾਦ ਦੀ ਲੋੜ',
-    'tab-dap': 'DAP ਨਾਲ ਫਾਸਫੋਰਸ', 'tab-ssp': 'SSP ਨਾਲ ਫਾਸਫੋਰਸ',
-    'th-fert': 'ਖਾਦ', 'th-nutrient': 'ਪੌਸ਼ਟਿਕ ਤੱਤ', 'th-qty': 'ਕਿੱਲੋ / ਏਕੜ', 'th-qty-ha': 'ਕਿੱਲੋ / ਹੈਕਟੇਅਰ',
-    'urea': 'ਯੂਰੀਆ', 'urea-src-dap': '46% N — DAP ਦੇ N ਕ੍ਰੈਡਿਟ ਤੋਂ ਬਾਅਦ',
-    'urea-src-ssp': '46% N — ਪੂਰੀ FN ਮਾਤਰਾ (SSP ਤੋਂ N ਕ੍ਰੈਡਿਟ ਨਹੀਂ)',
-    'dap-src': 'ਡਾਈ-ਅਮੋਨੀਅਮ ਫਾਸਫੇਟ — 18% N, 46% P₂O₅',
-    'mop': 'MOP', 'mop-src': 'ਮਿਊਰੇਟ ਆਫ਼ ਪੋਟਾਸ਼ — 60% K₂O',
-    'ssp-src': 'ਸਿੰਗਲ ਸੁਪਰ ਫਾਸਫੇਟ — 16% P₂O₅',
-    'nitrogen-n': 'ਨਾਈਟ੍ਰੋਜਨ (N)', 'phosphorus-p': 'ਫਾਸਫੋਰਸ (P₂O₅) + N ਕ੍ਰੈਡਿਟ',
-    'phosphorus-p2': 'ਫਾਸਫੋਰਸ (P₂O₅)', 'potassium-k': 'ਪੋਟਾਸ਼ੀਅਮ (K₂O)', 'potassium-k2': 'ਪੋਟਾਸ਼ੀਅਮ (K₂O)',
-    'dap-footnote': 'DAP ਵਿੱਚ 18% N ਹੁੰਦਾ ਹੈ ਜੋ ਯੂਰੀਆ ਦੀ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ ਜਾਂਦਾ ਹੈ। ਜੇ DAP ਦਾ N ਪੂਰੀ FN ਲੋੜ ਪੂਰੀ ਕਰ ਦੇਵੇ, ਯੂਰੀਆ = 0।',
-    'ssp-footnote': 'SSP ਵਿੱਚ N ਨਹੀਂ ਹੁੰਦਾ, ਇਸ ਲਈ ਯੂਰੀਆ ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਪਾਓ। SSP ਮਾਤਰਾ = FP₂O₅ ÷ 0.16।',
-    'eq-toggle-show': 'ਇਸ ਐਪ ਵਿੱਚ ਵਰਤੇ STCR ਸਮੀਕਰਨ ਦੇਖੋ ▾',
-    'eq-toggle-hide': 'STCR ਸਮੀਕਰਨ ਲੁਕਾਓ ▴',
-    'founder-label': 'ਸੰਸਥਾਪਕ',
-    'founder-name': 'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ',
-    'founder-dept': 'ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, ਪੰਜਾਬ ਖੇਤੀਬਾੜੀ ਯੂਨੀਵਰਸਿਟੀ, ਲੁਧਿਆਣਾ',
-    'err-t': 'ਕਿਰਪਾ ਕਰਕੇ ਟੀਚਾ ਝਾੜ ਦਰਜ ਕਰੋ।',
-    'err-soil': 'ਕਿਰਪਾ ਕਰਕੇ ਮਿੱਟੀ ਦੇ ਸਾਰੇ ਮੁੱਲ (SN, SP, SK) ਦਰਜ ਕਰੋ।',
-    'err-t-zero': 'ਟੀਚਾ ਝਾੜ ਜ਼ੀਰੋ ਤੋਂ ਵੱਧ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।',
-    'err-soil-neg': 'ਮਿੱਟੀ ਦੇ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਨਹੀਂ ਹੋ ਸਕਦੇ।',
-    'err-range': (min, max, crop) => `ਨੋਟ: T ਮੁੱਲ ${min}–${max} ਦੀ ਸਿਫ਼ਾਰਸ਼ੀ ਸੀਮਾ ਤੋਂ ਬਾਹਰ ਹੈ।`,
-    'crop-labels': { rice:'ਝੋਨਾ', maize:'ਮੱਕੀ', wheat:'ਕਣਕ' },
-    'residue-labels': { removed:'ਹਟਾਈ ਗਈ', incorporated:'ਵਾਹੀ ਗਈ', mulching:'ਮਲਚਿੰਗ' },
-    'crop-tag-wheat': (r) => `ਕਣਕ — ਰਹਿੰਦ-ਖੂੰਹਦ ${r}`,
-    'hints': {
-      rice: 'ਝੋਨੇ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ।',
-      maize: 'ਮੱਕੀ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ।',
-      wheat: 'ਕਣਕ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ।'
-    },
-    'badge': { rice:'੨੫–੩੫ ਕੁਇੰਟਲ', maize:'੨੫–੩੦ ਕੁਇੰਟਲ', wheat:'੨੦–੨੫ ਕੁਇੰਟਲ' },
-    'dap-credit': (n_acre, n_ha, full) => `DAP ਤੋਂ ${n_acre} ਕਿੱਲੋ N/ਏਕੜ (${n_ha} ਕਿੱਲੋ N/ਹੈਕਟੇਅਰ) ਮਿਲਦਾ ਹੈ — ਯੂਰੀਆ ਮਾਤਰਾ ਵਿੱਚੋਂ ਘਟਾਇਆ।` + (full ? ' DAP ਇਕੱਲਾ ਪੂਰੀ N ਲੋੜ ਪੂਰੀ ਕਰਦਾ ਹੈ; ਯੂਰੀਆ ਦੀ ਲੋੜ ਨਹੀਂ।' : ''),
+    lang:'pa', bodyClass:'pa',
+    title:'PAU KHAD app — ਖਾਦ ਲੋੜ ਕੈਲਕੁਲੇਟਰ',
+    'logo-text':'PAU KHAD app','logo-sub':'ਖਾਦ ਯੋਜਨਾਕਾਰ',
+    'hero-eyebrow':'ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਸਿਫ਼ਾਰਸ਼',
+    'hero-title':'ਆਪਣੀ ਫ਼ਸਲ ਲਈ <em>ਸਹੀ ਖਾਦ</em> ਦੀ ਲੋੜ ਜਾਣੋ',
+    'hero-desc':'ਟੀਚਾ ਝਾੜ ਅਤੇ ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ ਦਰਜ ਕਰੋ ਅਤੇ ਫ਼ਸਲ ਅਨੁਸਾਰ N, P₂O₅ ਅਤੇ K₂O ਦੀ ਸਿਫ਼ਾਰਸ਼ ਕਿੱਲੋ/ਏਕੜ ਵਿੱਚ ਪ੍ਰਾਪਤ ਕਰੋ।',
+    'step1-pill':'ਕਦਮ ੧','step1-title':'ਫ਼ਸਲ ਚੁਣੋ',
+    'step2-pill':'ਕਦਮ ੨','step2-title':'ਟੀਚਾ ਝਾੜ (T)',
+    'step3-pill':'ਕਦਮ ੩','step3-title':'ਮਿੱਟੀ ਦੇ ਪੌਸ਼ਟਿਕ ਤੱਤਾਂ ਦਾ ਪੱਧਰ',
+    'crop-rice':'ਝੋਨਾ','crop-rice-desc':'੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ',
+    'crop-maize':'ਮੱਕੀ','crop-maize-desc':'੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ',
+    'crop-wheat':'ਕਣਕ','crop-wheat-desc':'੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ',
+    'residue-label':'ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ',
+    'res-removed':'ਹਟਾਈ ਗਈ','res-incorporated':'ਵਾਹੀ ਗਈ','res-mulching':'ਮਲਚਿੰਗ',
+    't-label':'ਟੀਚਾ ਝਾੜ — ਕੁਇੰਟਲ / ਏਕੜ',
+    'sn-ph':'ਕਿੱਲੋ/ਏਕੜ','sp-ph':'ਕਿੱਲੋ/ਏਕੜ','sk-ph':'ਕਿੱਲੋ/ਏਕੜ','tin-ph':'ਜਿਵੇਂ 30',
+    'sn-label':'ਮਿੱਟੀ ਨਾਈਟ੍ਰੋਜਨ (SN)','sp-label':'ਮਿੱਟੀ ਫਾਸਫੋਰਸ (SP)','sk-label':'ਮਿੱਟੀ ਪੋਟਾਸ਼ੀਅਮ (SK)',
+    'oc-label':'ਜੈਵਿਕ ਕਾਰਬਨ (OC %)','oc-hint':'ਜੇ SN ਉਪਲਬਧ ਨਹੀਂ',
+    'oc-badge':'N — OC% ਤੋਂ ਅੰਦਾਜ਼ਾ',
+    'oc-estimate-msg':(oc,sn_ha,sn_ac)=>`SN ਦਾ ਅੰਦਾਜ਼ਾ OC ਤੋਂ: ${oc}% → ${sn_ha} kg/ha (${sn_ac} kg/ਏਕੜ)`,
+    'oc-warning':'ਵਧੀਆ ਨਤੀਜਿਆਂ ਲਈ ਸਿੱਧਾ ਮਿੱਟੀ N ਮੁੱਲ ਵਰਤੋ।',
+    'err-n-missing':'SN ਜਾਂ OC% ਵਿੱਚੋਂ ਕੋਈ ਇੱਕ ਦਰਜ ਕਰੋ।',
+    'err-oc-range':'OC% ਦਾ ਮੁੱਲ 0 ਅਤੇ 5 ਦੇ ਵਿਚਕਾਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।',
+    'calc-btn-text':'ਖਾਦ ਦੀ ਲੋੜ ਹਿਸਾਬ ਕਰੋ',
+    'results-heading':'ਖਾਦ ਸਿਫ਼ਾਰਸ਼',
+    'unit-n':'ਕਿੱਲੋ N / ਏਕੜ','unit-p':'ਕਿੱਲੋ P₂O₅ / ਏਕੜ','unit-k':'ਕਿੱਲੋ K₂O / ਏਕੜ',
+    'high-n':'ਮਿੱਟੀ N ਵੱਧ','high-p':'ਮਿੱਟੀ P ਵੱਧ','high-k':'ਮਿੱਟੀ K ਵੱਧ',
+    'results-footnote':'ਨਤੀਜੇ ਮਿੱਟੀ ਜਾਂਚ ਆਧਾਰਿਤ ਖਾਦ ਸਮੀਕਰਨਾਂ ਅਨੁਸਾਰ ਹਨ।',
+    't-conv-note':(T_acre,T_ha,sn,sp,sk)=>`T: ${T_acre} ਕੁਇੰਟਲ/ਏਕੜ → ${T_ha} q/ha · SN: ${sn} kg/ha · SP: ${sp} kg/ha · SK: ${sk} kg/ha।`,
+    'fert-title':'ਖਾਦ ਉਤਪਾਦ ਦੀ ਲੋੜ',
+    'tab-dap':'DAP ਨਾਲ ਫਾਸਫੋਰਸ','tab-ssp':'SSP ਨਾਲ ਫਾਸਫੋਰਸ',
+    'th-fert':'ਖਾਦ','th-nutrient':'ਪੌਸ਼ਟਿਕ ਤੱਤ','th-qty':'ਕਿੱਲੋ / ਏਕੜ','th-qty-ha':'ਕਿੱਲੋ / ਹੈਕਟੇਅਰ',
+    'urea':'ਯੂਰੀਆ','urea-src-dap':'46% N — DAP ਦੇ N ਕ੍ਰੈਡਿਟ ਤੋਂ ਬਾਅਦ',
+    'urea-src-ssp':'46% N — ਪੂਰੀ FN ਮਾਤਰਾ',
+    'dap-src':'ਡਾਈ-ਅਮੋਨੀਅਮ ਫਾਸਫੇਟ — 18% N, 46% P₂O₅',
+    'mop':'MOP','mop-src':'ਮਿਊਰੇਟ ਆਫ਼ ਪੋਟਾਸ਼ — 60% K₂O',
+    'ssp-src':'ਸਿੰਗਲ ਸੁਪਰ ਫਾਸਫੇਟ — 16% P₂O₅',
+    'nitrogen-n':'ਨਾਈਟ੍ਰੋਜਨ (N)','phosphorus-p':'ਫਾਸਫੋਰਸ (P₂O₅) + N ਕ੍ਰੈਡਿਟ',
+    'phosphorus-p2':'ਫਾਸਫੋਰਸ (P₂O₅)','potassium-k':'ਪੋਟਾਸ਼ੀਅਮ (K₂O)','potassium-k2':'ਪੋਟਾਸ਼ੀਅਮ (K₂O)',
+    'dap-footnote':'DAP ਵਿੱਚ 18% N ਹੁੰਦਾ ਹੈ ਜੋ ਯੂਰੀਆ ਵਿੱਚੋਂ ਘਟਾਇਆ ਜਾਂਦਾ ਹੈ।',
+    'ssp-footnote':'SSP ਵਿੱਚ N ਨਹੀਂ ਹੁੰਦਾ, ਯੂਰੀਆ ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਪਾਓ।',
+    'err-t':'ਕਿਰਪਾ ਕਰਕੇ ਟੀਚਾ ਝਾੜ ਦਰਜ ਕਰੋ।','err-soil':'ਸਾਰੇ ਮਿੱਟੀ ਮੁੱਲ (SN, SP, SK) ਦਰਜ ਕਰੋ।',
+    'err-t-zero':'ਟੀਚਾ ਝਾੜ ਜ਼ੀਰੋ ਤੋਂ ਵੱਧ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।','err-soil-neg':'ਮਿੱਟੀ ਦੇ ਮੁੱਲ ਨਕਾਰਾਤਮਕ ਨਹੀਂ ਹੋ ਸਕਦੇ।',
+    'err-range':(min,max,crop)=>`ਨੋਟ: T ਮੁੱਲ ${min}–${max} ਦੀ ਸੀਮਾ ਤੋਂ ਬਾਹਰ ਹੈ।`,
+    'crop-labels':{rice:'ਝੋਨਾ',maize:'ਮੱਕੀ',wheat:'ਕਣਕ'},
+    'residue-labels':{removed:'ਹਟਾਈ ਗਈ',incorporated:'ਵਾਹੀ ਗਈ',mulching:'ਮਲਚਿੰਗ'},
+    'crop-tag-wheat':(r)=>`ਕਣਕ — ਰਹਿੰਦ-ਖੂੰਹਦ ${r}`,
+    'hints':{rice:'ਝੋਨੇ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ।',maize:'ਮੱਕੀ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ।',wheat:'ਕਣਕ ਲਈ ਸਿਫ਼ਾਰਸ਼ੀ ਝਾੜ: ੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ।'},
+    'badge':{rice:'੨੫–੩੫ ਕੁਇੰਟਲ',maize:'੨੫–੩੦ ਕੁਇੰਟਲ',wheat:'੨੦–੨੫ ਕੁਇੰਟਲ'},
+    'dap-credit':(n_acre,n_ha,full)=>`DAP ਤੋਂ ${n_acre} ਕਿੱਲੋ N/ਏਕੜ (${n_ha} kg N/ha) ਮਿਲਦਾ ਹੈ।`+(full?' ਯੂਰੀਆ ਦੀ ਲੋੜ ਨਹੀਂ।':''),
   }
 };
 
-/* ===================== APP STATE ===================== */
 const cropData = {
-  rice:  { FN:[3.02,-0.63],    FP:[1.78,-8.37],   FK:[2.75,-1.39]  },
-  maize: { FN:[5.313,-1.663],  FP:[0.995,-0.571],  FK:[1.163,-0.506] }
+  rice:  {FN:[3.02,-0.63],   FP:[1.78,-8.37],  FK:[2.75,-1.39]},
+  maize: {FN:[5.313,-1.663], FP:[0.995,-0.571], FK:[1.163,-0.506]}
 };
 const wheatVariants = {
-  removed:      { FN:[5.968,-1.364],  FP:[1.714,-1.157], FK:[0.998,-0.108] },
-  mulching:     { FN:[4.675,-0.992],  FP:[1.714,-1.515], FK:[0.672,-0.075] },
-  incorporated: { FN:[5.476,-1.453],  FP:[1.04,-0.64],   FK:[0.603,-0.078] }
+  removed:      {FN:[5.968,-1.364], FP:[1.714,-1.157], FK:[0.998,-0.108]},
+  mulching:     {FN:[4.675,-0.992], FP:[1.714,-1.515], FK:[0.672,-0.075]},
+  incorporated: {FN:[5.476,-1.453], FP:[1.04,-0.64],   FK:[0.603,-0.078]}
 };
-const ranges = { rice:{min:25,max:35}, maize:{min:25,max:30}, wheat:{min:20,max:25} };
+const ranges = {rice:{min:25,max:35},maize:{min:25,max:30},wheat:{min:20,max:25}};
 
-let activeLang = 'en';
-let activeCrop = 'rice';
-let activeResidue = 'removed';
-let lastFN = null, lastFP = null, lastFK = null;
+let activeLang='en', activeCrop='rice', activeResidue='removed';
+let lastFN=null, lastFP=null, lastFK=null;
 
-/* ===================== LANGUAGE ===================== */
-function t(key) { return T18N[activeLang][key] || T18N['en'][key] || key; }
+function t(key){return T18N[activeLang][key]||T18N['en'][key]||key;}
 
-function setLang(lang) {
-  activeLang = lang;
-  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-  document.getElementById('btn-pa').classList.toggle('active', lang === 'pa');
-  document.body.className = T18N[lang].bodyClass;
-  document.documentElement.lang = lang;
-  document.title = t('title');
-
-  // IDs with innerHTML
-  const htmlIds = ['hero-title', 'footer-text'];
-  htmlIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = t(id);
-  });
-
-  // IDs with textContent
-  const textIds = ['logo-text','logo-sub','hero-eyebrow','hero-desc',
-    'step1-pill','step1-title','step2-pill','step2-title','step3-pill','step3-title',
-    'residue-label','t-label','calc-btn-text','results-heading','fert-title',
-    'dap-footnote','ssp-footnote','results-footnote',
-    'founder-label','founder-name','founder-dept',
-    'conv-title','conv-step1-label','conv-step2-label','conv-step3-label',
-    'oc-badge'];
-  textIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = t(id);
-  });
-
-  // data-i18n elements
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const val = t(key);
-    if (val) el.textContent = val;
-  });
-
-  // Placeholders
-  document.getElementById('T').placeholder = t('tin-ph');
-  document.getElementById('SN').placeholder = t('sn-ph');
-  document.getElementById('SP').placeholder = t('sp-ph');
-  document.getElementById('SK').placeholder = t('sk-ph');
-
-  // Re-apply dynamic content
-  selectCrop(activeCrop, true);
-  if (lastFN !== null) refreshResultLabels();
-  // Always update help content on language change
+function setLang(lang){
+  activeLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-pa').classList.toggle('active',lang==='pa');
+  document.body.className=T18N[lang].bodyClass;
+  document.documentElement.lang=lang;
+  document.title=t('title');
+  ['hero-title'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=t(id);});
+  ['logo-text','logo-sub','hero-eyebrow','hero-desc','step1-pill','step1-title','step2-pill','step2-title','step3-pill','step3-title','residue-label','t-label','calc-btn-text','results-heading','fert-title','dap-footnote','ssp-footnote','results-footnote','oc-badge'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t(id);});
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const v=t(el.getAttribute('data-i18n'));if(v)el.textContent=v;});
+  document.getElementById('T').placeholder=t('tin-ph');
+  document.getElementById('SN').placeholder=t('sn-ph');
+  document.getElementById('SP').placeholder=t('sp-ph');
+  document.getElementById('SK').placeholder=t('sk-ph');
+  selectCrop(activeCrop,true);
+  if(lastFN!==null)refreshResultLabels();
   renderHelpContent();
-  // Re-render split schedule in new language if results are showing
-  if (lastFN !== null) {
-    const activeScenario = document.getElementById('scenario-dap').style.display !== 'none' ? 'dap' : 'ssp';
-    const FN_eff = Math.max(0, lastFN), FP_eff = Math.max(0, lastFP);
-    const FN_eff_ha = FN_eff * 2.471, FP_eff_ha = FP_eff * 2.471;
-    const DAP = FP_eff / 0.46, N_from_DAP = DAP * 0.18;
-    const Urea_DAP = Math.max(0, FN_eff - N_from_DAP) / 0.46;
-    const Urea_SSP = FN_eff / 0.46;
-    const urea_acre = activeScenario === 'dap' ? Urea_DAP : Urea_SSP;
-    const urea_ha   = activeScenario === 'dap' ? (Math.max(0, FN_eff_ha - DAP*2.471*0.18) / 0.46) : (FN_eff_ha / 0.46);
-    renderSplitSchedule(urea_acre, urea_ha, activeCrop);
+  if(lastFN!==null){
+    const s=document.getElementById('scenario-dap').style.display!=='none'?'dap':'ssp';
+    const FNe=Math.max(0,lastFN),FPe=Math.max(0,lastFP);
+    const FNeha=FNe*2.471,FPeha=FPe*2.471;
+    const DAP=FPe/0.46,Ndap=DAP*0.18;
+    const ud=Math.max(0,FNe-Ndap)/0.46, us=FNe/0.46;
+    const ua=s==='dap'?ud:us;
+    const uh=s==='dap'?(Math.max(0,FNeha-DAP*2.471*0.18)/0.46):(FNeha/0.46);
+    renderSplitSchedule(ua,uh,activeCrop);
   }
-  const line2 = document.getElementById('footer-line2');
-  if (line2) line2.textContent = lang === 'pa'
-    ? 'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ, ਸੀਨੀਅਰ ਸੁਆਇਲ ਕੈਮਿਸਟ, ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, ਪੰਜਾਬ ਖੇਤੀਬਾੜੀ ਯੂਨੀਵਰਸਿਟੀ, ਲੁਧਿਆਣਾ'
-    : 'Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, Punjab Agricultural University, Ludhiana';
-  applyEqPanelLang();
+  const l2=document.getElementById('footer-line2');
+  if(l2)l2.textContent=lang==='pa'?'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ ਦੁਆਰਾ ਵਿਕਸਿਤ, ਸੀਨੀਅਰ ਸੁਆਇਲ ਕੈਮਿਸਟ, ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, PAU, ਲੁਧਿਆਣਾ':'Developed by Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, Punjab Agricultural University, Ludhiana';
 }
 
-function refreshResultLabels() {
-  // Refresh crop tag
-  const rl = t('residue-labels');
-  const cl = t('crop-labels');
-  const cropLabel = activeCrop === 'wheat'
-    ? t('crop-tag-wheat')(rl[activeResidue])
-    : cl[activeCrop];
-  document.getElementById('results-crop-tag').textContent = cropLabel;
-
-  // Refresh DAP credit note if visible
-  const creditEl = document.getElementById('dap-n-credit');
-  if (creditEl.style.display !== 'none' && lastFN !== null) {
-    const FP_eff = Math.max(0, lastFP);
-    const DAP = FP_eff / 0.46;
-    const N_from_DAP = DAP * 0.18;
-    const FN_eff = Math.max(0, lastFN);
-    creditEl.textContent = t('dap-credit')(N_from_DAP.toFixed(2), N_from_DAP >= FN_eff);
+function refreshResultLabels(){
+  const rl=t('residue-labels'),cl=t('crop-labels');
+  document.getElementById('results-crop-tag').textContent=activeCrop==='wheat'?t('crop-tag-wheat')(rl[activeResidue]):cl[activeCrop];
+  const ce=document.getElementById('dap-n-credit');
+  if(ce.style.display!=='none'&&lastFN!==null){
+    const FPe=Math.max(0,lastFP),DAP=FPe/0.46,N=DAP*0.18,FNe=Math.max(0,lastFN);
+    ce.textContent=t('dap-credit')(Math.round(N),Math.round(N*2.471),N>=FNe);
   }
 }
 
-/* ===================== CROP / RESIDUE ===================== */
-function selectCrop(crop, silent) {
-  activeCrop = crop;
-  if (!silent) {
-    document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector(`[data-crop="${crop}"]`).classList.add('active');
-  }
-  document.getElementById('wheat-residue-wrap').style.display = crop === 'wheat' ? 'block' : 'none';
-  document.getElementById('t-range-badge').textContent = t('badge')[crop];
-  const noteEl = document.getElementById('range-note');
-  noteEl.style.display = 'block';
-  noteEl.textContent = t('hints')[crop];
-  if (!silent) clearResults();
+function selectCrop(crop,silent){
+  activeCrop=crop;
+  if(!silent){document.querySelectorAll('.crop-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`[data-crop="${crop}"]`).classList.add('active');}
+  document.getElementById('wheat-residue-wrap').style.display=crop==='wheat'?'block':'none';
+  document.getElementById('t-range-badge').textContent=t('badge')[crop];
+  const n=document.getElementById('range-note');n.style.display='block';n.textContent=t('hints')[crop];
+  if(!silent)clearResults();
+}
+function selectResidue(r){activeResidue=r;document.querySelectorAll('.residue-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`[data-residue="${r}"]`).classList.add('active');clearResults();}
+function onInput(){clearResults();}
+function onSNInput(){const sn=document.getElementById('SN'),oc=document.getElementById('OC');if(sn.value!==''){oc.value='';oc.classList.add('input-muted');document.getElementById('oc-estimate-note').style.display='none';}else{oc.classList.remove('input-muted');}clearResults();}
+function onOCInput(){const oc=document.getElementById('OC'),sn=document.getElementById('SN');if(oc.value!==''){sn.value='';sn.classList.add('input-muted');}else{sn.classList.remove('input-muted');}clearResults();}
+function clearResults(){
+  document.getElementById('results-section').style.display='none';
+  document.getElementById('t-error').textContent='';document.getElementById('soil-error').textContent='';
+  ['fn','fp','fk'].forEach(id=>{document.getElementById('card-'+id)?.classList.remove('animate');const h=document.getElementById('r-'+id+'-ha');if(h)h.innerHTML='— <span class="r-ha-unit">kg/ha</span>';});
+  const tn=document.getElementById('t-conv-note');if(tn)tn.style.display='none';
+  const ob=document.getElementById('oc-result-badge');if(ob)ob.style.display='none';
+  const sc=document.getElementById('split-schedule');if(sc)sc.style.display='none';
+  lastFN=lastFP=lastFK=null;
+}
+function v(id){return parseFloat(document.getElementById(id).value);}
+function setResult(id,val){document.getElementById('r-'+id).textContent=Math.round(val);const neg=document.getElementById(id+'-neg');if(neg)neg.style.display=val<0?'block':'none';}
+
+function calculate(){
+  document.getElementById('t-error').textContent='';document.getElementById('soil-error').textContent='';
+  const T=v('T'),SN_raw=v('SN'),OC_raw=v('OC'),SP_acre=v('SP'),SK_acre=v('SK');
+  if(isNaN(T)){document.getElementById('t-error').textContent=t('err-t');return;}
+  if(T<=0){document.getElementById('t-error').textContent=t('err-t-zero');return;}
+  if(isNaN(SN_raw)&&isNaN(OC_raw)){document.getElementById('soil-error').textContent=t('err-n-missing');return;}
+  if(isNaN(SP_acre)||isNaN(SK_acre)){document.getElementById('soil-error').textContent=t('err-soil');return;}
+  if((!isNaN(SN_raw)&&SN_raw<0)||SP_acre<0||SK_acre<0){document.getElementById('soil-error').textContent=t('err-soil-neg');return;}
+  if(!isNaN(OC_raw)&&(OC_raw<0||OC_raw>5)){document.getElementById('soil-error').textContent=t('err-oc-range');return;}
+  let SN_acre,ocUsed=false;
+  if(!isNaN(SN_raw)){SN_acre=SN_raw;ocUsed=false;document.getElementById('oc-estimate-note').style.display='none';}
+  else{SN_acre=(94+68*OC_raw)/2.471;ocUsed=true;document.getElementById('oc-estimate-note').style.display='none';}
+  const r=ranges[activeCrop];
+  if(T<r.min||T>r.max)document.getElementById('t-error').textContent=t('err-range')(r.min,r.max,activeCrop);
+  const A=2.471,T_ha=T*A,SN=SN_acre*A,SP=SP_acre*A,SK=SK_acre*A;
+  const c=activeCrop==='wheat'?wheatVariants[activeResidue]:cropData[activeCrop];
+  const FN_ha=c.FN[0]*T_ha+c.FN[1]*SN, FP_ha=c.FP[0]*T_ha+c.FP[1]*SP, FK_ha=c.FK[0]*T_ha+c.FK[1]*SK;
+  const FN=FN_ha/A, FP=FP_ha/A, FK=FK_ha/A;
+  lastFN=FN;lastFP=FP;lastFK=FK;
+  setResult('fn',Math.max(0,FN));setResult('fp',Math.max(0,FP));setResult('fk',Math.max(0,FK));
+  document.getElementById('r-fn-ha').innerHTML=`${Math.round(FN_ha)} <span class="r-ha-unit">kg/ha</span>`;
+  document.getElementById('r-fp-ha').innerHTML=`${Math.round(Math.max(0,FP_ha))} <span class="r-ha-unit">kg/ha</span>`;
+  document.getElementById('r-fk-ha').innerHTML=`${Math.round(Math.max(0,FK_ha))} <span class="r-ha-unit">kg/ha</span>`;
+  document.getElementById('oc-result-badge').style.display=ocUsed?'inline-flex':'none';
+  const tn=document.getElementById('t-conv-note'),tx=document.getElementById('t-conv-text');
+  tn.style.display='block';tx.textContent=t('t-conv-note')(T.toFixed(1),T_ha.toFixed(2),SN.toFixed(2),SP.toFixed(2),SK.toFixed(2));
+  const rl=t('residue-labels'),cl=t('crop-labels');
+  document.getElementById('results-crop-tag').textContent=activeCrop==='wheat'?t('crop-tag-wheat')(rl[activeResidue]):cl[activeCrop];
+  const FNe=Math.max(0,FN),FPe=Math.max(0,FP),FKe=Math.max(0,FK);
+  const FNeha=Math.max(0,FN_ha),FPeha=Math.max(0,FP_ha),FKeha=Math.max(0,FK_ha);
+  const MOP=FKe/0.60,MOPha=FKeha/0.60;
+  const DAP=FPe/0.46,DAPha=FPeha/0.46,Ndap=DAP*0.18,Ndapha=DAPha*0.18;
+  const Ud=Math.max(0,FNe-Ndap)/0.46,Udha=Math.max(0,FNeha-Ndapha)/0.46;
+  document.getElementById('t-urea-dap').textContent=Math.round(Ud);
+  document.getElementById('t-urea-dap-ha').textContent=Math.round(Udha);
+  document.getElementById('t-dap').textContent=Math.round(DAP);
+  document.getElementById('t-dap-ha').textContent=Math.round(DAPha);
+  document.getElementById('t-mop-dap').textContent=Math.round(MOP);
+  document.getElementById('t-mop-dap-ha').textContent=Math.round(MOPha);
+  const ce=document.getElementById('dap-n-credit');
+  if(Ndap>0){ce.style.display='block';ce.textContent=t('dap-credit')(Math.round(Ndap),Math.round(Ndapha),Ndap>=FNe);}else{ce.style.display='none';}
+  const Us=FNe/0.46,Usha=FNeha/0.46,SSP=FPe/0.16,SSPha=FPeha/0.16;
+  document.getElementById('t-urea-ssp').textContent=Math.round(Us);
+  document.getElementById('t-urea-ssp-ha').textContent=Math.round(Usha);
+  document.getElementById('t-ssp').textContent=Math.round(SSP);
+  document.getElementById('t-ssp-ha').textContent=Math.round(SSPha);
+  document.getElementById('t-mop-ssp').textContent=Math.round(MOP);
+  document.getElementById('t-mop-ssp-ha').textContent=Math.round(MOPha);
+  const as=document.getElementById('scenario-dap').style.display!=='none'?'dap':'ssp';
+  renderSplitSchedule(as==='dap'?Ud:Us, as==='dap'?Udha:Usha, activeCrop);
+  const rs=document.getElementById('results-section');rs.style.display='block';rs.scrollIntoView({behavior:'smooth',block:'nearest'});
+  ['fn','fp','fk'].forEach((id,i)=>{const card=document.getElementById('card-'+id);card.classList.remove('animate');setTimeout(()=>card.classList.add('animate'),i*80);});
 }
 
-function selectResidue(r) {
-  activeResidue = r;
-  document.querySelectorAll('.residue-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`[data-residue="${r}"]`).classList.add('active');
-  clearResults();
-}
-
-function onInput() { clearResults(); }
-
-function onSNInput() {
-  const sn = document.getElementById('SN');
-  const oc = document.getElementById('OC');
-  if (sn.value !== '') {
-    oc.value = '';
-    oc.classList.add('input-muted');
-    document.getElementById('oc-estimate-note').style.display = 'none';
-  } else {
-    oc.classList.remove('input-muted');
-  }
-  clearResults();
-}
-
-function onOCInput() {
-  const oc = document.getElementById('OC');
-  const sn = document.getElementById('SN');
-  if (oc.value !== '') {
-    sn.value = '';
-    sn.classList.add('input-muted');
-  } else {
-    sn.classList.remove('input-muted');
-  }
-  clearResults();
-}
-
-function clearResults() {
-  document.getElementById('results-section').style.display = 'none';
-  document.getElementById('t-error').textContent = '';
-  document.getElementById('soil-error').textContent = '';
-  ['fn','fp','fk'].forEach(id => {
-    document.getElementById('card-'+id)?.classList.remove('animate');
-    const haEl = document.getElementById('r-'+id+'-ha');
-    if (haEl) haEl.innerHTML = '— <span class="r-ha-unit">kg/ha</span>';
-  });
-  const tNote = document.getElementById('t-conv-note');
-  if (tNote) tNote.style.display = 'none';
-  const ocBadge = document.getElementById('oc-result-badge');
-  if (ocBadge) ocBadge.style.display = 'none';
-  const sched = document.getElementById('split-schedule');
-  if (sched) sched.style.display = 'none';
-  lastFN = lastFP = lastFK = null;
-}
-
-/* ===================== CALCULATE ===================== */
-function v(id) { return parseFloat(document.getElementById(id).value); }
-
-function setResult(id, val) {
-  document.getElementById('r-'+id).textContent = Math.round(val);
-  const neg = document.getElementById(id+'-neg');
-  if (neg) neg.style.display = val < 0 ? 'block' : 'none';
-}
-
-function calculate() {
-  document.getElementById('t-error').textContent = '';
-  document.getElementById('soil-error').textContent = '';
-
-  const T      = v('T');
-  const SN_raw = v('SN');   // may be NaN if blank
-  const OC_raw = v('OC');   // may be NaN if blank
-  const SP_acre = v('SP');
-  const SK_acre = v('SK');
-
-  // ── Validation ────────────────────────────────────────────────
-  if (isNaN(T))  { document.getElementById('t-error').textContent = t('err-t'); return; }
-  if (T <= 0)    { document.getElementById('t-error').textContent = t('err-t-zero'); return; }
-
-  // Both SN and OC blank → error
-  if (isNaN(SN_raw) && isNaN(OC_raw)) {
-    document.getElementById('soil-error').textContent = t('err-n-missing'); return;
-  }
-  if (isNaN(SP_acre)||isNaN(SK_acre)) {
-    document.getElementById('soil-error').textContent = t('err-soil'); return;
-  }
-  if ((!isNaN(SN_raw) && SN_raw < 0) || SP_acre < 0 || SK_acre < 0) {
-    document.getElementById('soil-error').textContent = t('err-soil-neg'); return;
-  }
-  if (!isNaN(OC_raw) && (OC_raw < 0 || OC_raw > 5)) {
-    document.getElementById('soil-error').textContent = t('err-oc-range'); return;
-  }
-
-  // ── Determine SN_acre: direct entry takes priority over OC ───
-  let SN_acre, ocUsed = false, SN_estimated_ha = null;
-  if (!isNaN(SN_raw)) {
-    SN_acre = SN_raw;
-    ocUsed = false;
-    document.getElementById('oc-estimate-note').style.display = 'none';
-  } else {
-    // OC route: SN (kg/ha) = 94 + 68 × OC(%)
-    // Derived from 703 Punjab soil samples after outlier removal (r=0.118, R²=0.014)
-    SN_estimated_ha = 94 + 68 * OC_raw;
-    SN_acre = SN_estimated_ha / 2.471;
-    ocUsed = true;
-    // Hide the estimate note — no message shown to user
-    document.getElementById('oc-estimate-note').style.display = 'none';
-  }
-
-  const r = ranges[activeCrop];
-  if (T < r.min || T > r.max) {
-    document.getElementById('t-error').textContent = t('err-range')(r.min, r.max, activeCrop);
-  }
-
-  // ── Unit conversion ───────────────────────────────────────────
-  const ACRE_TO_HA = 2.471;
-  const T_ha = T * ACRE_TO_HA;
-  const SN   = SN_acre * ACRE_TO_HA;
-  const SP   = SP_acre * ACRE_TO_HA;
-  const SK   = SK_acre * ACRE_TO_HA;
-
-  // ── STCR equations (all kg/ha) ────────────────────────────────
-  const c = activeCrop === 'wheat' ? wheatVariants[activeResidue] : cropData[activeCrop];
-  const FN_ha = c.FN[0]*T_ha + c.FN[1]*SN;
-  const FP_ha = c.FP[0]*T_ha + c.FP[1]*SP;
-  const FK_ha = c.FK[0]*T_ha + c.FK[1]*SK;
-
-  // ── Convert kg/ha → kg/acre ───────────────────────────────────
-  const FN = FN_ha / ACRE_TO_HA;
-  const FP = FP_ha / ACRE_TO_HA;
-  const FK = FK_ha / ACRE_TO_HA;
-
-  // Show 0 for negative FP and FK (soil has enough), keep FN as-is for display
-  const FN_disp = FN;
-  const FP_disp = Math.max(0, FP);
-  const FK_disp = Math.max(0, FK);
-  const FN_ha_disp = FN_ha;
-  const FP_ha_disp = Math.max(0, FP_ha);
-  const FK_ha_disp = Math.max(0, FK_ha);
-
-  lastFN = FN; lastFP = FP; lastFK = FK;
-
-  setResult('fn', FN_disp); setResult('fp', FP_disp); setResult('fk', FK_disp);
-  document.getElementById('r-fn-ha').innerHTML = `${Math.round(FN_ha_disp)} <span class="r-ha-unit">kg/ha</span>`;
-  document.getElementById('r-fp-ha').innerHTML = `${Math.round(FP_ha_disp)} <span class="r-ha-unit">kg/ha</span>`;
-  document.getElementById('r-fk-ha').innerHTML = `${Math.round(FK_ha_disp)} <span class="r-ha-unit">kg/ha</span>`;
-
-  // OC note in result crop tag area
-  document.getElementById('oc-result-badge').style.display = ocUsed ? 'inline-flex' : 'none';
-
-  // T conversion note
-  const tNote = document.getElementById('t-conv-note');
-  const tText = document.getElementById('t-conv-text');
-  tNote.style.display = 'block';
-  tText.textContent = t('t-conv-note')(T.toFixed(1), T_ha.toFixed(2), SN.toFixed(2), SP.toFixed(2), SK.toFixed(2));
-
-  const rl = t('residue-labels');
-  const cl = t('crop-labels');
-  const cropLabel = activeCrop === 'wheat' ? t('crop-tag-wheat')(rl[activeResidue]) : cl[activeCrop];
-  document.getElementById('results-crop-tag').textContent = cropLabel;
-
-  // Fertilizer products — ROUNDED
-  const FN_eff = Math.max(0,FN), FP_eff = Math.max(0,FP), FK_eff = Math.max(0,FK);
-  const FN_eff_ha = Math.max(0,FN_ha), FP_eff_ha = Math.max(0,FP_ha), FK_eff_ha = Math.max(0,FK_ha);
-  const MOP    = FK_eff / 0.60,    MOP_ha = FK_eff_ha / 0.60;
-  const DAP    = FP_eff / 0.46,    DAP_ha = FP_eff_ha / 0.46;
-  const N_from_DAP    = DAP * 0.18,    N_from_DAP_ha = DAP_ha * 0.18;
-  const Urea_DAP    = Math.max(0, FN_eff    - N_from_DAP)    / 0.46;
-  const Urea_DAP_ha = Math.max(0, FN_eff_ha - N_from_DAP_ha) / 0.46;
-
-  document.getElementById('t-urea-dap').textContent    = Math.round(Urea_DAP);
-  document.getElementById('t-urea-dap-ha').textContent = Math.round(Urea_DAP_ha);
-  document.getElementById('t-dap').textContent         = Math.round(DAP);
-  document.getElementById('t-dap-ha').textContent      = Math.round(DAP_ha);
-  document.getElementById('t-mop-dap').textContent     = Math.round(MOP);
-  document.getElementById('t-mop-dap-ha').textContent  = Math.round(MOP_ha);
-
-  const creditEl = document.getElementById('dap-n-credit');
-  if (N_from_DAP > 0) {
-    creditEl.style.display = 'block';
-    creditEl.textContent = t('dap-credit')(Math.round(N_from_DAP), Math.round(N_from_DAP_ha), N_from_DAP >= FN_eff);
-  } else { creditEl.style.display = 'none'; }
-
-  const Urea_SSP    = FN_eff    / 0.46,  Urea_SSP_ha = FN_eff_ha / 0.46;
-  const SSP         = FP_eff    / 0.16,  SSP_ha      = FP_eff_ha / 0.16;
-  document.getElementById('t-urea-ssp').textContent    = Math.round(Urea_SSP);
-  document.getElementById('t-urea-ssp-ha').textContent = Math.round(Urea_SSP_ha);
-  document.getElementById('t-ssp').textContent         = Math.round(SSP);
-  document.getElementById('t-ssp-ha').textContent      = Math.round(SSP_ha);
-  document.getElementById('t-mop-ssp').textContent     = Math.round(MOP);
-  document.getElementById('t-mop-ssp-ha').textContent  = Math.round(MOP_ha);
-
-  // ── Urea application split schedule ──────────────────────────
-  const activeScenario = document.getElementById('scenario-dap').style.display !== 'none' ? 'dap' : 'ssp';
-  const urea_acre = activeScenario === 'dap' ? Urea_DAP : Urea_SSP;
-  const urea_ha   = activeScenario === 'dap' ? Urea_DAP_ha : Urea_SSP_ha;
-  renderSplitSchedule(urea_acre, urea_ha, activeCrop);
-
-  const rs = document.getElementById('results-section');
-  rs.style.display = 'block';
-  rs.scrollIntoView({ behavior:'smooth', block:'nearest' });
-
-  ['fn','fp','fk'].forEach((id,i) => {
-    const card = document.getElementById('card-'+id);
-    card.classList.remove('animate');
-    setTimeout(() => card.classList.add('animate'), i*80);
-  });
-}
-
-function renderSplitSchedule(urea_acre, urea_ha, crop) {
-  const L = activeLang === 'pa';
-  const sched = document.getElementById('split-schedule');
-  const rowsEl = document.getElementById('split-rows');
-  const s1 = Math.round(urea_acre / 3), s2 = Math.round(urea_acre / 3), s3 = Math.round(urea_acre - s1 - s2);
-  const h1 = Math.round(urea_ha / 3),   h2 = Math.round(urea_ha / 3),   h3 = Math.round(urea_ha - h1 - h2);
-
-  const splits = {
-    rice: L ? [
-      {t:'ਲੁਆਈ ਤੋਂ 7 ਦਿਨਾਂ ਅੰਦਰ (ਪਹਿਲੀ ਖੁਰਾਕ)', kg:s1, ha:h1},
-      {t:'ਲੁਆਈ ਤੋਂ 21 ਦਿਨਾਂ ਬਾਅਦ (ਦੂਜੀ ਖੁਰਾਕ)', kg:s2, ha:h2},
-      {t:'ਲੁਆਈ ਤੋਂ 42 ਦਿਨਾਂ ਬਾਅਦ (ਤੀਜੀ ਖੁਰਾਕ)', kg:s3, ha:h3}
-    ] : [
-      {t:'Within 7 days of transplanting (1st dose)', kg:s1, ha:h1},
-      {t:'21 days after transplanting (2nd dose)', kg:s2, ha:h2},
-      {t:'42 days after transplanting (3rd dose)', kg:s3, ha:h3}
-    ],
-    wheat: L ? [
-      {t:'ਬਿਜਾਈ ਸਮੇਂ (⅓ ਖੁਰਾਕ)', kg:s1, ha:h1},
-      {t:'ਪਹਿਲੀ ਸਿੰਚਾਈ ਤੋਂ ਬਾਅਦ (⅓ ਖੁਰਾਕ)', kg:s2, ha:h2},
-      {t:'ਦੂਜੀ ਸਿੰਚਾਈ ਤੋਂ ਬਾਅਦ (⅓ ਖੁਰਾਕ)', kg:s3, ha:h3}
-    ] : [
-      {t:'At time of sowing (⅓ dose)', kg:s1, ha:h1},
-      {t:'After first irrigation (⅓ dose)', kg:s2, ha:h2},
-      {t:'After second irrigation (⅓ dose)', kg:s3, ha:h3}
-    ],
-    maize: L ? [
-      {t:'ਬਿਜਾਈ ਸਮੇਂ (⅓ ਖੁਰਾਕ)', kg:s1, ha:h1},
-      {t:'ਗੋਡੇ ਦੀ ਉਚਾਈ ਦੇ ਪੜਾਅ \'ਤੇ (⅓ ਖੁਰਾਕ)', kg:s2, ha:h2},
-      {t:'ਟੈਸਲਿੰਗ ਤੋਂ ਪਹਿਲਾਂ (⅓ ਖੁਰਾਕ)', kg:s3, ha:h3}
-    ] : [
-      {t:'At sowing (⅓ dose)', kg:s1, ha:h1},
-      {t:'At knee height stage (⅓ dose)', kg:s2, ha:h2},
-      {t:'At pre-tasseling stage (⅓ dose)', kg:s3, ha:h3}
-    ]
+function renderSplitSchedule(urea_acre,urea_ha,crop){
+  const L=activeLang==='pa';
+  const s1=Math.round(urea_acre/3),s2=Math.round(urea_acre/3),s3=Math.round(urea_acre-s1-s2);
+  const h1=Math.round(urea_ha/3),h2=Math.round(urea_ha/3),h3=Math.round(urea_ha-h1-h2);
+  const splits={
+    rice:L?[{t:'ਲੁਆਈ ਤੋਂ 7 ਦਿਨਾਂ ਅੰਦਰ (ਪਹਿਲੀ ਖੁਰਾਕ)',kg:s1,ha:h1},{t:'ਲੁਆਈ ਤੋਂ 21 ਦਿਨਾਂ ਬਾਅਦ (ਦੂਜੀ ਖੁਰਾਕ)',kg:s2,ha:h2},{t:'ਲੁਆਈ ਤੋਂ 42 ਦਿਨਾਂ ਬਾਅਦ (ਤੀਜੀ ਖੁਰਾਕ)',kg:s3,ha:h3}]:[{t:'Within 7 days of transplanting (1st dose)',kg:s1,ha:h1},{t:'21 days after transplanting (2nd dose)',kg:s2,ha:h2},{t:'42 days after transplanting (3rd dose)',kg:s3,ha:h3}],
+    wheat:L?[{t:'ਬਿਜਾਈ ਸਮੇਂ (⅓ ਖੁਰਾਕ)',kg:s1,ha:h1},{t:'ਪਹਿਲੀ ਸਿੰਚਾਈ ਤੋਂ ਬਾਅਦ (⅓ ਖੁਰਾਕ)',kg:s2,ha:h2},{t:'ਦੂਜੀ ਸਿੰਚਾਈ ਤੋਂ ਬਾਅਦ (⅓ ਖੁਰਾਕ)',kg:s3,ha:h3}]:[{t:'At time of sowing (⅓ dose)',kg:s1,ha:h1},{t:'After first irrigation (⅓ dose)',kg:s2,ha:h2},{t:'After second irrigation (⅓ dose)',kg:s3,ha:h3}],
+    maize:L?[{t:'ਬਿਜਾਈ ਸਮੇਂ (⅓ ਖੁਰਾਕ)',kg:s1,ha:h1},{t:"ਗੋਡੇ ਦੀ ਉਚਾਈ ਦੇ ਪੜਾਅ 'ਤੇ (⅓ ਖੁਰਾਕ)",kg:s2,ha:h2},{t:'ਟੈਸਲਿੰਗ ਤੋਂ ਪਹਿਲਾਂ (⅓ ਖੁਰਾਕ)',kg:s3,ha:h3}]:[{t:'At sowing (⅓ dose)',kg:s1,ha:h1},{t:'At knee height stage (⅓ dose)',kg:s2,ha:h2},{t:'At pre-tasseling stage (⅓ dose)',kg:s3,ha:h3}]
   };
-
-  document.getElementById('split-title').textContent = L ? 'ਯੂਰੀਆ ਖੁਰਾਕ ਵੰਡ ਸਮਾਂ-ਸਾਰਣੀ' : 'Urea Application Schedule';
-  document.getElementById('split-pk-note').textContent = L
-    ? 'DAP/SSP ਅਤੇ MOP ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਬਿਜਾਈ/ਲੁਆਈ ਸਮੇਂ ਪਾਓ।'
-    : 'Apply full dose of DAP/SSP and MOP at the time of sowing / transplanting.';
-
-  const rows = splits[crop] || splits.rice;
-  const kgLabel  = L ? 'ਕਿੱਲੋ ਯੂਰੀਆ/ਏਕੜ' : 'kg Urea/acre';
-  const haLabel  = L ? 'ਕਿੱਲੋ/ਹੈਕਟੇਅਰ'   : 'kg/ha';
-  rowsEl.innerHTML = rows.map((r,i) => `
-    <div class="split-row">
-      <div class="split-num">${i+1}</div>
-      <div class="split-body">
-        <div class="split-timing">${r.t}</div>
-        <div class="split-amount">${r.kg} ${kgLabel} <span class="split-amount-ha">(${r.ha} ${haLabel})</span></div>
-      </div>
-    </div>`).join('');
-
-  sched.style.display = urea_acre > 0 ? 'block' : 'none';
+  document.getElementById('split-title').textContent=L?'ਯੂਰੀਆ ਖੁਰਾਕ ਵੰਡ ਸਮਾਂ-ਸਾਰਣੀ':'Urea Application Schedule';
+  document.getElementById('split-pk-note').textContent=L?'DAP/SSP ਅਤੇ MOP ਦੀ ਪੂਰੀ ਮਾਤਰਾ ਬਿਜਾਈ/ਲੁਆਈ ਸਮੇਂ ਪਾਓ।':'Apply full dose of DAP/SSP and MOP at the time of sowing / transplanting.';
+  const rows=splits[crop]||splits.rice;
+  const kgL=L?'ਕਿੱਲੋ ਯੂਰੀਆ/ਏਕੜ':'kg Urea/acre',haL=L?'ਕਿੱਲੋ/ਹੈਕਟੇਅਰ':'kg/ha';
+  document.getElementById('split-rows').innerHTML=rows.map((r,i)=>`<div class="split-row"><div class="split-num">${i+1}</div><div class="split-body"><div class="split-timing">${r.t}</div><div class="split-amount">${r.kg} ${kgL} <span class="split-amount-ha">(${r.ha} ${haL})</span></div></div></div>`).join('');
+  document.getElementById('split-schedule').style.display=urea_acre>0?'block':'none';
 }
 
-function switchScenario(s) {
-  document.getElementById('scenario-dap').style.display = s==='dap' ? 'block' : 'none';
-  document.getElementById('scenario-ssp').style.display = s==='ssp' ? 'block' : 'none';
-  document.getElementById('tab-dap').classList.toggle('active', s==='dap');
-  document.getElementById('tab-ssp').classList.toggle('active', s==='ssp');
-  // Re-render split schedule with correct urea value for this scenario
-  if (lastFN !== null) {
-    const FN_eff = Math.max(0, lastFN), FP_eff = Math.max(0, lastFP), FK_eff = Math.max(0, lastFK);
-    const FN_eff_ha = FN_eff * 2.471, FP_eff_ha = FP_eff * 2.471;
-    const DAP = FP_eff / 0.46, N_from_DAP = DAP * 0.18;
-    const Urea_DAP = Math.max(0, FN_eff - N_from_DAP) / 0.46;
-    const Urea_SSP = FN_eff / 0.46;
-    const urea = s === 'dap' ? Urea_DAP : Urea_SSP;
-    const urea_ha = s === 'dap' ? (Math.max(0, FN_eff_ha - DAP*2.471*0.18) / 0.46) : (FN_eff_ha / 0.46);
-    renderSplitSchedule(urea, urea_ha, activeCrop);
+function switchScenario(s){
+  document.getElementById('scenario-dap').style.display=s==='dap'?'block':'none';
+  document.getElementById('scenario-ssp').style.display=s==='ssp'?'block':'none';
+  document.getElementById('tab-dap').classList.toggle('active',s==='dap');
+  document.getElementById('tab-ssp').classList.toggle('active',s==='ssp');
+  if(lastFN!==null){
+    const FNe=Math.max(0,lastFN),FPe=Math.max(0,lastFP);
+    const FNeha=FNe*2.471,FPeha=FPe*2.471;
+    const DAP=FPe/0.46,Ndap=DAP*0.18;
+    const Ud=Math.max(0,FNe-Ndap)/0.46,Us=FNe/0.46;
+    const ua=s==='dap'?Ud:Us;
+    const uh=s==='dap'?(Math.max(0,FNeha-DAP*2.471*0.18)/0.46):(FNeha/0.46);
+    renderSplitSchedule(ua,uh,activeCrop);
   }
 }
 
-function toggleCardHelp() {
-  const body    = document.getElementById('help-card-body');
-  const chevron = document.getElementById('help-card-chevron');
-  const isOpen  = body.style.display !== 'none';
-  body.style.display = isOpen ? 'none' : 'block';
-  chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+function toggleCardHelp(){
+  const b=document.getElementById('help-card-body'),ch=document.getElementById('help-card-chevron');
+  const o=b.style.display!=='none';b.style.display=o?'none':'block';ch.style.transform=o?'':'rotate(180deg)';
 }
 
-function renderHelpContent() {
-  const L = activeLang === 'pa';
-  const content = {
-    q1: L ? 'ਇਹ ਐਪ ਕੀ ਹੈ?' : 'What is this app?',
-    p1: L ? 'PAU ਖਾਦ ਤੁਹਾਨੂੰ ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਅਤੇ ਟੀਚਾ ਝਾੜ ਦੇ ਆਧਾਰ \'ਤੇ ਤੁਹਾਡੀ ਫ਼ਸਲ ਲਈ ਸਹੀ ਖਾਦ ਦੀ ਮਾਤਰਾ ਹਿਸਾਬ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦੀ ਹੈ। ਇਹ N, P₂O₅ ਅਤੇ K₂O ਦੀ ਫ਼ਸਲ-ਅਨੁਸਾਰ ਸਿਫ਼ਾਰਸ਼ ਦਿੰਦੀ ਹੈ।' : 'PAU KHAD helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield. It gives you crop-specific recommendations for Nitrogen (N), Phosphorus (P₂O₅), and Potassium (K₂O).',
-    q2: L ? 'ਵਰਤੋਂ ਦੇ 3 ਸੌਖੇ ਕਦਮ' : 'How to use — 3 simple steps',
-    s1: L ? 'ਫ਼ਸਲ ਚੁਣੋ (ਝੋਨਾ, ਮੱਕੀ ਜਾਂ ਕਣਕ) ਅਤੇ ਕਣਕ ਲਈ ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ ਚੁਣੋ।' : 'Select your crop (Rice, Maize or Wheat) and, for Wheat, the rice residue management practice you follow.',
-    s2: L ? 'ਟੀਚਾ ਝਾੜ ਕੁਇੰਟਲ/ਏਕੜ ਵਿੱਚ ਦਰਜ ਕਰੋ।' : 'Enter your target yield in quintals per acre.',
-    s3: L ? 'PAU ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਤੋਂ SN, SP, SK (kg/ਏਕੜ) ਦਰਜ ਕਰੋ — ਜਾਂ OC% ਦਰਜ ਕਰੋ ਜੇ SN ਉਪਲਬਧ ਨਹੀਂ।' : 'Enter Soil N, Soil P and Soil K values (kg/acre) from your PAU soil test report — or enter Organic Carbon % if Soil N is not available.',
-    q3: L ? 'ਕੀ ਮਿਲਦਾ ਹੈ' : 'What you get',
-    g1: L ? 'ਖਾਦ ਦੀ ਲੋੜ kg/ਏਕੜ (ਅਤੇ kg/ha) ਵਿੱਚ' : 'Recommended fertilizer doses in kg/acre (and kg/ha)',
-    g2: L ? 'ਯੂਰੀਆ, DAP/SSP ਅਤੇ MOP ਦੀ ਮਾਤਰਾ — ਬੋਰੀਆਂ ਦੀ ਗਿਣਤੀ ਜਾਣੋ' : 'Ready-to-use fertilizer product quantities — Urea, DAP or SSP, and MOP — so you know exactly how many bags to buy',
-    g3: L ? 'ਨਤੀਜੇ kg/ਏਕੜ ਅਤੇ kg/ha ਦੋਵਾਂ ਵਿੱਚ' : 'Results in both kg/acre and kg/ha',
-    q4: L ? 'ਜ਼ਰੂਰੀ ਸੁਝਾਅ' : 'Important tips',
-    t1: L ? 'ਖਾਦ ਪਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਹਮੇਸ਼ਾ ਮਿੱਟੀ ਜਾਂਚ ਕਰਵਾਓ — ਪੈਸੇ ਬਚਦੇ ਹਨ ਅਤੇ ਝਾੜ ਵਧਦਾ ਹੈ।' : 'Always get your soil tested before applying fertilizers — it saves money and improves yield.',
-    t2: L ? 'ਮਨਜ਼ੂਰਸ਼ੁਦਾ ਮਿੱਟੀ ਜਾਂਚ ਪ੍ਰਯੋਗਸ਼ਾਲਾ ਦੇ ਮੁੱਲ ਵਰਤੋ।' : 'Use soil test values from an approved soil testing laboratory for best results.',
-    t3: L ? 'ਜੇ ਮਿੱਟੀ ਵਿੱਚ ਪੌਸ਼ਟਿਕ ਤੱਤ ਕਾਫ਼ੀ ਹੈ, ਐਪ ਜ਼ੀਰੋ ਦਿਖਾਵੇਗੀ — ਉਹ ਖਾਦ ਦੀ ਲੋੜ ਨਹੀਂ।' : 'If your soil nutrient level is high, the app may show zero dose for that nutrient — this means your soil already has enough; save the cost.',
-    t4: L ? 'ਟੀਚਾ ਝਾੜ ਆਪਣੇ ਖੇਤ ਅਨੁਸਾਰ ਯਥਾਰਥਵਾਦੀ ਰੱਖੋ।' : 'Target yield should be realistic for your field conditions — over-estimating leads to wasteful fertilizer use.',
-    t5: L ? 'ਇਹ ਐਪ ਪੰਜਾਬ ਦੀਆਂ ਖੇਤੀ-ਜਲਵਾਯੂ ਹਾਲਤਾਂ ਲਈ ਕੈਲੀਬ੍ਰੇਟ ਕੀਤੀ ਗਈ ਹੈ।' : 'This app is calibrated for Punjab agro-climatic conditions and may not apply directly to other regions.',
-    t6: L ? 'ਅਸਧਾਰਨ ਮੌਸਮ, ਕੀੜੇ ਜਾਂ ਸਿੰਚਾਈ ਰੁਕਾਵਟਾਂ ਅਸਲ ਖਾਦ ਪ੍ਰਤੀਕਿਰਿਆ ਨੂੰ ਬਦਲ ਸਕਦੀਆਂ ਹਨ।' : 'Recommendations assume normal crop management; abnormal weather, pest pressure or irrigation constraints may alter actual fertilizer response.'
+function renderHelpContent(){
+  const L=activeLang==='pa';
+  document.getElementById('help-card-label').textContent=L?'ਮਦਦ — ਐਪ ਕਿਵੇਂ ਵਰਤੀਏ':'Help — How to use this app';
+  const hcMap={
+    'hc-q1':L?'ਇਹ ਐਪ ਕੀ ਹੈ?':'What is this app?',
+    'hc-p1':L?'PAU KHAD app ਤੁਹਾਨੂੰ ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਅਤੇ ਟੀਚਾ ਝਾੜ ਦੇ ਆਧਾਰ \'ਤੇ ਸਹੀ ਖਾਦ ਦੀ ਮਾਤਰਾ ਦੱਸਦੀ ਹੈ।':'PAU KHAD app helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield.',
+    'hc-q2':L?'ਵਰਤੋਂ ਦੇ 3 ਸੌਖੇ ਕਦਮ':'How to use — 3 simple steps',
+    'hc-s1':L?'ਫ਼ਸਲ ਚੁਣੋ ਅਤੇ ਕਣਕ ਲਈ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ ਚੁਣੋ।':'Select your crop (Rice, Maize or Wheat) and, for Wheat, the rice residue management practice.',
+    'hc-s2':L?'ਟੀਚਾ ਝਾੜ ਕੁਇੰਟਲ/ਏਕੜ ਵਿੱਚ ਦਰਜ ਕਰੋ।':'Enter your target yield in quintals per acre.',
+    'hc-s3':L?'SN, SP, SK (kg/ਏਕੜ) ਦਰਜ ਕਰੋ ਜਾਂ OC% ਦਰਜ ਕਰੋ ਜੇ SN ਉਪਲਬਧ ਨਹੀਂ।':'Enter Soil N, Soil P and Soil K (kg/acre) from your soil test report — or enter OC% if Soil N is not available.',
+    'hc-q3':L?'ਕੀ ਮਿਲਦਾ ਹੈ':'What you get',
+    'hc-g1':L?'ਖਾਦ ਦੀ ਲੋੜ kg/ਏਕੜ (ਅਤੇ kg/ha) ਵਿੱਚ':'Recommended fertilizer doses in kg/acre (and kg/ha)',
+    'hc-g2':L?'ਯੂਰੀਆ, DAP/SSP ਅਤੇ MOP ਦੀ ਮਾਤਰਾ — ਬੋਰੀਆਂ ਦੀ ਗਿਣਤੀ ਜਾਣੋ':'Ready-to-use product quantities — Urea, DAP or SSP, and MOP',
+    'hc-g3':L?'ਨਤੀਜੇ kg/ਏਕੜ ਅਤੇ kg/ha ਦੋਵਾਂ ਵਿੱਚ':'Results in both kg/acre and kg/ha',
+    'hc-q4':L?'ਜ਼ਰੂਰੀ ਸੁਝਾਅ':'Important tips',
+    'hc-t1':L?'ਖਾਦ ਪਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਮਿੱਟੀ ਜਾਂਚ ਕਰਵਾਓ।':'Always get your soil tested before applying fertilizers — it saves money and improves yield.',
+    'hc-t2':L?'ਮਨਜ਼ੂਰਸ਼ੁਦਾ ਪ੍ਰਯੋਗਸ਼ਾਲਾ ਦੇ ਮਿੱਟੀ ਮੁੱਲ ਵਰਤੋ।':'Use soil test values from an approved laboratory for best results.',
+    'hc-t3':L?'ਜੇ ਮਿੱਟੀ ਵਿੱਚ ਕਾਫ਼ੀ ਪੌਸ਼ਟਿਕ ਤੱਤ ਹੈ, ਐਪ ਜ਼ੀਰੋ ਦਿਖਾਵੇਗੀ।':'If your soil nutrient level is high, the app may show zero dose — your soil already has enough.',
+    'hc-t4':L?'ਟੀਚਾ ਝਾੜ ਯਥਾਰਥਵਾਦੀ ਰੱਖੋ।':'Target yield should be realistic — over-estimating leads to wasteful fertilizer use.',
+    'hc-t5':L?'ਇਹ ਐਪ ਪੰਜਾਬ ਦੀਆਂ ਖੇਤੀ-ਜਲਵਾਯੂ ਹਾਲਤਾਂ ਲਈ ਕੈਲੀਬ੍ਰੇਟ ਕੀਤੀ ਗਈ ਹੈ।':'This app is calibrated for Punjab agro-climatic conditions and may not apply directly to other regions.',
+    'hc-t6':L?'ਅਸਧਾਰਨ ਮੌਸਮ, ਕੀੜੇ ਜਾਂ ਸਿੰਚਾਈ ਰੁਕਾਵਟਾਂ ਅਸਲ ਖਾਦ ਪ੍ਰਤੀਕਿਰਿਆ ਨੂੰ ਬਦਲ ਸਕਦੀਆਂ ਹਨ।':'Recommendations assume normal crop management; abnormal weather, pest pressure or irrigation constraints may alter fertilizer response.'
   };
-  ['q1','q2','q3','q4'].forEach(k => {
-    const el = document.getElementById('help-'+k);
-    if (el) el.textContent = content[k];
-  });
-  ['p1','s1','s2','s3','g1','g2','g3','t1','t2','t3','t4','t5','t6'].forEach(k => {
-    const el = document.getElementById('help-'+k);
-    if (el) el.textContent = content[k];
-  });
-  document.getElementById('help-btn-label') && (document.getElementById('help-btn-label').textContent = L ? 'ਮਦਦ' : 'Help');
-  document.getElementById('help-heading') && (document.getElementById('help-heading').textContent = L ? 'ਮਦਦ' : 'Help');
-  document.getElementById('help-card-label') && (document.getElementById('help-card-label').textContent = L ? 'ਮਦਦ — ਐਪ ਕਿਵੇਂ ਵਰਤੀਏ' : 'Help — How to use this app');
-  // Update card help content
-  const hcMap = {
-    'hc-q1': L ? 'ਇਹ ਐਪ ਕੀ ਹੈ?' : 'What is this app?',
-    'hc-p1': L ? 'PAU ਖਾਦ ਤੁਹਾਨੂੰ ਮਿੱਟੀ ਜਾਂਚ ਰਿਪੋਰਟ ਅਤੇ ਟੀਚਾ ਝਾੜ ਦੇ ਆਧਾਰ \'ਤੇ ਸਹੀ ਖਾਦ ਦੀ ਮਾਤਰਾ ਦੱਸਦੀ ਹੈ।' : 'PAU KHAD helps you calculate the right amount of fertilizer for your crop based on your soil test report and target yield. It gives you crop-specific recommendations for Nitrogen (N), Phosphorus (P₂O₅), and Potassium (K₂O).',
-    'hc-q2': L ? 'ਵਰਤੋਂ ਦੇ 3 ਸੌਖੇ ਕਦਮ' : 'How to use — 3 simple steps',
-    'hc-s1': L ? 'ਫ਼ਸਲ ਚੁਣੋ (ਝੋਨਾ, ਮੱਕੀ ਜਾਂ ਕਣਕ) ਅਤੇ ਕਣਕ ਲਈ ਝੋਨੇ ਦੀ ਰਹਿੰਦ-ਖੂੰਹਦ ਪ੍ਰਬੰਧਨ ਤਰੀਕਾ ਚੁਣੋ।' : 'Select your crop (Rice, Maize or Wheat) and, for Wheat, the rice residue management practice you follow.',
-    'hc-s2': L ? 'ਟੀਚਾ ਝਾੜ ਕੁਇੰਟਲ/ਏਕੜ ਵਿੱਚ ਦਰਜ ਕਰੋ।' : 'Enter your target yield in quintals per acre.',
-    'hc-s3': L ? 'PAU ਰਿਪੋਰਟ ਤੋਂ SN, SP, SK (kg/ਏਕੜ) ਦਰਜ ਕਰੋ — ਜਾਂ OC% ਦਰਜ ਕਰੋ।' : 'Enter Soil N, Soil P and Soil K (kg/acre) from your PAU soil test report — or enter Organic Carbon % if Soil N is not available.',
-    'hc-q3': L ? 'ਕੀ ਮਿਲਦਾ ਹੈ' : 'What you get',
-    'hc-g1': L ? 'ਖਾਦ ਦੀ ਲੋੜ kg/ਏਕੜ (ਅਤੇ kg/ha) ਵਿੱਚ' : 'Recommended fertilizer doses in kg/acre (and kg/ha)',
-    'hc-g2': L ? 'ਯੂਰੀਆ, DAP/SSP ਅਤੇ MOP ਦੀ ਮਾਤਰਾ' : 'Ready-to-use product quantities — Urea, DAP or SSP, and MOP — so you know exactly how many bags to buy',
-    'hc-g3': L ? 'ਨਤੀਜੇ kg/ਏਕੜ ਅਤੇ kg/ha ਦੋਵਾਂ ਵਿੱਚ' : 'Results in both kg/acre and kg/ha',
-    'hc-q4': L ? 'ਜ਼ਰੂਰੀ ਸੁਝਾਅ' : 'Important tips',
-    'hc-t1': L ? 'ਖਾਦ ਪਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਮਿੱਟੀ ਜਾਂਚ ਕਰਵਾਓ — ਪੈਸੇ ਬਚਦੇ ਹਨ, ਝਾੜ ਵਧਦਾ ਹੈ।' : 'Always get your soil tested before applying fertilizers — it saves money and improves yield.',
-    'hc-t2': L ? 'ਮਨਜ਼ੂਰਸ਼ੁਦਾ ਪ੍ਰਯੋਗਸ਼ਾਲਾ ਦੇ ਮਿੱਟੀ ਮੁੱਲ ਵਰਤੋ।' : 'Use soil test values from an approved soil testing laboratory for best results.',
-    'hc-t3': L ? 'ਜੇ ਮਿੱਟੀ ਵਿੱਚ ਕਾਫ਼ੀ ਪੌਸ਼ਟਿਕ ਤੱਤ ਹੈ, ਐਪ ਜ਼ੀਰੋ ਦਿਖਾਵੇਗੀ।' : 'If your soil nutrient level is high, the app may show zero dose for that nutrient — your soil already has enough; save the cost.',
-    'hc-t4': L ? 'ਟੀਚਾ ਝਾੜ ਯਥਾਰਥਵਾਦੀ ਰੱਖੋ।' : 'Target yield should be realistic for your field conditions — over-estimating leads to wasteful fertilizer use.',
-    'hc-t5': L ? 'ਇਹ ਐਪ ਪੰਜਾਬ ਦੀਆਂ ਖੇਤੀ-ਜਲਵਾਯੂ ਹਾਲਤਾਂ ਲਈ ਕੈਲੀਬ੍ਰੇਟ ਕੀਤੀ ਗਈ ਹੈ ਅਤੇ ਹੋਰ ਖੇਤਰਾਂ ਲਈ ਸਿੱਧੀ ਲਾਗੂ ਨਹੀਂ ਹੋ ਸਕਦੀ।' : 'This app is calibrated for Punjab agro-climatic conditions and may not apply directly to other regions.',
-    'hc-t6': L ? 'ਸਿਫ਼ਾਰਸ਼ਾਂ ਆਮ ਫ਼ਸਲ ਪ੍ਰਬੰਧਨ ਦੀ ਮੰਨਦੀਆਂ ਹਨ; ਅਸਧਾਰਨ ਮੌਸਮ, ਕੀੜੇ-ਮਕੌੜੇ ਜਾਂ ਸਿੰਚਾਈ ਦੀਆਂ ਰੁਕਾਵਟਾਂ ਅਸਲ ਖਾਦ ਪ੍ਰਤੀਕਿਰਿਆ ਨੂੰ ਬਦਲ ਸਕਦੀਆਂ ਹਨ।' : 'Recommendations assume normal crop management; abnormal weather, pest pressure or irrigation constraints may alter actual fertilizer response.'
-  };
-  Object.entries(hcMap).forEach(([id, txt]) => { const el = document.getElementById(id); if (el) el.textContent = txt; });
-  const line2 = document.getElementById('footer-line2');
-  if (line2) line2.textContent = L
-    ? 'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ ਦੁਆਰਾ ਵਿਕਸਿਤ, ਸੀਨੀਅਰ ਸੁਆਇਲ ਕੈਮਿਸਟ, ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, PAU, ਲੁਧਿਆਣਾ'
-    : 'Developed by Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, PAU, Ludhiana';
+  Object.entries(hcMap).forEach(([id,txt])=>{const el=document.getElementById(id);if(el)el.textContent=txt;});
+  const l2=document.getElementById('footer-line2');
+  if(l2)l2.textContent=L?'ਡਾ. ਜਗਦੀਪ ਸਿੰਘ ਦੁਆਰਾ ਵਿਕਸਿਤ, ਸੀਨੀਅਰ ਸੁਆਇਲ ਕੈਮਿਸਟ, ਮਿੱਟੀ ਵਿਗਿਆਨ ਵਿਭਾਗ, PAU, ਲੁਧਿਆਣਾ':'Developed by Dr. Jagdeep Singh, Senior Soil Chemist, Department of Soil Science, Punjab Agricultural University, Ludhiana';
 }
 
-function toggleEqPanel() {
-  const content = document.getElementById('eq-content');
-  const btn     = document.getElementById('eq-toggle-btn');
-  const chevron = document.getElementById('eq-chevron');
-  const isOpen  = content.style.display !== 'none';
-  content.style.display = isOpen ? 'none' : 'block';
-  btn.classList.toggle('open', !isOpen);
-  chevron.classList.toggle('open', !isOpen);
-  document.getElementById('eq-toggle-label').textContent = isOpen
-    ? t('eq-toggle-show') : t('eq-toggle-hide');
-}
-
-function applyEqPanelLang() {
-  const L = activeLang === 'pa';
-  document.getElementById('eq-toggle-label').textContent = t('eq-toggle-show');
-  document.getElementById('eq-rice-title').innerHTML  = (L ? 'ਝੋਨਾ' : 'Rice')  + ' &nbsp;<span class="eq-range">' + (L ? '(ਟੀਚਾ ਝਾੜ: ੨੫–੩੫ ਕੁਇੰਟਲ/ਏਕੜ)' : '(Target yield: 25–35 q/acre)') + '</span>';
-  document.getElementById('eq-maize-title').innerHTML = (L ? 'ਮੱਕੀ' : 'Maize') + ' &nbsp;<span class="eq-range">' + (L ? '(ਟੀਚਾ ਝਾੜ: ੨੫–੩੦ ਕੁਇੰਟਲ/ਏਕੜ)' : '(Target yield: 25–30 q/acre)') + '</span>';
-  document.getElementById('eq-wheat-title').innerHTML = (L ? 'ਕਣਕ'  : 'Wheat') + ' &nbsp;<span class="eq-range">' + (L ? '(ਟੀਚਾ ਝਾੜ: ੨੦–੨੫ ਕੁਇੰਟਲ/ਏਕੜ)' : '(Target yield: 20–25 q/acre)') + '</span>';
-  document.getElementById('eq-rem-label').textContent = L ? 'ਰਹਿੰਦ-ਖੂੰਹਦ ਹਟਾਈ ਗਈ'  : 'Residue Removed';
-  document.getElementById('eq-inc-label').textContent = L ? 'ਰਹਿੰਦ-ਖੂੰਹਦ ਵਾਹੀ ਗਈ'  : 'Residue Incorporated';
-  document.getElementById('eq-mul-label').textContent = L ? 'ਰਹਿੰਦ-ਖੂੰਹਦ ਮਲਚਿੰਗ'    : 'Residue Mulching';
-  document.getElementById('eq-oc-title').textContent  = L ? 'OC% ਤੋਂ SN ਦਾ ਅੰਦਾਜ਼ਾ (ਜਦੋਂ SN ਉਪਲਬਧ ਨਹੀਂ)' : 'Soil N estimation from Organic Carbon (when SN not available)';
-  document.getElementById('eq-oc-source').textContent = L ? ' — 359 ਪੰਜਾਬ ਮਿੱਟੀ ਨਮੂਨੇ (r = 0.11, R² = 0.012)' : ' — derived from 359 Punjab soil samples (r = 0.11, R² = 0.012)';
-  document.getElementById('eq-key-note').textContent  = L
-    ? 'T = ਟੀਚਾ ਝਾੜ (q/ha, q/ਏਕੜ × 2.471) · SN, SP, SK = ਮਿੱਟੀ ਪੌਸ਼ਟਿਕ (kg/ha, kg/ਏਕੜ × 2.471) · FN, FP₂O₅, FK₂O kg/ha ਵਿੱਚ, ਦਿਖਾਈ kg/ਏਕੜ (÷ 2.471)'
-    : 'T = target yield (q/ha, converted from q/acre × 2.471) · SN, SP, SK = soil nutrients (kg/ha, from kg/acre × 2.471) · FN, FP₂O₅, FK₂O in kg/ha, displayed as kg/acre (÷ 2.471)';
-  // table headers
-  document.querySelectorAll('.eq-table thead th:first-child').forEach(th => th.textContent = L ? 'ਪੌਸ਼ਟਿਕ ਤੱਤ' : 'Nutrient');
-  document.querySelectorAll('.eq-table thead th:last-child').forEach(th  => th.textContent = L ? 'ਸਮੀਕਰਨ (kg/ha)' : 'Equation (kg/ha)');
-}
-
-// Init
 setLang('en');
 selectCrop('rice');
 </script>
